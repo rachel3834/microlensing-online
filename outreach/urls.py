@@ -20,5 +20,5 @@ from tutorial.views import home, TutorialDetails
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home,name='home'),
-    url(r'^tutorial/(?P<pk>[0-9]+)/$',TutorialDetails.as_view(),name="tutorial_page")
+    url(r'^tutorial/(?P<pk>[0-9]+)/$',TutorialDetails.as_view(),name="tutorial"),
 ]
