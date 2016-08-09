@@ -19,15 +19,23 @@ class Command(BaseCommand):
         for f in file_list:
             file_lines = open(f,'r').readlines()
             page_title = file_lines[0].replace('TITLE','').lstrip().replace('\n','')
-            page_author = file_lines[1].replace('AUTHOR','').lstrip().replace('\n','')
+            page_short_title = file_lines[1].replace('SHORTTITLE','').lstrip().replace('\n','')
+            page_course_index = int(file_lines[2].replace('COURSEINDEX','').lstrip().replace('\n',''))
+            page_author = file_lines[3].replace('AUTHOR','').lstrip().replace('\n','')
+            page_text = ''.join(file_lines[4:])
             try:
                 user = User.objects.get(username=page_author)
             except User.DoesNotExist:
                 user = User.create(username=page_author)
-            page_text = ''.join(file_lines[2:])
-            page = TutorialPage(title=page_title, author=user, \
-                                text=page_text)
-            page.save()
+            try:
+                tutorial = TutorialPage.objects.get(title=page_title)
+            except TutorialPage.DoesNotExist:
+                page = TutorialPage(title=page_title, \
+                                    short_title=page_short_title, \
+                                    course_index=page_course_index,\
+                                    author=user, \
+                                    text=page_text)
+                page.save()
     
     def handle(self,*args, **options):
         self._create_tutorial_entries()

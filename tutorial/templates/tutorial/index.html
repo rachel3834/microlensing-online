@@ -1,11 +1,7 @@
-<html>
-	<head>
-		<title>Microlensing Online</title>
-	</head>
-<body>
-	<h1>Welcome to Microlensing Online!</h1>
-	{% for p in pages %}
-	<li>{{p.title}}</li>
-	{% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title_text %}Welcome to Microlensing Online!{% endblock %}
+{% block header_text %}Welcome to Microlensing Online!{% endblock %}
+
+{% block content %}
+{% endblock %}

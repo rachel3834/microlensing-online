@@ -1,10 +1,8 @@
-<html>
-	<head>
-		<title>{{tutorial.title}}</title>
-        <!--<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">-->
-	</head>
-<body>
-	<h1>{{tutorial.title}}</h1>
-	{{tutorial.text}}
-</body>
-</html>
+{% extends 'tutorial_base.html' %}
+
+{% block title_text %}{{tutorialpage.title}}{% endblock %}
+{% block header_text %}{{tutorialpage.title}}{% endblock %}
+
+{% block content %}
+{{tutorialpage.text|safe}}
+{% endblock %}

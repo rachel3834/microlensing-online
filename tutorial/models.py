@@ -5,6 +5,8 @@ from django.db import models
 class TutorialPage(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
+    short_title = models.CharField(max_length=20,null=True)
+    course_index = models.IntegerField(null=True)
     text = models.TextField()
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
