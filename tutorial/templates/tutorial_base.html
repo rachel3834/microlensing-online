@@ -1,35 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>{% block title_text %}{% endblock %}</title>
-		<meta name="viewport" content="width=device-width", initial-scale=1.0">
-		<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-		</script>
-	</head>
-	
-<body>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="navbar-brand" href="/">Microlensing Online</a>
-			</div>
-		</div>
-		
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-			  <li><a href="/tutorial/">Tutorials</a></li>
-			</ul>
-		  </div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
-	</nav>
-	
+{% extends 'base.html' %}
+{% block mainregion %}
 	<!-- Tutorial navigation sidebar -->
 	<div class="container-fluid">
 		<div class="row">
@@ -49,6 +19,4 @@
 			</div>
 		</div>
 	</div>
-</body>
-
-</html>
+{% endblock %}
