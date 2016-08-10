@@ -17,3 +17,16 @@ class TutorialPage(models.Model):
         
     def __str__(self):
         return self.title
+
+class SitePage(models.Model):
+    name = models.CharField(max_length=20)
+    text = models.TextField()
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+    
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name

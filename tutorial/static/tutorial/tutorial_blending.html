@@ -1,0 +1,64 @@
+TITLE Blending
+SHORTTITLE Blending
+COURSEINDEX 5
+AUTHOR rstreet
+<h3>Introduction</h3>
+<p>Continuing to explore complications which can cause microlensing events to deviate from purely PSPL models, we will now look at a
+more data-orientated issue which is nevertheless related to parallax because it's affects can mimic a parallax signature; the two
+are degenerate and need to be considered carefully. This issue is blending.
+</p>
+<h3>Blending</h3>
+<p>Assumption No. 2: That the image of the lensed source in our CCD frames is always isolated and the flux from it can always be
+measured independently from all neighboring stars.
+</p>
+<p>Microlensing is an intrinsically rare phenomenon, due to the precise alignment required between observer, lens and source. To
+detect these events in significant numbers, all surveys to date have concentrated their observations in very dense starfields such
+as the Galactic Bulge and Magallenic Clouds. The resulting CCD images are very crowded and its rare to have star which is entirely
+isolated from its neighbors.</p>
+<p>Although we do not resolve the disk of the stars in these observations - they remain points of light - the light from each star
+in the frame is spread over a circle of pixels due to diffraction at the telescope aperture. This shape of this circle is described
+by the star's Point Spread Function (PSF), which will have a certain Full Width Half Maximum (FWHM) depending on the telescope,
+instrument and seeing conditions at the time. If the PSFs of neighboring stars overlap, they are said to be blended. These neighbors
+are probably not physically associated with the target; they could be at any distance, at a close angular separation from our line
+of sight.</p>
+<h3>Affects of Blending</h3>
+<p>Blending results in light from the neighbors contaminating the flux measurement of the lensed star, f<sub>s</sub>. Whereas for
+an isolated lensed star, the flux at a given time t, f(t) is given by:</p>
+<table width="75%"><tr><td>$$f(t) = f_{s}(t)A(u(t))$$</td><td>[29]</td></tr></table>
+<p>in practise what we actually measure is more like:
+</p>
+<table width="75%"><tr><td>$$f(t) = f_{s}(t)A(u(t)) + f_{b}(t)$$</td><td>[30]</td></tr></table>
+
+<p>where f<sub>b</sub>(t) is the additional flux from all overlapping neighbors. This is heavily time-dependant: for instance, if
+the seeing suddenly worsens during observations, the PSF FWHM expands and f<sub>b</sub> abruptly increases.</p>
+
+<p>Figure XXX shows the affect of blending on a microlensing event. Overall, the additional flux can "dilute" the measured amplitude,
+and make t<sub>E</sub> appear shorter, leading to a mis-estimation of the lens parameters.  As this can be a symmetrical change in
+the lightcurve, it can mimic the affects of the parallax component &pi;<sub>E,&perp;</sub>.
+</p>
+<h3>Dealing with Blending</h3>
+<p>Multiple sets of observations from different instruments can help here. As each one may come from telescopes of very different
+aperture, f<sub>s</sub>, even unblended, will still differ between datasets just as f<sub>b</sub>, so we consider both as functions
+of time for each dataset, k (with N<sub>k</sub> datapoints), in turn:</p>
+
+<table width="75%"><tr><td>$$f_{k}(t) = f_{s,k}(t)A(u(t)) + f_{b,k}(t)$$</td><td>[31]</td></tr></table>
+
+<p>Of course, they’re all observing the same event, so A(u(t)) relates the datasets together.</p>
+<p>We begin by adopting initial typical values for the physical event parameters, to derive a starting model A(u(t)).
+Eqn. 31 gives us a model for the flux measured from each dataset, f<sub>m,k</sub>(t), with measurement errors, σ<sub>m,k</sub>(t).
+We can test how well the model fits with a &chi;<sup>2</sup> test:</p>
+
+<table width="75%"><tr><td>$$\chi^{2} = \frac{\sum_{i} \left( \frac{f_{m,k}(t) - f_{k}(t)}{\sigma_{m,k}(t)} \right)^{2}}{N_{k} - N_{par}}$$</td><td>[32]</td></tr></table>
+
+<p>where Npar is the number of fitted parameters.</p>
+<p>Differentiating this expression with respect to each variable in turn and equating it to zero, we can derive a set of
+simultaneous equations which can be used to infer f<sub>s,k</sub>, f<sub>b,k</sub> for each dataset, for the given amplification
+model.
+</p>
+<p>Given this set of initial blending parameters, we can now repeat this process, but this time fit for the physical parameters of
+the amplification model. By iterating this process, we can arrive a set of consistent parameters for both models.</p>
+<h3>References:</h3>
+<p>Alcock, C. et al. (1997), ApJ, 479, 119.<br>
+Wozniak, P & Paczynski, B. (1997), ApJ, 487, 55. <br>
+Han, C. (1999), MNRAS, 309, 373.<br>
+</p>

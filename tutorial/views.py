@@ -23,6 +23,17 @@ def tutorial(request,pk=None):
     return render(request,'tutorial/tutorial_index.html',\
                 {'tutorial_list':tutorials, 'page':page})
 
+def learning(request):
+    return render(request,'tutorial/learning.html',{})
+
+def page(request):
+    page_name = str(request.path_info).replace('/','')
+    try:
+        page = SitePage.objects.get(name=page_name)
+    except SitePage.DoesNotExist:
+        page = SitePage.objects.get(name='MissingPage')
+    return render(request,'site/site_page.html',{'page':page})
+
 class TutorialDetails(DetailView):
     model = TutorialPage
     template_name = 'tutorial/tutorial_page.html'
