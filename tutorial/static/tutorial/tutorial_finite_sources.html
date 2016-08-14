@@ -1,0 +1,177 @@
+TITLE Finite Sources
+SHORTTITLE Finite Sources
+COURSEINDEX 6
+AUTHOR rstreet
+<h3>Introduction</h3>
+<p>Assumption No. 3: that the source can be treated as a point source of light. Of course we know that stars have a physical extent,
+but generally in astronomy its pretty safe to treat them as point sources given their enormous distances! But microlensing is an
+extraordinarily sensitive technique and even the radius of a star almost half way across the Galaxy can have a measureable affect.</p>
+
+<h3>The Lens Equation in Complex Notation</h3>
+<p>In considering non-point sources, it is helpful to introduce the use of complex- number notation, since this makes it more natural to introduce two-dimensional vectors. For this reason, much of the following theory was originally explored
+in the context of lensed quasars and other large-scale masses.</p>
+<p>The lensing can be thought of as a 'mapping' of the coordinate system in the lens plane (x,y, centered on the lens) to that of
+the source (&xi;,&eta;), in the sense that it describes the offsets (&theta;<sub>1,2</sub>) of the images of the source in terms of
+the lens characteristics and the angular separation between lens and source(&alpha;).</p>
+<p>Here we introduce complex notation in order to parameterize the lens equation:</p>
+
+<table width="75%">
+    <tr><td>$$\zeta = \xi + i\eta$$</td><td><td></tr>
+    <tr><td>$$z = x + iy,$$</td><td>[33]</td></tr>
+</table>
+
+<p>where z and &zeta; are normalized to the Einstein radius in the lens, source planes respectively.</p>
+<p>The lens equation can then be re-written:</p>
+
+<table width="75%"><tr><td>$$\zeta - \frac{D_{S}}{D_{L}}z - D_{LS}\alpha(z,\bar{z}) = 0,$$</td><td>[34]</td></tr></table>
+
+<p>where &alpha; is the complex deflection angle &alpha;(z, z&#772;) = &alpha;<sub>x</sub>(x, y) + <em>i</em>&alpha;<sub>y</sub>(x, y) and
+z&#772; is the complex conjugate of z.</p>
+
+<p>The solutions of this form of the lens equation are then:</p>
+
+<table width="75%"><tr><td>$$z_{1,2} = \frac{\xi}{2}\left( 1 \pm \sqrt{1 + \frac{4}{\zeta\zeta}} \right)$$</td><td>[35]</td></tr></table>
+
+<p>See Witt 1990, Witt & Mao 1994 and Mao & Witt 1998 for a detailed introduction of this form of the lens equation and full
+derivation of finite-source expressions.</p>
+
+<h3>Sources of Finite Extent</h3>
+
+<p>In this notation a single, circular source of finite radius r can be described as:</p>
+
+<table width="75%"><tr><td>$$\zeta(\phi) = \zeta_{0} + re^{i\phi},$$</td><td>[36]</td></tr></table>
+
+<p>where &phi; = &theta;-2&pi; and &zeta;<sub>0</sub> is the (parameterized) impact parameter.
+This is simply substituted into the solutions for the lens equations to derive the parameterized image locations:</p>
+
+<table width="75%"><tr><td>$$z_{1,2} = \frac{\zeta_{0}+re^{i\phi}}{2}\left[ 1 \pm \sqrt{1 + \frac{4}{\zeta_{0}^{2} + 2r\zeta_{0}\cos{\phi+r^{2}}}} \right],$$</td><td>[37]</td></tr></table>
+
+<p>The source-plane coordinate system is taken to be orientated so that &zeta;<sub>0</sub> lies along the &xi;-axis and so is real.</p>
+
+<p>This leads to 3 catagories of images:<br>
+If &zeta;<sub>0</sub> &le; r: 2 images merge into a ring at the Einstein radius ("perfect" alignment)<br>
+If r < &zeta;<sub>0</sub> << 2: 2 images form arcs<br>
+If &zeta;<sub>0</sub> &ge; 2: 2 images are increasely deformed from circular with proximity to the line of sight.<br>
+</p>
+
+<h3>Finite Source Size and Amplification</h3>
+
+<p>As before, since surface brightness is conserved, the amplification is given by the ratio of the combined image area to that of
+the source. In complex notation this is given by:</p>
+
+<table width="75%"><tr><td>$$A_{1,2} = \frac{1}{2\pi r^{2}} \int_{0}^{2\pi} y(\phi) \frac{dx(\phi)}{d\phi},$$</td><td>[38]</td></tr></table>
+<p>where</p>
+ 
+ <table width="75%">
+    <tr><td>$$x(\phi) = \frac{\zeta_{0} + r\cos\phi}{2}f_{1,2}(\phi),$$</td><td></td></tr>
+    <tr><td>$$y(\phi) = \frac{r\sin\phi}{2}f_{1,2}(\phi),$$</td><td></td></tr>
+    <tr><td>$$f_{1,2}(\phi) = 1 \pm \sqrt{1 + \frac{4}{\zeta_{0}^{2} + r^{2} + 2\zeta_{0}r\cos\phi}}$$</td><td>[39]</td></tr>
+ </table>
+ 
+ <center>
+    <img src="/static/tutorial/progression_lensed_images.png" width="50%"><br>
+    <i>Figure 9, the progression and deformation of lensed images throughout a microlensing event. Here the coordinates are
+    centered on the lens and the relative movement of the source is depicted as a series of open circles. The images of the source
+    created are shown as filled ovals and the line indicates which two images would be observed at a single time during the event.</i>
+ </center>
+ 
+ <p>Witt & Mao 1994 derived general expressions for the image amplification A<sub>1,2</sub> and total amplification (A<sub>tot</sub>).
+ Where &zeta;<sub>0</sub> < r ("perfect" alignment along the line of sight) the images merge to form a ring, so only A<sub>tot</sub>
+ makes physical sense. In the general case where &zeta; &ne; r, the full expression for A<sub>1,2</sub> is:</p>
+ 
+ <table width="75%">
+    <tr><td>$$A_{1,2} = \pm\frac{\pi}{2} + \frac{1}{2\pi}E\left(\frac{\pi}{2},k\right)\frac{\zeta_{0}+r}{2r^{2}}\sqrt{4 + (\zeta_{0} - r)^{2}}$$</td><td></td></tr>
+ </table>
+ <table width="75%">
+    <tr><td></td><td>$$-\frac{1}{2\pi}F\left(\frac{\pi}{2},k\right) \frac{\zeta_{0}-r}{r^{2}}{4+(\zeta_{0}^{2} - r^{2}/2}{\sqrt{4 + (\zeta_{0}-r)^{2}}}$$</td></tr>
+ </table>
+ <table width="75%">
+    <tr><td></td><td>$$+\frac{1}{2\pi}\Pi\left(\frac{\pi}{2},n,k\right) \frac{2(\zeta_{0}-r)^{2}}{r^{2}(\zeta_{0}+r)}\frac{1+r^{2}}{\sqrt{4+(\zeta_{0}-r)^{2}}}$$</td><td>[40]</td></tr>
+ </table>
+ 
+ <p>where E,F and &Pi; are the first, second and third elliptic integrals defined by Gradshteyn & Ryzhik (1980) and</p>
+ 
+ <table width="75%">
+    <tr><td>$$n = \frac{4\zeta_{0}r}{(\zeta_{0}+r)^{2}},$$</td><td></td></tr>
+    <tr><td>$$k = \sqrt{\frac{4n}{4+(\zeta_{0}-r)^{2}}}$$</td><td>[41]</td></tr>
+ </table>
+ 
+ <p>However, in the case where the source can be considered to be small (r &rarr; 0) but the alignment is not perfect
+ (&zeta;<sub>0</sub>  &ne; 0), we recover the familiar amplification equation for a point source by summing the contributions from
+ A<sub>1,2</sub>:</p>
+ 
+ <table width="75%"><tr><td>$$A_{tot} = \frac{2+\zeta_{0}^{2}}{\zeta_{0}\sqrt{4+\zeta_{0}^{2}}}.$$</td><td>[42]</td></tr></table>
+ 
+ <p>The observable effects of the finite extent of the source are illustrated in Fig. 10. The lightcurve is noticably "rounded-over"
+ at the peak of the event in comparison with the PSPL model, and the amplitude can differ significantly. In practise this prevents
+ real events from achieving the (theoretical) infinite amplification. These effects become significant when &alpha; &asymp; &theta;<sub>0</sub>.
+ This can be a problem while an event is in progress, since any deviation from the PSPL lightcurve has to be regarded as a
+ potential planetary anomaly (ie. a binary lens). As a result, a certain amount of time is spent observing apparently anomalous
+ events which later turn out to be due to single-object-lens.</p>
+ 
+ <center>
+    <img src="/static/tutorial/finite_source_lightcurves.png" width="50%"><br>
+    <i>Figure 10, taken from Witt & Mao (1994), showing finite source effects on microlensing lightcurves. The plots on the left
+    show the lens-centered geometry (star) with the relative source motion (open circle) and image configuration. The right-hand
+    graphs compare the PSPL lightcurve (thin line) with the finite-source one for the same system (thick line). In their notation,
+    &mu; is the total amplification and b is the impact parameter.
+</i>
+ </center>
+ 
+ <h3>Limb-darkened Finite Sources</h3>
+ 
+ <p>The advantage of expressing the lens and amplification equations this way is that it makes it relatively straightforward to
+ introduce one last consideration for a finite source – limb darkening. While the surface brightness of the source is conserved
+ during a microlensing event, most stars don't have a constant brightness profile over the disk.</p>
+ 
+ <p>A number of well-established wavelength-dependent limb darkening relationships are available. The higher-order equations
+ generally offer greater accuracy but are not always convenient to use. Published tables present the co-efficients for each
+ relationship as established from observations, allowing us to look-up the appropriate coefficients for the passband of our
+ observations. See papers by Claret et al. These coefficients have historically been denoted by u<sub>&lambda;,1,2</sub>,
+ somewhat confusingly in the microlensing context!
+</p>
+ <p>Mao & Witt (1998) implemented the limb-darkening law:</p>
+ 
+ <table width="75%"><tr><td>$$\frac{I_{\lambda}(r)}{I_{\lambda}(0)} = 1 - u_{\lambda,1} - u_{\lambda,2} + u_{\lambda,1}\sqrt{1 - \frac{R_{S}^{2}}{r^{2}}} + u_{\lambda,2}\left(1 - \frac{R_{S}^{2}}{r^{2}}\right),$$</td><td>[33]</td></tr></table>
+ 
+ <p>where I<sub>&lambda;</sub>(r) and I<sub>&lambda;</sub>(0) are the intensity of the stellar disk out to radii of r and at the
+ center, respectively.</p>
+ 
+ <p>To find an expression for the amplification taking this into account, we break the disk of the star down into infinesimally
+ thin 'shell' layers of radial thickness dr.</p>
+ 
+ <p>Remembering that the amplification A(r) is the ratio of the image area to that of the unlensed source, we can represent the
+ image area of a lensed source of radius r as:</p>
+ 
+ <table width="75%"><tr><td>$${\rm Area}_{\rm image}(r) = A(r)\pi r^{2},$$</td><td>[34]</td></tr></table>
+ 
+ <p>It follows then that for a source of slightly larger radius r+dr, this area is:</p>
+ 
+ <table width="75%"><tr><td>$${\rm Area}_{\rm image}(r+dr) = A(r+dr)\pi (r+dr)^{2},$$</td><td[35]></td></tr></table>
+ 
+ <p>The image area of the shell, Area<sub>image</sub>(dr), alone is then the difference between these two. The contribution of that
+ shell to the amplification, A<sub>shell</sub>, is given, as always, by the ratio of the shell image area Area<sub>shell</sub>(dr)
+ and the unlensed area of the shell, 2&pi;rdr:
+</p>
+ 
+ <table width="75%">
+    <tr><td>$$A_{\rm shell} = \frac{Area_{\rm image}(r+dr) - Area_{\rm image}(r)}{2 \pi r dr},$$</td><td></td></tr>
+    <tr><td>$$A_{\rm shall} = \frac{1}{2\pi r}{d}{dr}(\pi r^{2}A).$$</td><td>[36]</td></tr>
+ </table>
+ 
+ <p>For each shell at radius r, the product of the area of shell's image and the intensity of the stellar disk at that radius,
+ I(r) give the flux from the shell's image. We then extract the total flux from the images during lensing by integrating over the
+ full radius of the source. The amplification A<sub>limb</sub> is then the ratio of this quantity to the integral of I(r)&times;area
+ over the unlensed disk:</p>
+ 
+ <table width="75%"><tr><td>$$A_{\rm limb} = \frac{\int_{0}^{R_{S}} A_{\rm shell}I(r)2\pi r dr}{\int_{0}^{R_{S}} I(r)2 \pi r dr}$$</td><td>[37]</td></tr></table>
+ 
+ <p>Ultimately, Eqn. 37 still depends on A, and when the angular separation u = &alpha;/&theta;<sub>0</sub> of lens and source is
+ large, finite source effects can be neglected.</p>
+ 
+ <h3>References:</h3>
+ <p>With, H.J. (1990), A&A, 236, 311.<br>
+Witt, H.J. & Mao, S. (1994), ApJ, 430, 505.<br>
+Mao, S. & Witt, H.J. (1998), MNRAS, 300, 104.<br>
+Claret, A & Bloemen, S. (2011) A&A, 529, 75, and earlier papers by the same lead author.<br>
+ </p>
