@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+	<!-- Learning menu panels -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">Ground-based Surveys</h4>
+					</div>
+					<div class="panel-body">
+						<img src="/static/tutorial/GalacticBulge.png" width="100%"><br>
+						<center>Ground-based programs which search for microlensing events</center>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-4">
+				<a href="/tutorial/">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">Space Missions</h4>
+						</div>
+						<div class="panel-body">
+							<img src="/static/tutorial/nasa-wfirst-telescope.jpg" width="100%"><br>
+							<center>Current and future missions with a microlensing component</center>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+						
+			<div class="col-lg-4">
+				<a href="/tutorial/">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">Ground-based Follow-up</h4>
+						</div>
+						<div class="panel-body">
+							<img src="/static/tutorial/tutorial_graphic.png" width="100%"><br>
+							<center>Projects and facilities studying microlensing phenomena</center>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

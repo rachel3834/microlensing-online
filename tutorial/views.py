@@ -25,6 +25,12 @@ def tutorial(request,pk=None):
 
 def learning(request):
     return render(request,'tutorial/learning.html',{})
+    
+def overview(request):
+    return render(request,'tutorial/overview.html',{})
+    
+def resources(request):
+    return render(request,'tutorial/resources.html',{})
 
 def page(request):
     page_name = str(request.path_info).replace('/','')
