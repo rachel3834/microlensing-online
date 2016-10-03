@@ -1,0 +1,72 @@
+TITLE Parallax and other Deviations from Point Source, Point Lens Models
+SHORTTITLE Parallax
+COURSEINDEX 4
+AUTHOR rstreet
+<h3>Introduction</h3>
+<p>In the course of exploring point-source, point-lens models, we've made a number of useful but simplifying assumptions. For many
+events, these assumptions actually serve us well. In the real world of course, things are not quite so straight forward, and some
+events do deviate from PSPL without actually being binary or variable. Here we examine the most significant causes of deviations,
+and introduce some new parameters which will be relevant when we consider binary events.</p>
+
+<h3>Microlens Parallax</h3>
+<p>Assumption No. 1: The Earth is a stationary observing platform through-out the event, and the relative movements of the lens
+and source can be considered to be plane parallel to the sky.</p>
+
+<p>Of course, these things are not true. All three bodies are moving, including the Earth around the Sun, which can only be
+considered to be a straight line over small timescales. For some events, particularly long timescale events, this assumption breaks
+down, and the resulting parallax must be taken into account.</p>
+
+<p>The effect of parallax is that the observer's "perspective" on the lens-source separation changes more quickly/slowly than
+expected, depending on the relative directions of motion. Since:</p>
+
+<table width="75%"><tr><td>$$A = \frac{u^{2}+2}{u(u^{2}+4)^{1/2}}$$</td><td>[24]</td></tr></table>
+
+<p>depends on this separation, u = &alpha;/&theta;<sub>0</sub>, the observer sees variations in the amplification from that
+expected from a purely PSPL event.</p>
+
+<p>Eqn. 24 depends only on the impact parameter - the apparent separation of lens and source at a given time. The characteristic
+parameters of the event - M<sub>L</sub>, D<sub>L</sub>, D<sub>S</sub> etc - are degenerate since together they define &theta;<sub>0</sub>
+and many combinations of these parameters can produce the same amplification.  Therefore, parallax can be useful because the
+variations it causes give us additional information regarding the relative movements of the bodies, which can be used to break
+degeneracies in the model, and learn more about the characteristics of the system.</p>
+
+<p>The Einstein crossing time t<sub>E</sub> (time taken to cross the Einstein radius) is given as:</p>
+
+<table width="75%"><tr><td>$$t_{E} = \frac{R_{E}}{\bar{\nu}} = \frac{D_{L}\theta_{0}}{\bar{\nu}} = \omega^{-1}$$</td></tr></table>
+
+<p>where &nu;&#772; is the vector of relative motion and &omega;<sup>-1</sup> is referred to as the vector event rate. So far, we've
+consider the separation at time t, u<sub>&#9737;</sub>(t), neglecting Earth's orbital motion, which can be represented as:</p>
+
+<table width="75%"><tr><td>$$u_{\odot}(t) = \beta + \omega(t - t_{0})$$</td><td>[26]</td></tr></table>
+
+<p>where &beta; = b/D<sub>L</sub>&theta;<sub>0</sub> is the normalized impact parameter for a minimum physical separation of the
+lens from the Sun-Source line of sight, b. This minimum separation occurs at the peak amplification of the event, at time t<sub>0</sub>.
+</p>
+
+<p>However, for an observer on Earth, u<sub>&#8853;</sub>(t), must take into account our annual orbital motion, which is known
+relative to background stars from celestial mechanics:</p>
+
+<table width="75%"><tr><td>$$u_{\oplus}(t) = u_{\odot}(t) + \pi_{E}\hat{\beta} \cos(\Omega(t - t_{0}) + \phi) + \Lambda \hat{\omega}(\sin(\Omega(t - t_{0}) + \phi)$$</td><td>[27]</td></tr></table>
+
+<p>where &Omega; = 2 &pi;/yr is Earth's orbital motion, and &phi; is our phase in that motion at t = t<sub>0</sub> relative to the
+normalized impact parameter at Earth, &beta;&#770;.  &Lambda; is the parity &equiv; -j&#772;(&beta;&#770; &times; &omega;&#770;) = &#8723;1, where
+j&#772; is the unit vector toward the North ecliptic pole.</p>
+
+<p>&pi;<sub>E</sub> is the microlensing parallax parameter = a<sub>&#8853;</sub>/&#345;<sub>E</sub>, where a<sub>&#8853;</sub> is
+1 AU and &#345;<sub>E</sub> is the Einstein radius projected onto the observer plane (aka the reduced Einstein radius).</p>
+
+<table width="75%"><tr><td>$$\tilde{r_{E}} = \theta_{0}D_{L} = \left( \frac{4GM_{L}D_{L}}{c^{2}} \right)^{\frac{1}{2}}$$</td><td>[28]</td></tr></table>
+
+<p>Eqn. 27 can then be substituted into eqn. 24 to plot the parallax-modified amplification during the event.</p>
+
+<p>Given the known sky position of the event and the Earth's position in it's orbit at the time, most of the additional parameters are actually calculable,
+so in principle the parallax introduces one additional parameter - &pi;<sub>E</sub> into the fitting process.</p>
+
+<p>However, in reality, &pi;<sub>E</sub> has 2 components - one which is parallel to the Sun at to and one perpendicular.
+&pi;<sub>E,||</sub> is relatively easy to spot as it introduces asymmetries in the lightcurve around the peak.
+&pi;<sub>E,&perp;</sub> however introduces symmetric distortion and can be more difficult to distinguish observationally, as it
+mimics a different set of event parameters.</p>
+
+<h3>References:</h3>
+Gould, A. (1992), ApJ, 392, 442.<br>
+Buchalter, A. & Kamionkowski, M. (1997), ApJ, 482, 782.<br>

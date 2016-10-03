@@ -32,6 +32,24 @@ def overview(request):
 def resources(request):
     return render(request,'tutorial/resources.html',{})
 
+def interactive(request,pk=None):
+    tool_list = InteractiveTool.objects.all()
+    indices = []
+    tools = []
+    for page in tool_list:
+        if page.tools_index != 0:
+            indices.append(page.tools_index)
+            tools.append(page)
+    index = zip(indices,tools)
+    index.sort()
+    (indices, tools) = zip(*index)
+    if pk == None:
+        page = InteractiveTool.objects.get(tools_index=0)
+    else:
+        page = InteractiveTool.objects.get(pk=pk)
+    return render(request,'tutorial/interactive_index.html',\
+                {'tool_list':tools, 'page':page})
+
 def page(request):
     page_name = str(request.path_info).replace('/','')
     try:

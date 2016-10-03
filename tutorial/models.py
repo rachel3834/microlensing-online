@@ -30,3 +30,24 @@ class SitePage(models.Model):
         
     def __str__(self):
         return self.name
+        
+
+class InteractiveTool(models.Model):
+    name = models.CharField(max_length=20)
+    text = models.TextField()
+    tools_index = models.IntegerField(null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+    
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name
+        
+#class GroundSurvey(models.Model):
+#    name = models.CharField(max_length=20)
+#    pi = models.CharField(max_length=40)
+#    tel_diameter = models.DecimalField()
+#    sites = models.

@@ -1,0 +1,8 @@
+{% extends 'interactive_base.html' %}
+
+{% block title_text %}{{page.title}}{% endblock %}
+{% block header_text %}{{page.title}}{% endblock %}
+
+{% block content %}
+{{page.text|safe}}
+{% endblock %}
