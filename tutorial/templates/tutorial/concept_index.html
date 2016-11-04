@@ -1,0 +1,10 @@
+{% extends 'tutorial_base.html' %}
+
+{% block title_text %}{{page.title}}{% endblock %}
+{% block header_text %}{{page.title}}{% endblock %}
+{% block author_name %}{{page.author}}{% endblock %}
+{% block page_index %}{{page.course_index}}{% endblock %}
+
+{% block content %}
+{{page.text|safe}}
+{% endblock %}

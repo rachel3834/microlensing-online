@@ -23,6 +23,25 @@ def tutorial(request,pk=None):
     return render(request,'tutorial/tutorial_index.html',\
                 {'tutorial_list':tutorials, 'page':page})
 
+def concept(request,pk=None):
+    concept_list = ConceptPage.objects.all()
+    indices = []
+    concepts = []
+    for page in concept_list:
+        if page.course_index != 0:
+            indices.append(page.course_index)
+            concepts.append(page)
+    course_index = zip(indices,concepts)
+    course_index.sort()
+    (indices, concepts) = zip(*course_index)
+    if pk == None:
+        page = ConceptPage.objects.get(course_index=0)
+    else:
+        page = ConceptPage.objects.get(pk=pk)
+        
+    return render(request,'tutorial/concept_index.html',\
+                    {'tutorial_list':concepts, 'page':page})
+        
 def learning(request):
     return render(request,'tutorial/learning.html',{})
     
@@ -32,6 +51,9 @@ def overview(request):
 def resources(request):
     return render(request,'tutorial/resources.html',{})
 
+def opportunities(request):
+    return render(request,'tutorial/opportunities.html',{})
+    
 def interactive(request,pk=None):
     tool_list = InteractiveTool.objects.all()
     indices = []

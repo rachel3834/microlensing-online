@@ -12,6 +12,7 @@
 			</div>
 			<div class="col-sm-9 main">
 				<h1 class="page-header">{% block header_text %}{% endblock %}</h1>
+				{% if page_index > 0 %} <p style="text-align:right"><i>by {% block author_name %}{% endblock %}</i></p> {% endif %}
 				<div class="col-sm-9">
 					{% block content %}
 					{% endblock %}

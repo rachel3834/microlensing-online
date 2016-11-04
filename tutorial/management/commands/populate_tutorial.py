@@ -7,7 +7,7 @@ Created on Mon Aug  8 21:00:08 2016
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from tutorial.models import TutorialPage
+from tutorial.models import TutorialPage, Author
 import glob
 
 class Command(BaseCommand):
@@ -24,16 +24,17 @@ class Command(BaseCommand):
             page_author = file_lines[3].replace('AUTHOR','').lstrip().replace('\n','')
             page_text = ''.join(file_lines[4:])
             try:
-                user = User.objects.get(username=page_author)
-            except User.DoesNotExist:
-                user = User.create(username=page_author)
+                author = Author.objects.get(name=page_author)
+            except Author.DoesNotExist:
+                author = Author(name=page_author)
+                author.save()
             try:
                 tutorial = TutorialPage.objects.get(title=page_title)
             except TutorialPage.DoesNotExist:
                 page = TutorialPage(title=page_title, \
                                     short_title=page_short_title, \
                                     course_index=page_course_index,\
-                                    author=user, \
+                                    author=author, \
                                     text=page_text)
                 page.save()
     

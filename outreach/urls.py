@@ -16,18 +16,21 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from tutorial.views import home, page, tutorial, learning, overview, resources
-from tutorial.views import interactive
+from tutorial.views import interactive, opportunities, concept
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home,name="home"),
     url(r'^tutorial/(?P<pk>[0-9]+)/$',tutorial,name="tutorial"),
+    url(r'^concept/(?P<pk>[0-9]+)/$',concept,name="concept"),
     url(r'^interactive/(?P<pk>[0-9]+)/$',interactive,name="interactive"),
     url(r'^tutorial/$',tutorial,name="tutorial"),
+    url(r'^concept/$',concept,name="concept"),
     url(r'^learning/$',learning,name="learning"),
     url(r'^overview/$',overview,name="overview"),
     url(r'^resources/$',resources,name="resources"),
     url(r'^interactive/$',interactive,name="interactive"),
+    url(r'^opportunities/$',opportunities,name="opportunities"),
     url(r'^about/$',page,name="about"),
     url(r'^contact/$',page,name="contact"),
 ]
