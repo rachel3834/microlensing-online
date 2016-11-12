@@ -15,12 +15,30 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
+class Reference(models.Model):
+    authors = models.CharField(max_length=50)
+    year = models.IntegerField()
+    journal = models.CharField(max_length=50, null=True)
+    volume = models.CharField(max_length=10, null=True)
+    page = models.CharField(max_length=10, null=True)
+    url = models.URLField(max_length=200, null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+    
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name
+        
 class TutorialPage(models.Model):
     author = models.ForeignKey(Author,null=True)
     title = models.CharField(max_length=200)
     short_title = models.CharField(max_length=20,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
+    references = models.ManyToManyField(Reference)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
@@ -30,7 +48,6 @@ class TutorialPage(models.Model):
         
     def __str__(self):
         return self.title
-
 
 class ConceptPage(models.Model):
     author = models.ForeignKey(Author,null=True)
@@ -75,7 +92,7 @@ class InteractiveTool(models.Model):
         
     def __str__(self):
         return self.name
-        
+    
 class GroundSurvey(models.Model):
     name = models.CharField(max_length=20)
     pi = models.CharField(max_length=40)
@@ -89,3 +106,18 @@ class GroundSurvey(models.Model):
         
     def __str__(self):
         return self.name
+
+class OnlineResource(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField(max_length=200)
+    link_group = models.CharField(max_length=100)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+    
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name
+
