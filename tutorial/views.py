@@ -38,9 +38,9 @@ def concept(request,pk=None):
         page = ConceptPage.objects.get(course_index=0)
     else:
         page = ConceptPage.objects.get(pk=pk)
-        
+            
     return render(request,'tutorial/concept_index.html',\
-                    {'tutorial_list':concepts, 'page':page})
+                    {'concepts_list':concepts, 'page':page})
         
 def learning(request):
     return render(request,'tutorial/learning.html',{})

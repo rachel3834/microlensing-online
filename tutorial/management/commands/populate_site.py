@@ -15,8 +15,8 @@ class Command(BaseCommand):
     help = ''
     
     def _create_site_page(self):
-        print SitePage.objects.all()
         file_list = glob.glob('tutorial/static/site/site_*html')
+        file_list = file_list + glob.glob('tutorial/static/tutorial/site_*html')
         for f in file_list:
             file_lines = open(f,'r').readlines()
             page_name = file_lines[0].replace('NAME','').lstrip().replace('\n','')
