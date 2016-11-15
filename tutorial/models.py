@@ -15,23 +15,29 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
-class Reference(models.Model):
+class Reference(models.Model, params={}):
     authors = models.CharField(max_length=50)
     year = models.IntegerField()
     journal = models.CharField(max_length=50, null=True)
     volume = models.CharField(max_length=10, null=True)
     page = models.CharField(max_length=10, null=True)
     url = models.URLField(max_length=200, null=True)
+    search_key = models.CharField(max_length=200)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
+    if len(params) > 0:
+        for key, value in params.items():
+            setattr(self,key,value)
+            
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
         
     def __str__(self):
         return self.name
-        
+    
+            
 class TutorialPage(models.Model):
     author = models.ForeignKey(Author,null=True)
     title = models.CharField(max_length=200)
