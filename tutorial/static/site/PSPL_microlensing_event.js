@@ -1,4 +1,4 @@
-console.log("Executing PSPL_microlensing_event.js");
+  console.log("Executing PSPL_microlensing_event.js");
 
 //NOTE: const keyword not compatible with IE -- should replace it with var and document what values are constant
 //NOTE update: const uses replaced with var, with comments marking them "const"
@@ -6,8 +6,8 @@ console.log("Executing PSPL_microlensing_event.js");
 // "revealing pattern" module object for this script file
 
 var PSPL_microlensing_event = (function() {
-  var lcurveCanvas = document.getElementById("lcurveCanvas");
-  var lcurveContext = lcurveCanvas.getContext("2d");
+  var canvas = document.getElementById("lcurveCanvas");
+  var context = canvas.getContext("2d");
 
   var graphLeftBorder = 50; // left border of graph x-pixel value, NOT including any trailing gridlines
   var graphTopBorder = 50; // top border of graph y-pixel value, NOT including any trailing gridlines
@@ -29,15 +29,15 @@ var PSPL_microlensing_event = (function() {
   var graphTopTrailingBorder = graphTopBorder - graphTopTrail; // top border of graph y-pixel value, INCLUDING any trailing gridlines
   var graphBottomTrailingBorder = graphBottomBorder + graphBottomTrail; // bottom border of graph y-pixel value, INCLUDING any trailing gridlines
 
-  // var graphRightBorder = lcurveCanvas.width - 50; // right border of graph x-pixel value, NOT including any trailing gridlines
-  // var graphBottomBorder = lcurveCanvas.height - 50; // bottom border of graph y-pixel value
+  // var graphRightBorder = canvas.width - 50; // right border of graph x-pixel value, NOT including any trailing gridlines
+  // var graphBottomBorder = canvas.height - 50; // bottom border of graph y-pixel value
   // var graphWidth = graphRightBorder - graphLeftBorder;
   // var graphHeight = graphBottomBorder - graphTopBorder;
 
   var centerX = graphWidth/2 + graphLeftBorder;
   var centerY = graphHeight/2 + graphTopBorder;
 
-  // slider parameters; only tE, t0, and u0 work/have reasonable ranges/values
+  // slider parameters; only tE, t0, and thetaY work/have reasonable ranges/values
   // NOTE: There are/should be corellations between several of these for instance tE depends
   // on the rest, and mu depends on Ds and Dl;
   // need to figure that out so that updating one changes the related ones
@@ -55,16 +55,19 @@ var PSPL_microlensing_event = (function() {
   // base quantities set by user
   var Ml; // solMass
   var Ds; // kpc: Ds =  Dl / (1 - 1/mu)
-  var u0;
+  var thetaY; // milliarcseconds (mas)
   var Dl; // kpc: Dl = Ds * (1 - 1/mu)
   var t0; // days
   var mu; // mas/yr: mu = thetaE / tE; mu = Ds / (Ds - Dl) = 1/(1 - Dl/Ds)
 
   // derived quantities
+  var u0;
   var tE; // days
   var Drel; // kpc
   var thetaE; // radians (or should we use milliarcsecond?)
-  initParams();
+
+  // tracks whether u0 is to be held fixed while other quantities vary
+  var fixU0;
 
   // plot scale
   var dayWidth;
@@ -78,13 +81,10 @@ var PSPL_microlensing_event = (function() {
   var xAxisFinalDay;
   var yAxisFinalMagnif;
 
-  var dayWidthDefault = 30; // const
+  var dayWidthDefault = 32; // const
   var magnifHeightDefault = 10; // const
   var xAxisInitialDayDefault = -16; // const
   var yAxisInitialMagnifDefault = 0.5; // const
-  // initialize plot scale/range vars
-  updatePlotScaleAndRange(dayWidthDefault, magnifHeightDefault,
-                          xAxisInitialDayDefault, yAxisInitialMagnifDefault);
 
   // gridlines
   var xGridInitial;
@@ -96,7 +96,6 @@ var PSPL_microlensing_event = (function() {
 
   var xGridStepDefault = 2; // const
   var yGridStepDefault = 1; // const
-  updateGridRange(xGridStepDefault, yGridStepDefault); // initialize gridline vars
 
   // Step increments used by debug buttons to alter range/scale
   var xGraphShiftStep = 0.25;
@@ -111,6 +110,10 @@ var PSPL_microlensing_event = (function() {
   var gridWidth = 1;
   var curveColor = "blue";
   var curveWidth = 2;
+  var dashedCurveColor = "green";
+  var dashedCurveWidth = 2;
+  var dashedCurveLength = 8;
+  var dashedCurveSpacing = 10;
   var graphBorderColor = "grey";
   var graphBorderWidth = 1;
   var axisColor = "black";
@@ -135,15 +138,14 @@ var PSPL_microlensing_event = (function() {
   // time increment for drawing curve
   var dt = 0.01;
 
-  // flag for whether graph is generated from calculating
-  // magnifications for a range of times from an equation,
-  // or from an input of time/magnification arrays
-  var fromEquationDefault = true; // const
-  var centerLayout = false; // const
-
   // parameter sliders and their readouts
   var tEslider = document.getElementById("tEslider");
   var tEreadout = document.getElementById("tEreadout");
+
+  var thetaEreadout = document.getElementById("thetaEreadout");
+
+  var u0slider = document.getElementById("u0slider");
+  var u0readout = document.getElementById("u0readout");
 
   var MlSlider = document.getElementById("MlSlider");
   var MlReadout = document.getElementById("MlReadout");
@@ -151,8 +153,8 @@ var PSPL_microlensing_event = (function() {
   var DsSlider = document.getElementById("DsSlider");
   var DsReadout = document.getElementById("DsReadout");
 
-  var u0slider = document.getElementById("u0slider");
-  var u0readout = document.getElementById("u0readout");
+  var thetaYslider = document.getElementById("thetaYslider");
+  var thetaYreadout = document.getElementById("thetaYreadout");
 
   var DlSlider = document.getElementById("DlSlider");
   var DlReadout = document.getElementById("DlReadout");
@@ -161,9 +163,10 @@ var PSPL_microlensing_event = (function() {
   var t0readout = document.getElementById("t0readout");
 
   var muSlider = document.getElementById("muSlider");
-  var muReadout = document.getElementById("muReadout")
+  var muReadout = document.getElementById("muReadout");
 
   var resetParamsButton = document.getElementById("resetParams");
+  var fixU0checkbox = document.getElementById("fixU0checkbox");
 
   // debug plot scale/range buttons
   var xLeftButton = document.getElementById("xLeft");
@@ -178,22 +181,42 @@ var PSPL_microlensing_event = (function() {
 
   var resetGraphButton = document.getElementById("resetGraph");
 
+  var finiteSourceCheckbox = document.getElementById("finiteSourceCheckbox");
+
+  // flag for whether graph is generated from calculating
+  // magnifications for a range of times from an equation,
+  // or from an input of time/magnification arrays
+  var fromEquationDefault = false; // const
+  var centerLayout = false; // const
+  var finiteSourceFlag = finiteSourceCheckbox.checked;
+
+
   // window.onload = init;
   // console.log(PSPL_microlensing_event_lens_plane);
   init();
 
   function init() {
+    initParams();
     initListeners();
-    plotLightcurve();
+    updateGridRange(xGridStepDefault, yGridStepDefault); // initialize gridline vars
+    // initialize plot scale/range vars
+    updatePlotScaleAndRange(dayWidthDefault, magnifHeightDefault,
+                            xAxisInitialDayDefault, yAxisInitialMagnifDefault);
+
+    // display lightcurve after all modules have been loaded
+    window.onload = plotLightcurve;
     console.log(`tE: ${tE}`);
     console.log(`thetaE: ${thetaE}`);
     console.log(`Drel: ${Drel}`);
     console.log(`mu: ${mu}`);
   }
-
+ 
   function initListeners() {
     tEslider.addEventListener("input", function() { updateParam("tE"); }, false);
     tEslider.addEventListener("change", function() { updateParam("tE"); }, false);
+
+    u0slider.addEventListener("input", function() { updateParam("u0"); }, false);
+    u0slider.addEventListener("change", function() { updateParam("u0"); }, false);
 
     MlSlider.addEventListener("input", function() { updateParam("Ml"); }, false);
     MlSlider.addEventListener("change", function() { updateParam("Ml"); }, false);
@@ -201,8 +224,8 @@ var PSPL_microlensing_event = (function() {
     DsSlider.addEventListener("input", function() { updateParam("Ds"); }, false);
     DsSlider.addEventListener("change", function() { updateParam("Ds"); }, false);
 
-    u0slider.addEventListener("input", function() { updateParam("u0"); }, false);
-    u0slider.addEventListener("change", function() { updateParam("u0"); }, false);
+    thetaYslider.addEventListener("input", function() { updateParam("thetaY"); }, false);
+    thetaYslider.addEventListener("change", function() { updateParam("thetaY"); }, false);
 
     DlSlider.addEventListener("input", function() { updateParam("Dl"); }, false);
     DlSlider.addEventListener("change", function() { updateParam("Dl"); }, false);
@@ -216,6 +239,10 @@ var PSPL_microlensing_event = (function() {
     // reset buttons
     resetParamsButton.addEventListener("click", resetParams, false);
 
+    // checkbox to hold u0 value fixed while varying other quantities besides thetaY
+    fixU0checkbox.addEventListener("change", function() { fixU0 = fixU0checkbox.checked;
+                                                          console.log(`fixU0: ${fixU0}`); }, false);
+
     // debug plot range/scale and reset buttons
     xLeftButton.addEventListener("click", function() { updateGraph("xLeft"); }, false);
     xRightButton.addEventListener("click", function() {updateGraph("xRight"); }, false);
@@ -228,6 +255,7 @@ var PSPL_microlensing_event = (function() {
     yZoomOutButton.addEventListener("click", function() { updateGraph("yZoomOut"); }, false);
 
     resetGraphButton.addEventListener("click", function() { updateGraph("reset"); }, false)
+    finiteSourceCheckbox.addEventListener("change", toggleFiniteSource, false);
     updateSliders(); // in case HTML slider values differ from actual starting values
   }
 
@@ -238,21 +266,37 @@ var PSPL_microlensing_event = (function() {
     // tE = 10; // tE = thetaE / mu
     Ml = 0.1; // solMass
     Ds = 8.0; // kpc: Ds =  Dl / (1 - 1/mu)
-    u0 = 0.1;
+    thetaY = 0.0121; // milliarcseconds (mas)
     Dl = 7.0; // kpc: Dl = Ds * (1 - 1/mu)
     t0 = 0; // days
     mu = 7; // mas/yr  (milliarcseconds/year): mu = thetaE / tE
+    fixU0 = fixU0checkbox.checked;
 
     // set derived quantities
-    updateDerivedQuantities();
+    updateDerivedQuantities(initializing=true);
   }
 
-  function updateDerivedQuantities() {
+  function updateDerivedQuantities(initializing=false) {
     updateDrel();
     updateThetaE();
+    if (fixU0 === false || initializing === true)
+      updateU0();
+    else
+      updateThetaY();
+
     // console.log(`tE before: ${tE}`);
     updateTE();
     // console.log(`tE after: ${tE}`);
+  }
+
+  function updateU0() {
+    var thetaY_rad = thetaY * masToRad; // convert from mas to radians
+    u0 = thetaY_rad / thetaE; // unitless ("units" of thetaE)
+  }
+
+  function updateThetaY() {
+    var thetaE_mas = thetaE / masToRad ;// convert from radians to mas
+    thetaY = u0 * thetaE_mas; // mas
   }
 
   function updateDrel() {
@@ -295,46 +339,99 @@ var PSPL_microlensing_event = (function() {
   }
 
   function updateSliders() {
-    var tEmax = 365; // maximum tE slider value; const
+    // maximum parameter values that can be displayed;
+    // need to match up with max value on HTML sliders
+    var tEmax = 365; // days
+    var u0max = 2; // unitless (einstein radii)
+    var MlMax = 15; // solMass
+    var DsMax = 8.5 // kpc
+    var thetaYmax = 2; // mas
+    var DlMax = 8.5 // kpc
+    var t0max = 75 // days
+    var muMax = 10 // milliarcseconds/year
+
     // update slider values and readouts to reflect current variable values
     tEslider.value = tE;
     tEreadout.innerHTML = Number(tEslider.value).toFixed(3);
-
-    // add "+" once tE exceeds maximum slider value;
+    // add "+" once after exceeding maximum slider value;
     // NOTE: Very hacky. Improve this
     if (tE > tEmax) {
       tEreadout.innerHTML += "+";
     }
 
+    u0slider.value = u0;
+    u0readout.innerHTML = Number(u0slider.value).toFixed(3);
+    if (u0 > u0max) {
+      u0readout.innerHTML += "+";
+    }
+
     MlSlider.value = Ml;
     MlReadout.innerHTML = Number(MlSlider.value).toFixed(6);
+    if (Ml > MlMax) {
+      MlReadout.innerHTML += "+";
+    }
 
     DsSlider.value = Ds;
     DsReadout.innerHTML = Number(DsSlider.value).toFixed(2);
+    if (Ds > DsMax) {
+      DsReadout.innerHTML += "+";
+    }
 
-    u0slider.value = u0;
-    u0readout.innerHTML = Number(u0slider.value).toFixed(3);
+    thetaYslider.value = thetaY;
+    thetaYreadout.innerHTML = Number(thetaYslider.value).toFixed(3);
+    if (thetaY > thetaYmax) {
+      thetaYreadout.innerHTML += "+";
+    }
 
     DlSlider.value = Dl;
     DlReadout.innerHTML = Number(DlSlider.value).toFixed(2);
+    if (Dl > DlMax) {
+      DlReadout.innerHTML += "+";
+    }
 
     t0slider.value = t0;
     t0readout.innerHTML = Number(t0slider.value).toFixed(1);
+    if (t0 > t0max) {
+      t0Readout.innerHTML += "+";
+    }
 
     muSlider.value = mu;
     muReadout.innerHTML = Number(muSlider.value).toFixed(2);
+    if (mu > muMax) {
+      muReadout.innerHTML += "+";
+    }
+
+    // update thetaE readout (no slider)
+    var thetaE_mas = thetaE / masToRad;
+    console.log(`thetaE (mas): ${thetaE_mas}`);
+    thetaEreadout.innerHTML = Number(thetaE_mas).toFixed(4);
   }
 
   function resetParams() {
     // reset lense curve parameters to defaults and redraw curve
     initParams();
     updateSliders();
-    plotLightcurve();
-    if (typeof PSPL_microlensing_event_lens_plane !== undefined)
-      PSPL_microlensing_event_lens_plane.redraw();
+    if (typeof PSPL_microlensing_event_lens_plane !== "undefined")
+      PSPL_microlensing_event_lens_plane.initSourceRadius();
+    if (finiteSourceFlag == true)
+      updateCurveData();
+    redrawCanvases();
+    // if (finiteSourceFlag === true)
+    //   updateCurveData();
+    // if (typeof PSPL_microlensing_event_lens_plane !== "undefined") {
+    //   PSPL_microlensing_event_lens_plane.initSourceRadius(noRedraw=false);
+    //   PSPL_microlensing_event_lens_plane.redraw();
+    // }
+    // plotLightcurve();
   }
 
   function updateParam(param) {
+    if (typeof PSPL_microlensing_event_animation !== "undefined") {
+      if (PSPL_microlensing_event_animation.running === true) {
+        console.log("Can't modify paramters while animation is playing right now.")
+      }
+    }
+
     if (param === "Ml") {
       Ml = Number(MlSlider.value);
       // tE depends on thetaE which depends on Ml
@@ -349,13 +446,10 @@ var PSPL_microlensing_event = (function() {
       }
       // tE depends on thetaE depends on Drel depends on Ds
     }
-    else if (param === "u0") {
-      // if (u0slider.value == 0)
-      //   u0slider.value = 0.001;
-      u0 = Number(u0slider.value);
+    else if (param === "thetaY" && fixU0 === false) {
+      thetaY = Number(thetaYslider.value);
     }
     else if (param === "Dl") {
-        // console.log(`Dl: ${Dl}, DlSlider.value: ${DlSlider.value}, Ds: ${Ds}, DlSlider.value < Ds: ${DlSlider.value < Ds}`)
       if (Number(DlSlider.value) < Ds) { // lens must be closer than source
         Dl = Number(DlSlider.value);
       }
@@ -374,17 +468,54 @@ var PSPL_microlensing_event = (function() {
     }
     else if (param === "tE") {
       console.log("Can't change tE yet (since it's a derived quantity)");
+      var oldTE = tE;
+      tE = Number(tEslider.value);
+      /*
+      thetaE = k * sqrt(M)
+      tE = thetaE / mu
+
+      tE = (k/mu) * sqrt(M)
+         = k2 * sqrt(M)
+
+       M = (tE/k2)**2
+       M = k3 * tE**2
+       */
+
+       // NOTE: Pretty hacky way of doing this
+       // modify Ml accordingly of tE is changed, where
+       // Ml is propotional to tE^2
+       Ml *= (tE/oldTE)*(tE/oldTE);
+    }
+    else if (param === "u0") {
+      u0 = Number(u0slider.value);
+      var thetaY_rad = u0 * thetaE; // thetaY in radians
+      thetaY = thetaY_rad / masToRad; // converted to milliarcseconds (mas)
     }
 
     // updates Drel, then thetaE, then tE, each of which depends on the last,
     // and collectively depends on some of these base quantities;
     // not necessary for every option, but probably cleaner code this way
-
+    //
     updateDerivedQuantities();
     updateSliders();
-    // console.log(`tE: ${tE}`);
-    PSPL_microlensing_event_lens_plane.redraw();
-    plotLightcurve();
+    updateCurveData();
+    redrawCanvases();
+  }
+
+  function redrawCanvases() {
+    if (typeof PSPL_microlensing_event_lens_plane !== "undefined")
+      PSPL_microlensing_event_lens_plane.redraw();
+
+    if (typeof PSPL_microlensing_event_animation != "undefined") {
+      plotLightcurve(PSPL_microlensing_event_animation.time);
+
+      //redraw current animation frame
+      PSPL_microlensing_event_animation.animateFrame();
+      // PSPL_microlensing_event_animation.updatePlayback("stepForward", updateFrame=true);
+      // PSPL_microlensing_event_animation.updatePlayback("redraw");
+    }
+    else
+      plotLightcurve();
   }
 
   function updateGraph(shift) {
@@ -423,6 +554,7 @@ var PSPL_microlensing_event = (function() {
     }
 
     updatePlotScaleAndRange(xWidth, yHeight, xInit, yInit);
+    updateCurveData();
     plotLightcurve();
   }
 
@@ -432,7 +564,7 @@ var PSPL_microlensing_event = (function() {
 
     // if new step values are passed in, update grid step values;
     // otherwise leave grid steps unchanged when updating grid
-    if ( !(xStep === undefined) && !(yStep === undefined)) {
+    if ( xStep !== undefined && yStep !== undefined) {
       xGridStep = xStep;
       yGridStep = yStep;
     }
@@ -475,7 +607,7 @@ var PSPL_microlensing_event = (function() {
   }
 
   function clearGraph() {
-    lcurveContext.clearRect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
+    context.clearRect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
   }
 
   function xDayToPixel(xPlotDay) {
@@ -489,65 +621,65 @@ var PSPL_microlensing_event = (function() {
   }
 
   function drawAxes() {
-    lcurveContext.beginPath();
+    context.beginPath();
 
     // x axis
     // the -axisWidth/2 makes the x and y axes fully connect
     // at their intersection for all axis linewidths
-    lcurveContext.moveTo(graphLeftBorder - axisWidth/2, graphBottomBorder);
-    lcurveContext.lineTo(graphRightBorder + 15, graphBottomBorder);
+    context.moveTo(graphLeftBorder - axisWidth/2, graphBottomBorder);
+    context.lineTo(graphRightBorder + 15, graphBottomBorder);
 
     // y axis;
-    lcurveContext.moveTo(graphLeftBorder, graphBottomBorder);
-    lcurveContext.lineTo(graphLeftBorder, graphTopBorder - 15);
+    context.moveTo(graphLeftBorder, graphBottomBorder);
+    context.lineTo(graphLeftBorder, graphTopBorder - 15);
 
     // x axis arrow
     // NOTE: Doesn't look right for linewidth > 2
-    lcurveContext.moveTo(graphRightBorder + 15, graphBottomBorder);
-    lcurveContext.lineTo(graphRightBorder + 8, graphBottomBorder - 5);
-    lcurveContext.moveTo(graphRightBorder + 15, graphBottomBorder);
-    lcurveContext.lineTo(graphRightBorder + 8, graphBottomBorder + 5);
+    context.moveTo(graphRightBorder + 15, graphBottomBorder);
+    context.lineTo(graphRightBorder + 8, graphBottomBorder - 5);
+    context.moveTo(graphRightBorder + 15, graphBottomBorder);
+    context.lineTo(graphRightBorder + 8, graphBottomBorder + 5);
 
     // y axis arrow
     // NOTE: Doesn't look right for linewidth > 2
-    lcurveContext.moveTo(graphLeftBorder, graphTopBorder - 15);
-    lcurveContext.lineTo(graphLeftBorder - 5, graphTopBorder - 8);
-    lcurveContext.moveTo(graphLeftBorder, graphTopBorder - 15);
-    lcurveContext.lineTo(graphLeftBorder + 5, graphTopBorder - 8);
+    context.moveTo(graphLeftBorder, graphTopBorder - 15);
+    context.lineTo(graphLeftBorder - 5, graphTopBorder - 8);
+    context.moveTo(graphLeftBorder, graphTopBorder - 15);
+    context.lineTo(graphLeftBorder + 5, graphTopBorder - 8);
 
-    lcurveContext.strokeStyle = axisColor;
-    lcurveContext.lineWidth = axisWidth;
-    lcurveContext.stroke();
+    context.strokeStyle = axisColor;
+    context.lineWidth = axisWidth;
+    context.stroke();
   }
 
   function drawAxisLabels() {
     // x label
-    lcurveContext.font = axisLabelFont;
-    lcurveContext.textAlign = axisLabelAlign;
-    lcurveContext.textBaseline = axisLabelBaseline;
-    lcurveContext.fillStyle = axisLabelColor;
+    context.font = axisLabelFont;
+    context.textAlign = axisLabelAlign;
+    context.textBaseline = axisLabelBaseline;
+    context.fillStyle = axisLabelColor;
 
     if (centerLayout === true) {
       // x label
-      lcurveContext.fillText(xLabel, centerX, graphBottomTrailingBorder + axisLabelSpacing)
+      context.fillText(xLabel, centerX, graphBottomTrailingBorder + axisLabelSpacing)
 
       // y label
-      lcurveContext.save();
-      lcurveContext.translate(graphLeftTrailingBorder - 25, centerY);
-      lcurveContext.rotate(-Math.PI/2);
-      lcurveContext.textAlign = "center";
-      lcurveContext.fillText(yLabel, 0, 0);
-      lcurveContext.restore();
+      context.save();
+      context.translate(graphLeftTrailingBorder - 25, centerY);
+      context.rotate(-Math.PI/2);
+      context.textAlign = "center";
+      context.fillText(yLabel, 0, 0);
+      context.restore();
     }
     else {
       // x label
-      lcurveContext.textAlign = "left";
-      lcurveContext.fillText(xLabel, graphRightTrailingBorder + 20, graphBottomBorder);
+      context.textAlign = "left";
+      context.fillText(xLabel, graphRightTrailingBorder + 20, graphBottomBorder);
 
       // y label
-      lcurveContext.textBaseline = "bottom";
-      lcurveContext.textAlign = "center";
-      lcurveContext.fillText(yLabel, graphLeftBorder, graphTopTrailingBorder - 20);
+      context.textBaseline = "bottom";
+      context.textAlign = "center";
+      context.fillText(yLabel, graphLeftBorder, graphTopTrailingBorder - 20);
     }
   }
 
@@ -580,71 +712,91 @@ var PSPL_microlensing_event = (function() {
     // console.log("tE: " + tE);
     // console.log("dayWidth: " + dayWidth);
     // fill in canvas background
-    lcurveContext.fillStyle = canvasBackgroundColor;
-    lcurveContext.fillRect(0, 0, lcurveCanvas.width, lcurveCanvas.height);
+    context.fillStyle = canvasBackgroundColor;
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     // fill in graph background
-    lcurveContext.fillStyle = graphBackgroundColor;
-    lcurveContext.fillRect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
+    context.fillStyle = graphBackgroundColor;
+    context.fillRect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
 
     // draw vertical lines and x axis tick labels
-    lcurveContext.beginPath();
+    context.beginPath();
     for (var xPlotDay = xGridInitial; xPlotDay <= xGridFinal; xPlotDay+=xGridStep) {
       var xPlotPixel = xDayToPixel(xPlotDay);
-      lcurveContext.moveTo(xPlotPixel, graphTopTrailingBorder);
-      lcurveContext.lineTo(xPlotPixel, graphBottomTrailingBorder);
+      context.moveTo(xPlotPixel, graphTopTrailingBorder);
+      context.lineTo(xPlotPixel, graphBottomTrailingBorder);
 
       // tick text label
       var xTickLabel = xPlotDay;
-      lcurveContext.font = tickLabelFont;
-      lcurveContext.fillStyle = tickLabelColor;
-      lcurveContext.textAlign = tickLabelAlign;
-      lcurveContext.textBaseline = tickLabelBaseline;
-      lcurveContext.fillText(xTickLabel, xPlotPixel, graphBottomTrailingBorder + tickLabelSpacing);
+      context.font = tickLabelFont;
+      context.fillStyle = tickLabelColor;
+      context.textAlign = tickLabelAlign;
+      context.textBaseline = tickLabelBaseline;
+      context.fillText(xTickLabel, xPlotPixel, graphBottomTrailingBorder + tickLabelSpacing);
     }
 
     //draw horizontal lines and y axis tick label
     for (var yPlotMagnif = yGridInitial; yPlotMagnif <= yGridFinal; yPlotMagnif+=yGridStep) {
       var yPlotPixel = yMagnifToPixel(yPlotMagnif);
-      lcurveContext.moveTo(graphLeftTrailingBorder, yPlotPixel);
-      lcurveContext.lineTo(graphRightTrailingBorder, yPlotPixel);
+      context.moveTo(graphLeftTrailingBorder, yPlotPixel);
+      context.lineTo(graphRightTrailingBorder, yPlotPixel);
 
       var yTickLabel = yPlotMagnif;
-      lcurveContext.font = tickLabelFont;
-      lcurveContext.fillStyle = tickLabelColor;
-      lcurveContext.textAlign = "right";
-      lcurveContext.textBaseline = tickLabelBaseline;
-      lcurveContext.fillText(yTickLabel,graphLeftTrailingBorder - tickLabelSpacing,  yPlotPixel);
+      context.font = tickLabelFont;
+      context.fillStyle = tickLabelColor;
+      context.textAlign = "right";
+      context.textBaseline = tickLabelBaseline;
+      context.fillText(yTickLabel,graphLeftTrailingBorder - tickLabelSpacing,  yPlotPixel);
     }
-    lcurveContext.lineWidth = gridWidth;
-    lcurveContext.strokeStyle = gridColor;
-    lcurveContext.stroke();
+    context.lineWidth = gridWidth;
+    context.strokeStyle = gridColor;
+    context.stroke();
 
     // draw border
-    lcurveContext.strokeStyle = graphBorderColor;
-    lcurveContext.lineWidth = graphBorderWidth;
-    lcurveContext.strokeRect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
+    context.strokeStyle = graphBorderColor;
+    context.lineWidth = graphBorderWidth;
+    context.strokeRect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
+  }
 
+  function plotLightcurve(tDayFinal=xAxisFinalDay, inputData, fromEquation=fromEquationDefault) {
+    // Draw plot background, as well as both complete (dashed) lightcurve and
+    // partial (solid) lightcurve up to a given time
+    // draw plot with gridlines, etc. (no axes or axis labels yet).
+    initPlot();
+    // draw complete lightcurve across entire time axis as dashed line
+    plotLightcurveAlone(xAxisFinalDay, inputData, fromEquation, dashedCurve=true);
+    // draw lightcurve up to the time argument as solid line
+    plotLightcurveAlone(tDayFinal, inputData, fromEquation, dashedCurve=false);
+    // draw axes and their labels;
+    // goes last because axes are IN FRONT of lightcurve
     drawAxes();
     drawAxisLabels();
   }
 
-  function plotLightcurve(inputData, fromEquation=fromEquationDefault) {
+  var lightcurveData = undefined;
+
+  function plotLightcurveAlone(tDayFinal=xAxisFinalDay, inputData, fromEquation=fromEquationDefault, dashedCurve=false) {
+    // draw a single lightcurve (dashed or solid) up to a given time
+
     // console.log("fromEquation: " + fromEquation);
     // console.log("inputData: " + inputData);
-    initPlot();
     var tDay, magnif;
     if (fromEquation) {
       tDay = xAxisInitialDay;
       magnif = getMagnif(tDay);
     }
     else {
-      var curveData;
-      if (inputData === undefined) {
-        curveData = getCurveData();
-      }
-      else {
+      if (inputData !== undefined) {
         curveData = inputData;
+      }
+      else { // no input parameter given
+        if (lightcurveData !== undefined) { // module lightcurve variable already initialized
+          curveData = lightcurveData; // use module variable in function
+        }
+        else { // module lightcurve variable not initialized yet
+          updateCurveData(); // initialize module variable
+          curveData = lightcurveData; // use newly initialized module variable in function
+        }
       }
       var times = curveData.times;
       var magnifs = curveData.magnifs;
@@ -652,27 +804,30 @@ var PSPL_microlensing_event = (function() {
       magnif = magnifs[0];
     }
 
-    lcurveContext.save();
+    context.save();
       // set up clipping region as graph region, so that curve does not
       // extend beyond graph region
-      lcurveContext.beginPath();
-      lcurveContext.rect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
-      lcurveContext.clip();
+      context.beginPath();
+      context.rect(graphLeftBorder, graphTopBorder, graphWidth, graphHeight);
+      context.clip();
+
+      if (dashedCurve === true)
+        context.setLineDash([dashedCurveLength, dashedCurveSpacing]); // turn on dashed lines
 
       // prepare to draw curve and move to initial pixel coordinate
       var tPixel = xDayToPixel(tDay);
       var magnifPixel = yMagnifToPixel(magnif);
-      lcurveContext.beginPath();
-      lcurveContext.moveTo(tPixel, magnifPixel);
+      context.beginPath();
+      context.moveTo(tPixel, magnifPixel);
 
       // Iterate over remaining days and draw lines from each pixel coordinate
       // to the next
       if (!fromEquation) // Index tracks place in data arrays if reading in data
         var index = 0; //
-      while (tDay < xAxisFinalDay) {
+      while (tDay < tDayFinal) {
         // If calculating from equation, increment day by set amount and
         // calculate magnification
-        if (fromEquation) {
+        if (fromEquation === true) {
           tDay += dt;
           magnif = getMagnif(tDay);
         }
@@ -686,7 +841,7 @@ var PSPL_microlensing_event = (function() {
 
         var tPixel = xDayToPixel(tDay);
         var magnifPixel = yMagnifToPixel(magnif);
-        lcurveContext.lineTo(tPixel, magnifPixel);
+        context.lineTo(tPixel, magnifPixel);
       }
       // console.log(index);
       // if (!fromEquation) {
@@ -697,14 +852,24 @@ var PSPL_microlensing_event = (function() {
       //   console.log(tDay);
       //   console.log(dayWidth);
       // }
-      lcurveContext.lineJoin = "round";
-      lcurveContext.lineWidth = curveWidth;
-      lcurveContext.strokeStyle = curveColor;
-      lcurveContext.stroke();
-    lcurveContext.restore();
+
+      if (dashedCurve === true) {
+        context.strokeStyle = dashedCurveColor;
+        context.lineWidth = dashedCurveWidth;
+      }
+      else {
+        context.lineJoin = "round";
+        context.lineWidth = curveWidth;
+        context.strokeStyle = curveColor;
+      }
+      context.stroke();
+
+      if (dashedCurve === true)
+        context.setLineDash([]); // turn off dashed lines
+    context.restore();
   }
 
-  function getCurveData() {
+  function updateCurveData() {
     var times = [];
     var magnifs = [];
 
@@ -716,7 +881,13 @@ var PSPL_microlensing_event = (function() {
       magnifs.push(magnif);
     }
     var curveData = {times:times, magnifs:magnifs};
-    return curveData;
+    lightcurveData = curveData;
+  }
+
+  function toggleFiniteSource() {
+    finiteSourceFlag = !finiteSourceFlag;
+    updateCurveData();
+    redrawCanvases();
   }
 
   // functions to calculate magnification from parameters for a given time
@@ -742,38 +913,14 @@ var PSPL_microlensing_event = (function() {
     var timeTerm = getTimeTerm(t); // unitless
     var u = getU(timeTerm); // unitless
     var magnif = getMagnifFromU(u); // unitless
+
+    if (finiteSourceFlag === true &&
+        typeof PSPL_microlensing_event_finite_source !== "undefined") {
+      magnif *= PSPL_microlensing_event_finite_source.getFiniteSourceFactor(u);
+    }
+
     return magnif;
   }
-
-  // function getParam(param) {
-  //   if (param == "Ds") {
-  //     return Ds;
-  //   }
-  //   else if (param == "u0") {
-  //     return u0;
-  //   }
-  //   else if (param == "Dl") {
-  //     return Dl;
-  //   }
-  //   else if (param == "t0") {
-  //     return t0;
-  //   }
-  //   else if (param == "mu") {
-  //     return mu;
-  //   }
-  //   else if (param == "Drel") {
-  //     return Drel;
-  //   }
-  //   else if (param == "thetaE") {
-  //     return thetaE;
-  //   }
-  //   else if (param == "tE") {
-  //     return tE;
-  //   }
-  //   else {
-  //     console.log(`Error: ${param} is not a valid parameter.`)
-  //   }
-  // }
 
   // public properties to be stored in module object,
   // accessible via module object by code executed after this script
@@ -781,20 +928,42 @@ var PSPL_microlensing_event = (function() {
     // getters for variables we want to share
     get Ml() { return Ml; }, // base modeling parameters
     get Ds() { return Ds; }, // kpc
-    get u0() { return u0; }, // unitless (units of thetaE)
+    get thetaY() { return thetaY; }, // milliarcseconds (mas)
     get Dl() { return Dl; }, // kpc
     get t0() { return t0; }, // days
     get mu() { return mu; }, // mas/yr
 
     get Drel() { return Drel; }, // derived modeling parameters
     get thetaE() { return thetaE; }, // radians
-    get tE() { return tE; }, // days
-
     get thetaE_mas() { return thetaE / masToRad; }, // milliarcseconds (mas)
+    get tE() { return tE; }, // days
+    get u0() { return u0; }, // unitless (units of thetaE)
 
-    // getParam: getParam,
-    getMagnif: getMagnif, // getting magnification for a given time;
-                          // probably want to store t and u values in arrays
-                          // and share those instead, honestly
+    get finiteSourceFlag() { return finiteSourceFlag; }, // whether finite or point source is being used
+
+    // used for animation
+    get dt() { return dt; }, // time step used for drawing curve (days)
+    get xAxisInitialDay() { return xAxisInitialDay; },
+    get xAxisFinalDay() { return xAxisFinalDay; },
+    plotLightcurve: plotLightcurve,
+
+    // redrawing both canvases
+    redrawCanvases: redrawCanvases,
+
+    // toggling finite source effects
+    toggleFiniteSource: toggleFiniteSource,
+
+    // for debugging
+    getU: getU,
+    getTimeTerm: getTimeTerm,
+    getMagnif: getMagnif,
+    updateCurveData: updateCurveData,
+
+    // plotLightcurveSegment: plotLightcurveSegment,
+    // initPlot: initPlot,
+    // context: context,
+    // xDayToPixel: xDayToPixel,
+    // getMagnif: getMagnif,
+    // yMagnifToPixel: yMagnifToPixel,
   };
 })();

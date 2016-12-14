@@ -15,7 +15,7 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
-class Reference(models.Model, params={}):
+class Reference(models.Model):
     authors = models.CharField(max_length=50)
     year = models.IntegerField()
     journal = models.CharField(max_length=50, null=True)
@@ -26,25 +26,33 @@ class Reference(models.Model, params={}):
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
-    if len(params) > 0:
+    def set_params(self,params):
         for key, value in params.items():
             setattr(self,key,value)
-            
+        
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
         
     def __str__(self):
-        return self.name
-    
-            
+        ref_string = ''
+        if self.url != None:
+            ref_string = '<a href="'+str(self.url)+'">'+str(self.authors)+\
+                        ' ('+str(self.year)+'), '+str(self.journal)+', '+\
+                        str(self.volume)+', '+str(self.page)+'</a>'
+        else:
+            ref_string = str(self.authors)+' ('+str(self.year)+'), '+\
+                        str(self.journal)+', '+str(self.volume)+\
+                        ', '+str(self.page)
+        return ref_string
+        
 class TutorialPage(models.Model):
     author = models.ForeignKey(Author,null=True)
     title = models.CharField(max_length=200)
     short_title = models.CharField(max_length=20,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
-    references = models.ManyToManyField(Reference)
+    references = models.ManyToManyField(Reference,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     

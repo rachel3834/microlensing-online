@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^tutorial/$',tutorial,name="tutorial"),
     url(r'^concept/$',concept,name="concept"),
     url(r'^learning/$',learning,name="learning"),
+    url(r'^glossary/$',page,name="glossary"),
     url(r'^overview/$',overview,name="overview"),
     url(r'^ground-based-surveys/$',page,name="Ground-based Surveys"),
     url(r'^space-based-programs/$',page,name="Space-based Programs"),

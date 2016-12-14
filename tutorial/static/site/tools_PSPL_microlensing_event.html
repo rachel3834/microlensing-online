@@ -9,49 +9,111 @@ TOOLINDEX 1
     <canvas id="lensPlaneCanvas" style="margin-left:10px; border:1px solid black;" width="550" height="400">
     </canvas>
   </div>
+
   <div style="text-align:center; position:relative;">
-    t<sub>E</sub> <input type="range" id="tEslider" min="0.001" max="365" step="0.001" value="110.5">
-    <span id="tEreadout" style="display:inline-block;
-                     width:3.8em; text-align:right;">110.500</span> days
+    <input type="button" id="stepBack" value="&#9194;">
+    <input type="button" id="play" value="&#9654;">
+    <input type="button" id="pause" value="&#9646;&#9646;">
+    <input type="button" id="stepForward" value="&#9193;">
+    <input type="button" id="timeReset" value="Reset">
+  </div>
+
+   &nbsp;
+  <div style="text-align:center; position:relative;">
+    Time: <span id="timeReadout">-16.0000</span> days
+
+    <!-- thetaE probably just for testing? Maybe should be slider? -->
+    &nbsp; &nbsp; &nbsp;
+    &theta;<sub>E</sub>: <span id="thetaEreadout">0.1206</span> mas
+
+    &nbsp; &nbsp; &nbsp;
+    &theta;<sub>x</sub>: <span id="thetaXreadout">0.3066</span> mas
+
+    &nbsp; &nbsp; &nbsp;
+  	&rho;: <span id="sourceRadiusNormalizedReadout">0.1105</span>
+  </div>
+
+  <div style="text-align:center; position:relative; padding: 5px 10px;">
+    <!-- <a href="javascript:show_hide_test.toggleDiv('myContent');"
+          style="text-align:center; position:relative; padding: 5px 10px;">
+          + Show Options For Finite Source Effects</a> -->
+
+    <a id="displayText" href="javascript:show_or_hide.toggle();">+ Show Options For Finite Source Effects</a>
+
+    <!-- <div id="myContent" style="padding: 5px 10px;"> -->
+    <div id="toggleText" style="display: none; padding: 5px 10px;">
+
+      <div>
+        <input type="checkbox" id="finiteSourceCheckbox"></input>Use finite source
+      </div>
+
+      <div>
+        source radius <input type="range" id="sourceRadiusSlider" min="0.0001" max="0.5000" step="0.0001" value="0.0133">
+        <span id="sourceRadiusReadout" style="display:inline-block;
+                        width:3.8em; text-align:right;">0.0133</span> mas
+      </div>
+
+    </div>
   </div>
 
   <div style="text-align:center; position:relative;">
-    M<sub>l</sub> <input type="range" id="MlSlider" min="0.000001" max="15" step="0.000001" value="1">
+    t<sub>E</sub> <input type="range" id="tEslider" min="0.001" max="365" step="0.001" value="6.293">
+    <span id="tEreadout" style="display:inline-block;
+                     width:3.8em; text-align:right;">6.293</span> days
+    &nbsp; &nbsp; &nbsp;
+    u<sub>0</sub> <input type="range" id="u0slider" min="-2" max="2" step="0.001" value="0.1">
+    <span id="u0readout" style="display:inline-block;
+                  width:2.3em; text-align:right;">0.100</span>
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    M<sub>l</sub> <input type="range" id="MlSlider" min="0.000001" max="15" step="0.000001" value="0.1">
 
      <!-- subscript after M is sun symbol, to make solar mass symbol -->
     <span id="MlReadout" style="display:inline-block;
-                     width:4.2em; text-align:right;">1.000</span> M<sub>&#9737;</sub>
+                     width:4.8em; text-align:right;">0.100000</span> M<sub>&#9737;</sub>
     &nbsp; &nbsp; &nbsp;
-    D<sub>s</sub> <input type="range" id="DsSlider" min="0.01" max="8.5" step="0.01" value="6.5">
+    D<sub>s</sub> <input type="range" id="DsSlider" min="0.01" max="8.5" step="0.01" value="8.0">
     <span id="DsReadout" style="display:inline-block;
-                    width:2.3em; text-align:right;">6.50</span> kpc
+                    width:2.3em; text-align:right;">8.00</span> kpc
   </div>
   <div style="text-align:center; position:relative;">
-    u<sub>0</sub> <input type="range" id="u0slider" min="-2" max="2" step="0.001" value="0.1">
-    <span id="u0readout" style="display:inline-block;
-                   width:2.3em; text-align:right;">0.100</span>
+    &theta;<sub>y</sub> <input type="range" id="thetaYslider" min="-2" max="2" step="0.001" value="0.012">
+    <span id="thetaYreadout" style="display:inline-block;
+                   width:2.6em; text-align:right;">0.012</span> mas
 
     <!-- I know this sort of spacing is bad practice. Need to change this.
          Meant to make Dl an Ds sliders line up, since one's range limits the other's.-->
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    D<sub>l</sub> <input type="range" id="DlSlider" min="0.01" max="8.5" step="0.01" value="3">
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    D<sub>l</sub> <input type="range" id="DlSlider" min="0.01" max="8.5" step="0.01" value="7">
     <span id="DlReadout" style="display:inline-block;
-                    width:2.3em; text-align:right;">3.00</span> kpc
+                    width:2.3em; text-align:right;">7.00</span> kpc
   </div>
 
   <div style="text-align:center; position:relative;">
     t<sub>0</sub> <input type="range" id="t0slider" min="-75" max="75" step="0.1" value="0">
     <span id="t0readout" style="display:inline-block;
-                    width:2.3em; text-align:right;">15.0</span> days
+                    width:2.3em; text-align:right;">0.0</span> days
     &nbsp; &nbsp; &nbsp;
-    &mu;<sub>rel</sub> <input type="range" id="muSlider" min="0.01" max="10" step="0.01" value="4">
+    &mu;<sub>rel</sub> <input type="range" id="muSlider" min="0.01" max="10" step="0.01" value="7">
     <span id="muReadout" style="display:inline-block;
-                    width:2.3em; text-align:right;">4.00</span> mas/yr
+                    width:2.3em; text-align:right;">7.00</span> mas/yr
   </div>
 
   <br>
   <div style="text-align:center; position:relative">
     <input type="button" id="resetParams" value="Reset Parameters">
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    <input type="checkbox" id="fixU0checkbox">Hold u0 fixed when changing other quantities
+    <input type="checkbox" id="imageShapeCheckbox" checked>Display image shapes (not working properly yet)
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    <p>Note: &theta;<sub>y</sub> is the angular height of the source relative to the lens in milliarcseconds.</p>
+    <p>u<sub>0</sub> is this height in units of &theta;<sub>E</sub> (the Einstein ring radius).</p>
+    <p>u<sub>0</sub> = &theta;<sub>y</sub> / &theta;<sub>E</sub></p>
   </div>
 
   <div style="text-align:center; position:relative;">
@@ -72,6 +134,18 @@ TOOLINDEX 1
   <div style="text-align:center; position:relative;">
     <input type="button" id="resetGraph" value="Reset Range/Scale">
   </div>
+
+
+  <!--jQuery library-->
+  <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
+  <!--Everpolate library: for interpolation of finite source
+      correction factor table-->
+  <script src="/static/site/libraries/everpolate.browserified.min.js"></script>
+  <!-- Microlensing Event scripts -->
   <!-- <script src="PSPL_microlensing_event_main.js"></script> -->
   <script src="/static/site/PSPL_microlensing_event.js"></script>
   <script src="/static/site/PSPL_microlensing_event_lens_plane.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_finite_source_table.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_finite_source.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_animation.js"></script>
+  <script src="/static/site/show_or_hide.js"></script>
