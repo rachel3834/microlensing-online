@@ -38,12 +38,18 @@ class Reference(models.Model):
         ref_string = ''
         if self.url != None:
             ref_string = '<a href="'+str(self.url)+'">'+str(self.authors)+\
-                        ' ('+str(self.year)+'), '+str(self.journal)+', '+\
-                        str(self.volume)+', '+str(self.page)+'</a>'
+                        ' ('+str(self.year)+')'
+            for f in [ 'journal', 'volume', 'page' ]:
+                val = getattr(self,f)
+                if val != None:
+                    ref_string+=', '+str(val)
+            ref_string+='</a>'
         else:
-            ref_string = str(self.authors)+' ('+str(self.year)+'), '+\
-                        str(self.journal)+', '+str(self.volume)+\
-                        ', '+str(self.page)
+            ref_string = str(self.authors)+' ('+str(self.year)+')'
+            for f in [ 'journal', 'volume', 'page' ]:
+                val = getattr(self,f)
+                if val != None:
+                    ref_string+=', '+str(val)
         return ref_string
         
 class TutorialPage(models.Model):
@@ -52,7 +58,7 @@ class TutorialPage(models.Model):
     short_title = models.CharField(max_length=20,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
-    references = models.ManyToManyField(Reference,null=True)
+    references = models.ManyToManyField(Reference)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
@@ -124,7 +130,21 @@ class GroundSurvey(models.Model):
 class OnlineResource(models.Model):
     name = models.CharField(max_length=100)
     url = models.URLField(max_length=200)
-    link_group = models.CharField(max_length=100)
+    group = models.CharField(max_length=100)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+    
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name+' '+self.url
+
+class Movie(models.Model):
+    name = models.CharField(max_length=200,null=True)
+    filename = models.CharField(max_length=100,null=True)
+    credit = models.CharField(max_length=50,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
@@ -135,3 +155,16 @@ class OnlineResource(models.Model):
     def __str__(self):
         return self.name
 
+class Picture(models.Model):
+    name = models.CharField(max_length=200,null=True)
+    filename = models.CharField(max_length=100,null=True)
+    credit = models.CharField(max_length=50,null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+            
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name+' '+self.url

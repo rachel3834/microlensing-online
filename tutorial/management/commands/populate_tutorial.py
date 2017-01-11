@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from tutorial.models import TutorialPage, Author, Reference
 import glob
 from sys import exit
+import ingest_functions 
 
 class Command(BaseCommand):
     args = ''
@@ -27,7 +28,7 @@ class Command(BaseCommand):
             references = []
             for line in file_lines[4:]:
                 if 'REF:' in line:
-                    ref_string = ingest_reference(line)
+                    ref_string = ingest_functions.reference(line)
                     references.append(ref_string)
                 else:
                     page_text += line
@@ -35,7 +36,10 @@ class Command(BaseCommand):
             if len(references) > 0:
                 page_text += '<p><h3>References</h3>\n'
                 for ref_string in references:
-                    page_text += ref_string+'</br>\n'
+                    try:
+                        page_text += str(ref_string)+'</br>\n'
+                    except UnicodeDecodeError:
+                        print 'ERROR:'+ref_string+':', f
                 page_text += '</p>'
                 
             try:
@@ -56,20 +60,4 @@ class Command(BaseCommand):
     def handle(self,*args, **options):
         self._create_tutorial_entries()
 
-def ingest_reference(ref_string):
-    entries = ref_string.replace('REF:','').replace('\n','').split(':')
-    params = {}
-    for item in entries:
-        (key, value) = item.split('=')
-        params[str(key).lower()] = value
-    params['search_key'] = params['authors']+params['year']
-    
-    try:
-        ref = Reference.objects.get(search_key=params['search_key'])
-    except Reference.DoesNotExist:
-        ref = Reference()
-        ref.set_params(params)
-        ref.save()
-    
-    return ref.__str__()
     

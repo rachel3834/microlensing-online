@@ -80,6 +80,42 @@ def page(request):
         page = SitePage.objects.get(name='MissingPage')
     return render(request,'site/site_page.html',{'page':page})
 
+def references(request):
+    refs = Reference.objects.all()
+    ref_list = []
+    for r in refs:
+        ref_list.append(r)
+    ref_list.sort()
+    return render(request,'tutorial/references.html',{'reference_list':ref_list})
+
+def links(request):
+    space_surveys = OnlineResource.objects.filter(group__contains='space-based mission')
+    ground_surveys = OnlineResource.objects.filter(group__contains='ground-based survey')
+    ground_followup = OnlineResource.objects.filter(group__contains='ground-based follow-up')
+            
+    return render(request,'tutorial/links.html',{'space_surveys':space_surveys, \
+                                                'ground_surveys':ground_surveys, \
+                                                'ground_followup':ground_followup})
+
+def list_resources(request,resource_type,pk=None):
+    
+    if resource_type == 'Movies':
+        resources = Movie.objects.all()
+    elif resource_type == 'Pictures':
+        resources = Picture.objects.all()
+    else:
+        resources = []
+    
+    if pk != None:
+        item = Movie.objects.get(pk=pk)
+    else:
+        item = None
+        
+    return render(request,'tutorial/resource_files.html',{'index':resources, 
+                                                          'type':resource_type,
+                                                          'resource':item})
+ 
+                                                          
 class TutorialDetails(DetailView):
     model = TutorialPage
     template_name = 'tutorial/tutorial_page.html'

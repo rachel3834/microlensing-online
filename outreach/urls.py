@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from tutorial.views import home, page, tutorial, learning, overview, resources
-from tutorial.views import interactive, opportunities, concept
+from tutorial.views import interactive, opportunities, concept, references
+from tutorial.views import links, list_resources
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,6 +28,11 @@ urlpatterns = [
     url(r'^tutorial/$',tutorial,name="tutorial"),
     url(r'^concept/$',concept,name="concept"),
     url(r'^learning/$',learning,name="learning"),
+    url(r'^references/$',references,name="references"),
+    url(r'^links/$',links,name="links"),
+    url(r'^pictures/$',list_resources,{'resource_type':'Pictures'}),
+    url(r'^movies/$',list_resources,{'resource_type':'Movies'}),
+    url(r'^movies/(?P<pk>[0-9]+)/$',list_resources,{'resource_type':'Movies'},name='movies'),
     url(r'^glossary/$',page,name="glossary"),
     url(r'^overview/$',overview,name="overview"),
     url(r'^ground-based-surveys/$',page,name="Ground-based Surveys"),

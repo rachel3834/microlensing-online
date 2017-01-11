@@ -6,7 +6,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					{% for t in tool_list %}
-					<li><a href="{% url 'interactive' t.pk %}">{{t.tools_index}}.) {{t.name}}</a></li>
+					<li><a href="{% url 'interactive' t.pk %}">{{t.name}}</a></li>
 					{% endfor %}
 				</ul>
 			</div>
