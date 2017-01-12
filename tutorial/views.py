@@ -38,10 +38,42 @@ def concept(request,pk=None):
         page = ConceptPage.objects.get(course_index=0)
     else:
         page = ConceptPage.objects.get(pk=pk)
+    
+    dbentries,page = get_article_db_entries(page)
             
     return render(request,'tutorial/concept_index.html',\
-                    {'concepts_list':concepts, 'page':page})
-        
+                    {'concepts_list':concepts, 'page':page, 
+                    'dbentries':dbentries})
+
+def get_article_db_entries(page):
+    dbentries = {}
+    tables = {'REF': Reference, 'URL': OnlineResource, \
+                'MOVIE': Movie, 'PICTURE': Picture }
+    text = []
+    for line in page.text:
+        if 'DBENTRY' in line:
+            l = line.replace('\n','').split(' ')
+            idb = l[0]
+            table = l[1]
+            pk = int(l[2])
+            if table == 'REF':
+                dbentries[idb] = Reference.objects.get(pk=pk)
+            elif table == 'URL':
+                dbentries[idb] = OnlineResources.objects.get(pk=pk)
+            elif table == 'MOVIE':
+                dbentries[idb] = Movie.objects.get(pk=pk)
+            elif table == 'PICTURE':
+                dbentries[idb] = Picture.objects.get(pk=pk)
+            text.append(idb)
+        else:
+            text.append(line)
+    page.text = text
+    
+XXX dbentries values need to be objects with property to indicate how to display the object, e.g. movie, picture, URL, etc. 
+    
+    
+    return dbentries,page
+
 def learning(request):
     return render(request,'tutorial/learning.html',{})
     

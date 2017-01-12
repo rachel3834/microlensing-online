@@ -51,6 +51,18 @@ class Reference(models.Model):
                 if val != None:
                     ref_string+=', '+str(val)
         return ref_string
+
+class TextBlock(models.Model):
+    text = models.textField()
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+    
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.text
         
 class TutorialPage(models.Model):
     author = models.ForeignKey(Author,null=True)

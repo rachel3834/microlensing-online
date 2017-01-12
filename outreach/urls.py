@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from tutorial.views import home, page, tutorial, learning, overview, resources
 from tutorial.views import interactive, opportunities, concept, references
@@ -43,4 +45,4 @@ urlpatterns = [
     url(r'^opportunities/$',opportunities,name="opportunities"),
     url(r'^about/$',page,name="about"),
     url(r'^contact/$',page,name="contact"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
