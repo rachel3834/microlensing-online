@@ -17,18 +17,18 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from tutorial.views import home, page, tutorial, learning, overview, resources
-from tutorial.views import interactive, opportunities, concept, references
+from tutorial.views import home, page, learning, overview, resources
+from tutorial.views import interactive, opportunities, article, references
 from tutorial.views import links, list_resources
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home,name="home"),
-    url(r'^tutorial/(?P<pk>[0-9]+)/$',tutorial,name="tutorial"),
-    url(r'^concept/(?P<pk>[0-9]+)/$',concept,name="concept"),
+    url(r'^tutorial/(?P<pk>[0-9]+)/$',article,{'resource_type':'tutorial'},name="tutorial"),
+    url(r'^concept/(?P<pk>[0-9]+)/$',article,{'resource_type':'concept'},name="concept"),
     url(r'^interactive/(?P<pk>[0-9]+)/$',interactive,name="interactive"),
-    url(r'^tutorial/$',tutorial,name="tutorial"),
-    url(r'^concept/$',concept,name="concept"),
+    url(r'^tutorial/$',article,{'resource_type':'tutorial'},name="tutorial"),
+    url(r'^concept/$',article,{'resource_type':'concept'},name="concept"),
     url(r'^learning/$',learning,name="learning"),
     url(r'^references/$',references,name="references"),
     url(r'^links/$',links,name="links"),

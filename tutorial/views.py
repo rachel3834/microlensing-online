@@ -20,30 +20,42 @@ def tutorial(request,pk=None):
         page = TutorialPage.objects.get(course_index=0)
     else:
         page = TutorialPage.objects.get(pk=pk)
-    return render(request,'tutorial/tutorial_index.html',\
-                {'tutorial_list':tutorials, 'page':page})
+        
+    page,content = get_article_db_entries(page)
+    
+    return render(request,'tutorial/article_base.html',\
+                {'article_list':tutorials, 'page':page,\
+                    'content':content})
 
-def concept(request,pk=None):
-    concept_list = ConceptPage.objects.all()
-    indices = []
-    concepts = []
-    for page in concept_list:
-        if page.course_index != 0:
-            indices.append(page.course_index)
-            concepts.append(page)
-    course_index = zip(indices,concepts)
-    course_index.sort()
-    (indices, concepts) = zip(*course_index)
-    if pk == None:
-        page = ConceptPage.objects.get(course_index=0)
+def article(request,resource_type,pk=None):
+    if resource_type == 'concept':
+        article_list = ConceptPage.objects.all()
     else:
-        page = ConceptPage.objects.get(pk=pk)
+        article_list = TutorialPage.objects.all()
+    indices = []
+    articles = []
+    for page in article_list:
+        indices.append(page.course_index)
+        articles.append(page)
+    course_index = zip(indices,articles)
+    course_index.sort()
+    (indices, articles) = zip(*course_index)
+    if pk == None:
+        if resource_type == 'concept':
+            page = ConceptPage.objects.get(course_index=0)
+        else:
+            page = TutorialPage.objects.get(course_index=0)
+    else:
+        if resource_type == 'concept':
+            page = ConceptPage.objects.get(pk=pk)
+        else:
+            page = TutorialPage.objects.get(pk=pk)
     
     page,content = get_article_db_entries(page)
     
-    return render(request,'tutorial/concepts_base.html',\
-                    {'concepts_list':concepts, 'page':page,\
-                    'content':content})
+    return render(request,'tutorial/article_base.html',\
+                    {'article_list':articles, 'page':page,\
+                    'content':content,'resource_type':resource_type})
 
 def get_article_db_entries(page):
             
