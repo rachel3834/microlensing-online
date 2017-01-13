@@ -51,11 +51,12 @@ def article(request,resource_type,pk=None):
         else:
             page = TutorialPage.objects.get(pk=pk)
     
-    page,content = get_article_db_entries(page)
+    page,content,references = get_article_db_entries(page)
     
     return render(request,'tutorial/article_base.html',\
                     {'article_list':articles, 'page':page,\
-                    'content':content,'resource_type':resource_type})
+                    'content':content,'resource_type':resource_type,\
+                    'references':references})
 
 def get_article_db_entries(page):
             
@@ -63,6 +64,7 @@ def get_article_db_entries(page):
                 'MOVIE': Movie, 'PICTURE': Picture }
     text = []
     dbentries = []
+    references = []
     lines = page.text
     lines = lines.split('\n')
     for line in lines:
@@ -76,6 +78,7 @@ def get_article_db_entries(page):
             if table == 'REF':
                 entry['type'] = 'REF'
                 entry['object'] = Reference.objects.get(pk=pk)
+                references.append(entry['object'])
             elif table == 'URL':
                 entry['type'] = 'URL'
                 entry['object'] = OnlineResources.objects.get(pk=pk)
@@ -87,10 +90,10 @@ def get_article_db_entries(page):
                 entry['object'] = Picture.objects.get(pk=pk)
             dbentries.append( entry )
         else:
-            dbentries.append( 'no_db_entry')
+            dbentries.append( 'no_db_entry' )
     content = zip(text,dbentries)
     
-    return page, content
+    return page, content, references
 
 def learning(request):
     return render(request,'tutorial/learning.html',{})

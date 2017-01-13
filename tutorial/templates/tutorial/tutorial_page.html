@@ -1,9 +1,0 @@
-{% extends 'tutorial_base.html' %}
-
-{% block title_text %}{{tutorialpage.title}}{% endblock %}
-{% block header_text %}{{tutorialpage.title}}{% endblock %}
-{% block author_name %}{{tutorialpage.author}}{% endblock %}
-
-{% block content %}
-{{tutorialpage.text|safe}}
-{% endblock %}
