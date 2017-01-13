@@ -53,7 +53,7 @@ class Reference(models.Model):
         return ref_string
 
 class TextBlock(models.Model):
-    text = models.textField()
+    text = models.TextField()
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
@@ -151,12 +151,14 @@ class OnlineResource(models.Model):
         self.save()
         
     def __str__(self):
-        return self.name+' '+self.url
+        return self.url
 
 class Movie(models.Model):
     name = models.CharField(max_length=200,null=True)
     filename = models.CharField(max_length=100,null=True)
+    caption = models.CharField(max_length=100,null=True)
     credit = models.CharField(max_length=50,null=True)
+    url = models.URLField(max_length=200,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
     
@@ -170,7 +172,9 @@ class Movie(models.Model):
 class Picture(models.Model):
     name = models.CharField(max_length=200,null=True)
     filename = models.CharField(max_length=100,null=True)
+    caption = models.CharField(max_length=100,null=True)
     credit = models.CharField(max_length=50,null=True)
+    url = models.URLField(max_length=200,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
             
@@ -179,4 +183,4 @@ class Picture(models.Model):
         self.save()
         
     def __str__(self):
-        return self.name+' '+self.url
+        return self.name

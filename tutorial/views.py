@@ -39,40 +39,46 @@ def concept(request,pk=None):
     else:
         page = ConceptPage.objects.get(pk=pk)
     
-    dbentries,page = get_article_db_entries(page)
-            
-    return render(request,'tutorial/concept_index.html',\
-                    {'concepts_list':concepts, 'page':page, 
-                    'dbentries':dbentries})
+    page,content = get_article_db_entries(page)
+    
+    return render(request,'tutorial/concepts_base.html',\
+                    {'concepts_list':concepts, 'page':page,\
+                    'content':content})
 
 def get_article_db_entries(page):
-    dbentries = {}
+            
     tables = {'REF': Reference, 'URL': OnlineResource, \
                 'MOVIE': Movie, 'PICTURE': Picture }
     text = []
-    for line in page.text:
+    dbentries = []
+    lines = page.text
+    lines = lines.split('\n')
+    for line in lines:
+        text.append( line )
         if 'DBENTRY' in line:
             l = line.replace('\n','').split(' ')
             idb = l[0]
             table = l[1]
             pk = int(l[2])
+            entry = {}
             if table == 'REF':
-                dbentries[idb] = Reference.objects.get(pk=pk)
+                entry['type'] = 'REF'
+                entry['object'] = Reference.objects.get(pk=pk)
             elif table == 'URL':
-                dbentries[idb] = OnlineResources.objects.get(pk=pk)
+                entry['type'] = 'URL'
+                entry['object'] = OnlineResources.objects.get(pk=pk)
             elif table == 'MOVIE':
-                dbentries[idb] = Movie.objects.get(pk=pk)
+                entry['type'] = 'MOVIE'
+                entry['object'] = Movie.objects.get(pk=pk)
             elif table == 'PICTURE':
-                dbentries[idb] = Picture.objects.get(pk=pk)
-            text.append(idb)
+                entry['type'] = 'PICTURE'
+                entry['object'] = Picture.objects.get(pk=pk)
+            dbentries.append( entry )
         else:
-            text.append(line)
-    page.text = text
+            dbentries.append( 'no_db_entry')
+    content = zip(text,dbentries)
     
-XXX dbentries values need to be objects with property to indicate how to display the object, e.g. movie, picture, URL, etc. 
-    
-    
-    return dbentries,page
+    return page, content
 
 def learning(request):
     return render(request,'tutorial/learning.html',{})
