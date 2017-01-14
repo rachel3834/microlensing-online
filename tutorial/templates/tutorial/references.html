@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+<p>
+<h3 class="page-header">References</h3>
+{% for ref in reference_list %}
+{{ref|safe}}</br>
+{% endfor %}
+</p>
+{% endblock %}

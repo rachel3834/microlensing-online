@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+<h3 class="page-header">{{title}}</h3>
+{% if index|length > 0 %}
+	<!-- Tutorial navigation sidebar -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+				{% for item in index %}
+                    {% if resource_type == "pictures" %}
+                        <a href="{% url 'pictures' item.pk %}">{{item.name}}</a><br>
+                    {% elif resource_type == "movies" %}
+                        <a href="{% url 'movies' item.pk %}">{{item.name}}</a><br>
+                    {% endif %}
+                {% endfor %}
+				</ul>
+			</div>
+			<div class="col-sm-9 main">
+				{% if resource != None %}
+                    {% if resource_type == "pictures" %}
+                        <p><img src="/static/tutorial/pictures/{{resource.filename}}" alt="{{resource.name}}" width=500/></br>
+                        <center><h4>{{resource.caption}}</h4> </br><i>{{resource.credit}}</i></center></p>
+                    {% elif resource_type == "movies" %}
+                        <p><img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/></br>
+                        <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></center></p>
+                    {% endif %}
+                {% else %}
+                    <p></p>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+{% else %}
+    <B>Sorry, no resources under this category yet.</B>
+{% endif %}
+{% endblock %}
