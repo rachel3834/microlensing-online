@@ -81,7 +81,7 @@ def get_article_db_entries(page):
                 references.append(entry['object'])
             elif table == 'URL':
                 entry['type'] = 'URL'
-                entry['object'] = OnlineResources.objects.get(pk=pk)
+                entry['object'] = OnlineResource.objects.get(pk=pk)
             elif table == 'MOVIE':
                 entry['type'] = 'MOVIE'
                 entry['object'] = Movie.objects.get(pk=pk)
@@ -131,7 +131,9 @@ def page(request):
         page = SitePage.objects.get(name=page_name)
     except SitePage.DoesNotExist:
         page = SitePage.objects.get(name='MissingPage')
-    return render(request,'site/site_page.html',{'page':page})
+    page,content,references = get_article_db_entries(page)
+    return render(request,'site/site_page.html',{'page':page,\
+                    'content':content,'references':references})
 
 def references(request):
     refs = Reference.objects.all()
@@ -145,30 +147,40 @@ def links(request):
     space_surveys = OnlineResource.objects.filter(group__contains='space-based mission')
     ground_surveys = OnlineResource.objects.filter(group__contains='ground-based survey')
     ground_followup = OnlineResource.objects.filter(group__contains='ground-based follow-up')
-            
+    
     return render(request,'tutorial/links.html',{'space_surveys':space_surveys, \
                                                 'ground_surveys':ground_surveys, \
                                                 'ground_followup':ground_followup})
 
 def list_resources(request,resource_type,pk=None):
     
-    if resource_type == 'Movies':
+    if resource_type == 'movies':
         resources = Movie.objects.all()
-    elif resource_type == 'Pictures':
+    elif resource_type == 'pictures':
         resources = Picture.objects.all()
     else:
         resources = []
     
     if pk != None:
-        item = Movie.objects.get(pk=pk)
+        if resource_type == 'movies':
+            item = Movie.objects.get(pk=pk)
+        elif resource_type == 'pictures':
+            item = Picture.objects.get(pk=pk)
     else:
         item = None
-        
+
+    title = capitalize_first_letter(resource_type)
+    
     return render(request,'tutorial/resource_files.html',{'index':resources, 
-                                                          'type':resource_type,
-                                                          'resource':item})
+                                                          'resource_type':resource_type,
+                                                          'resource':item, 
+                                                          'title': title})
  
-                                                          
+def capitalize_first_letter(s):
+    s = s.lstrip()
+    s = s[0:1].upper()+s[1:]
+    return s
+    
 class TutorialDetails(DetailView):
     model = TutorialPage
     template_name = 'tutorial/tutorial_page.html'
