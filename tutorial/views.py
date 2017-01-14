@@ -138,9 +138,13 @@ def page(request):
 def references(request):
     refs = Reference.objects.all()
     ref_list = []
+    indices = []
     for r in refs:
-        ref_list.append(r)
-    ref_list.sort()
+        ref_list.append(r.__str__())
+        indices.append(r.authors)
+    index = zip(indices,ref_list)
+    index.sort()
+    (indices, ref_list) = zip(*index)
     return render(request,'tutorial/references.html',{'reference_list':ref_list})
 
 def links(request):
