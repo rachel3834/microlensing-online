@@ -1,36 +1,73 @@
 HEADER::NAME=glossary
 <h3 class="page-header">Glossary of Microlensing Terms</h3>
 <p>
-    <h4>Parameter Definitions</h4>
     <table width="75%">
-        <tr><th>Name</th><th>Commonly-used symbol</th><th>Definition</th></tr>
-        <tr><td>Einstein crossing time</td><td>t<sub>E</sub></td><td>Time taken for the background source to cross the diameter of the lens' Einstein radius, as seen by the observer.</td></tr>
-        <tr><td>Einstein radius</td><td>R<sub>E</sub></td><td>The characteristic radius around the lens at which the images of the source form due to the gravitational deflection of light.</td></tr>
-        <tr><td>Einstein angular radius</td><td>&theta;<sub>E</sub></td><td>The angle subtended by the Einstein radius of a lens from the distance of the observer.</td></tr>
-        <tr><td>Projected Einstein radius</td><td>&#345;<sub>E</sub></td><td>The Einstein radius projected to the observer's plane.</td></tr>
-        <tr><td>Impact parameter</td><td>u, at minimum u<sub>0</sub></td><td>The angular separation between source and lens as seen by the observer.</td></tr>
-        <tr><td>Time of peak</td><td>t<sub>0</sub></td><td>Time at which the separation of lens and source reaches the minimum.</td></tr>
-        <tr><td>Source distance</td><td>D<sub>S</sub></td><td>Physical distance from the observer to the source star.</td></tr>
-        <tr><td>Lens distance</td><td>D<sub>L</sub></td><td>Physical distance from the observer to the lensing object.</td></tr>
-        <tr><td>Lens-source distance</td><td>D<sub>LS</sub></td>Physical distance between the source and lens along the observer's line of sight.</td></tr>
-        <tr><td>Lens mass</td><td>M<sub>L</sub></td><td>Mass of the lensing object, including all component masses unless otherwise stated.</td>
-        <tr><td>Magnification</td><td>A, at peak A<sub>max</sub> or A<sub>0</sub></td><td>The magnification of the source star flux caused by the gravitational lens.  </td></tr>
-        <tr><td>Source flux</td><td>f<sub>S</sub></td><td>Flux received from the source (as opposed to f<sub>b</sub>)</td></tr>
-        <tr><td>Blend flux</td><td>f<sub>b</sub></td><td>Flux from background sources blended with the source.</td></tr>
-        <tr><td>Parallax (also: annual parallax)</td><td>&pi;, components &pi;<sub>E,E</sub> and &pi;<sub>E,N</sub> or &pi;<sub>E,||</sub> and &pi;<sub>E,&perp;</sub></td>
-            <td>The parallax to a lensing event caused by the motion of the Earth in its orbit during the event.</td></tr>
-        <tr><td>Mass ratio</td><td>q</td><td>The ratio of the masses of a binary lens</td></tr>
-        <tr><td>Lens separation</td><td>s</td><td>The projected separation of the masses of a binary lens during the event.</td></tr>
-        <tr><td>Trajectory angle</td><td>&alpha;</td><td>Angle between the trajectory of the source and the axis of a binary lens.</td></tr>
-        <tr><td>Rate of change of lens separation</td><td>ds/dt</td><td>The change in the projected separation of a binary lens due to the motion of the lens components in their orbit during an event</td>
-        <tr><td>Rate of change of trajectory angle</td><td>d&alpha;/dt</td><td>The change in the trajectory of the source relative to the axis of a binary lens, due to the orbital motion of the lens components during an event.</td>
+        <tr><td><a href="#timescales">Timescales</a></td><td><a href="#lenspars">Lens and Physical Parameters</a></td><td><a href="#motion">Trajectory, Motion, Parallax</a></td><td><a href="#photpars">Photometric Parameters</a></td><td><a href="#keyconcepts">Key Concepts</a></td><td><a href="#naming">Naming Convention</a></td></tr>
     </table>
 </p>
-<p></p>
 <p>
-    <h4>Key Concepts</h4>
     <table width="75%">
-        <tr><th>Name</th><th>Commonly-used symbol</th><th>Definition</th></tr>
-        <tr><td>Optical depth</td><td>&tau;</td><td>The probability that a given star, at a specific instant in time, has an amplification caused by gravitational microlensing of A ≻ 1.34. This is the fraction of a given solid angle of sky observed which is covered by the Einstein rings of all lensing objects within that area.</td></tr>
+        <tr><th>Name</th><th>Commonly-used symbols</th><th>Unit</th><th>Definition</th></tr>
+        <tr bgcolor="#ccdef9"><td colspan="4"><h4 id="timescales">Timescales</h4></td></tr>
+        <tr bgcolor="#ccdef9"><td>Einstein crossing time</td><td>t<sub>E</sub></td><td>days</td><td>Time taken for the background source to cross the diameter of the lens' Einstein radius, as seen by the observer.</td></tr>
+        <tr bgcolor="#ccdef9"><td>Time of peak</td><td>t<sub>0</sub></td><td>days</td><td>Time at which the separation of lens and source reaches the minimum.</td></tr>
+        <tr bgcolor="#ccdef9"><td>Source crossing time</td><td>t<sub>*</sub></td><td>days</td><td>Time taken to cross the source's angular radius</td>
+
+        <tr bgcolor="#cceef9"><td><h4 id="lenspars">Lens and Physical Parameters</h4></td><td></td><td></td><td></td></tr>
+        <tr bgcolor="#cceef9"><td>Einstein angular radius</td><td>&theta;<sub>E</sub></td><td>mas</td><td>The angle subtended by the Einstein radius of a lens from the distance of the observer.</td></tr>
+        <tr bgcolor="#cceef9"><td>Source angular radius</td><td>&theta;<sub>*</sub> or &theta;<sub>S</sub></td><td>mas</td><td>The angle subtended by the source star radius at the distance of the observer</td></tr>
+        <tr bgcolor="#cceef9"><td>Einstein radius</td><td>R<sub>E</sub></td><td>Km</td><td>The characteristic radius around the lens at which the images of the source form due to the gravitational deflection of light.</td></tr>
+        <tr bgcolor="#cceef9"><td>Projected Einstein radius</td><td>&#345;<sub>E</sub></td><td>Km</td><td>The Einstein radius projected to the observer's plane.</td></tr>
+        <tr bgcolor="#cceef9"><td>Source radius</td><td>R<sub>*</sub> or R<sub>S</sub></td><td>Km</td><td>The physical radius of the source star</td></tr>
+        <tr bgcolor="#cceef9"><td>Rho</td><td>&rho;</td><td>&theta;<sub>E</sub></td><td>The angular source size &theta;<sub>S</sub> in units of the angular Einstein radius &theta;<sub>E</sub></td></tr>
+        <tr bgcolor="#cceef9"><td>Lens distance</td><td>D<sub>L</sub></td><td>pc</td><td>Physical distance from the observer to the lensing object.</td></tr>
+        <tr bgcolor="#cceef9"><td>Lens-source distance</td><td>D<sub>LS</sub></td><td>pc</td><td>Physical distance between the source and lens along the observer's line of sight.</td></tr>
+        <tr bgcolor="#cceef9"><td>Lens mass</td><td>M<sub>L</sub></td><td>M<sub>&sun;</sub></td><td>Mass of the lensing object, including all component masses unless otherwise stated.</td>
+        <tr bgcolor="#cceef9"><td>Source distance</td><td>D<sub>S</sub></td><td>pc</td><td>Physical distance from the observer to the source star.</td></tr>
+        <tr bgcolor="#cceef9"><td>Planet mass</td><td>M<sub>P</sub></td><td>M<sub>Jupiter</sub> or M<sub>Earth</sub></td><td>Mass of a binary lens component of planetary mass</td></tr>
+        <tr bgcolor="#cceef9"><td>Lens mass</td><td>M<sub>L</sub></td><td>M<sub>&sun;</sub></td><td>Mass of the lens (may include multiple components)</td></tr>
+        <tr bgcolor="#cceef9"><td>Mass ratio</td><td>q</td><td></td><td>The ratio of the masses of a binary lens</td></tr>
+        <tr bgcolor="#cceef9"><td>Lens separation</td><td>s</td><td>&theta;<sub>E</sub></td><td>The projected separation of the masses of a binary lens during the event, usually in units of the angular Einstein radius &theta;<sub>E</sub></td></tr>
+        <tr bgcolor="#cceef9"><td>Projected lens separation</td><td>a<sub>&perp;</sub></td><td>AU</td><td>Projected separation of binary lens masses in physical units.</td></tr>
+        <tr bgcolor="#cceef9"><td></td></tr>
+        
+        <tr bgcolor="#ccf9f0"><td colspan="4"><h4 id="motion">Trajectory, Motion and Parallax</h4></td></tr>
+        <tr bgcolor="#ccf9f0"><td>Impact parameter</td><td>u, at minimum u<sub>0</sub></td><td>&theta;<sub>E</sub></td><td>The angular separation between source and lens as seen by the observer.</td></tr>
+        <tr bgcolor="#ccf9f0"><td>Relative proper motion</td><td>%mu;<sub>rel</sub></td><td>mas/yr</td><td>The relative proper motion between lens and source</td></tr>
+        <tr bgcolor="#ccf9f0"><td>Trajectory angle</td><td>&alpha;</td><td>radians</td><td>Angle between the trajectory of the source and the axis of a binary lens.</td></tr>
+        <tr bgcolor="#ccf9f0"><td>Rate of change of lens separation</td><td>ds/dt</td><td>&theta;<sub>E</sub>/day</td><td>The change in the projected separation of a binary lens due to the motion of the lens components in their orbit during an event</td>
+        <tr bgcolor="#ccf9f0"><td>Rate of change of trajectory angle</td><td>d&alpha;/dt</td><td>radians/day</td><td>The change in the trajectory of the source relative to the axis of a binary lens, due to the orbital motion of the lens components during an event.</td>
+        <tr bgcolor="#ccf9f0"><td>Parallax (also: annual parallax)</td><td>&pi;, components &pi;<sub>E,E</sub> and &pi;<sub>E,N</sub> or &pi;<sub>E,||</sub> and &pi;<sub>E,&perp;</sub></td><td></td><td>The parallax to a lensing event caused by the motion of the Earth in its orbit during the event.</td></tr>
+        <tr bgcolor="#ccf9f0"><td>Relative parallax</td><td>&pi;<sub>rel</sub></td><td></td><td>Relative parallax observed for lens and source</td></tr>
+
+        
+        <tr bgcolor="#ccf9d5"><td colspan="4"><h4 id="photpars">Photometric Parameters</h4></td></tr>
+        <tr bgcolor="#ccf9d5"><td>Magnification</td><td>A, at peak A<sub>max</sub> or A<sub>0</sub></td><td>mag</td><td>The magnification of the source star flux caused by the gravitational lens.  </td></tr>
+        <tr bgcolor="#ccf9d5"><td>Source flux</td><td>f<sub>S</sub></td><td>counts/s</td><td>Flux received from the source (as opposed to f<sub>b</sub>)</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Blend flux</td><td>f<sub>b</sub></td><td>counts/s</td><td>Flux from background sources blended with the source.</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Blend ratio</td><td>g</td><td></td><td>Ratio of blend flux to source flux</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Baseline magnitude</td><td>I<sub>base</sub> or I<sub>0</sub></td><td>mag</td><td>The measured brightness of a source star when unlensed, which may be blended with other stars</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Peak magnitude</td><td>I<sub>peak</sub></td><td>mag</td><td>Measured brightness of the source star at the time of smallest separation between lens and source, i.e. greatest brightness</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Source magnitude</td><td>I<sub>S</sub></td><td>mag</td><td>Measured (and reddened) source star magnitude</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Dereddened source magnitude</td><td>I<sub>S,0</sub></td><td>mag</td><td>Source star magnitude when corrected for interstellar reddening</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Blend magnitude</td><td>I<sub>B</sub></td><td>mag</td><td>Measured magnitude of stars blended with the source star</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Lens magnitude</td><td>I<sub>L</sub>,H<sub>L</sub></td><td>mag</td><td>Magnitude of the lens star measured in I and H passbands</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Source star color</td><td>Usually (V-I)<sub>S</sub></td><td>mag</td><td>Measured color (here in (V-I) bands) of the blended and reddened source star</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Dereddened source color</td><td>Usually (V-I)<sub>S,0</sub></td><td>mag</td><td>Dereddened color of the source star</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Blend color</td><td>Usually (V-I)<sub>B</sub></td><td>mag</td><td>The combined color of stars blended with the source</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Extinction coefficient</td><td>Usually A<sub>I</sub></td><td>mag</td><td>Extinction between the observer and the source star, here in the I passband</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Reddening cofficient</td><td>Usually E(V-I)</td><td>mag</td><td>Reddening term between the observer and the source, here in the V and I passbands</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Limb darkening coefficient</td><td>&Gamma;<sub>&lambda;</sub></td><td>mag</td><td>Limb darkening coefficient for passband &lambda;</td></tr>
+        <tr bgcolor="#ccf9d5"><td>Limb darkening coefficient</td><td>u<sub>&lambda;</sub></td><td>mag</td><td>Limb darkening coefficient for passband &lambda;</td></tr>
+
+        <tr bgcolor="#f8f9cc"><td colspan="4"><h4 id="photpars">Key Concepts</h4></td></tr>
+        <tr bgcolor="#f8f9cc"><td>Optical depth</td><td>&tau;</td><td>star<sup>-1</sup></td><td>The probability that a given star, at a specific instant in time, has an amplification caused by gravitational microlensing of A ≻ 1.34. This is the fraction of a given solid angle of sky observed which is covered by the Einstein rings of all lensing objects within that area.</td></tr>
     </table>
+</p>
+<p id="naming">
+    <h4>Naming Convention</h4>
+Microlensing events are usually named for the survey which independently discovered them, the year in which they were discovered and the region of the sky in which they were found.  <br>
+    For example: OGLE-2017-BLG-1234 refers to the 1234th event found by the OGLE survey in the Galactic Bulge during the 2017 observing season.  <br>
+As most microlensing events are found in largely the same region of the Galactic Bulge, it is often the case that multiple surveys will find the same event independently.  In these cases, it is customary for the event to be refered to by a joint name, in the sequence in which public alerts were issued.  <br>
+    For example: OGLE-2017-BLG-1234/MOA-2017-BLG-234 indicates that OGLE issued a public alert first, and MOA subsequently found the same event independently.
 </p>
