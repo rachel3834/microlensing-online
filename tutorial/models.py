@@ -112,7 +112,9 @@ class SitePage(models.Model):
         
 
 class InteractiveTool(models.Model):
+    author = models.ForeignKey(Author,null=True)
     name = models.CharField(max_length=20)
+    title = models.CharField(max_length=200)
     text = models.TextField()
     tools_index = models.IntegerField(null=True)
     last_modified_date = models.DateTimeField(

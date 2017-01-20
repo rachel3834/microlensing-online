@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import *
 from django.views.generic.detail import DetailView
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
     return render(request,'tutorial/index.html',{})
@@ -115,14 +116,21 @@ def interactive(request,pk=None):
         if page.tools_index != 0:
             indices.append(page.tools_index)
             tools.append(page)
-    index = zip(indices,tools)
-    index.sort()
-    (indices, tools) = zip(*index)
+    if len(indices) > 0:
+        index = zip(indices,tools)
+        index.sort()
+        (indices, tools) = zip(*index)
     if pk == None:
-        page = InteractiveTool.objects.get(tools_index=0)
+        try:
+            page = InteractiveTool.objects.get(tools_index=0)
+        except ObjectDoesNotExist:
+            page = SitePage.objects.get(name='missingpage')
     else:
-        page = InteractiveTool.objects.get(pk=pk)
-    return render(request,'tutorial/interactive_index.html',\
+        try:
+            page = InteractiveTool.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            page = SitePage.objects.get(name='missingpage')
+    return render(request,'tutorial/interactive_base.html',\
                 {'tool_list':tools, 'page':page})
 
 def page(request):
@@ -130,7 +138,7 @@ def page(request):
     try:
         page = SitePage.objects.get(name=page_name)
     except SitePage.DoesNotExist:
-        page = SitePage.objects.get(name='MissingPage')
+        page = SitePage.objects.get(name='missingpage')
     page,content,references = get_article_db_entries(page)
     return render(request,'site/site_page.html',{'page':page,\
                     'content':content,'references':references})

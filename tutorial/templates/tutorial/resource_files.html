@@ -19,11 +19,14 @@
 			<div class="col-sm-9 main">
 				{% if resource != None %}
                     {% if resource_type == "pictures" %}
-                        <p><img src="/static/tutorial/pictures/{{resource.filename}}" alt="{{resource.name}}" width=500/></br>
-                        <center><h4>{{resource.caption}}</h4> </br><i>{{resource.credit}}</i></center></p>
+                <p><center><h4>{{resource.caption}}</h4> </br><i>{{resource.credit}}</i></br>
+                        <img src="/static/tutorial/pictures/{{resource.filename}}" alt="{{resource.name}}" width=500/>
+                        </centre></p>
                     {% elif resource_type == "movies" %}
-                        <p><img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/></br>
-                        <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></center></p>
+                        <p>
+                        <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></br>
+                            <img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/>
+                        </center></p>
                     {% endif %}
                 {% else %}
                     <p></p>
