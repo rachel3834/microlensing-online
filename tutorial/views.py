@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.views.generic.detail import DetailView
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime
 
 def home(request):
     return render(request,'tutorial/index.html',{})
@@ -105,8 +106,21 @@ def overview(request):
 def resources(request):
     return render(request,'tutorial/resources.html',{})
 
-def opportunities(request):
-    return render(request,'tutorial/opportunities.html',{})
+def opportunities(request,selected='none'):
+    meetings = []
+    jobs = []
+    grants = []
+    if selected == 'meetings':
+        meetings = Meeting.objects.filter(date_end__gte=datetime.utcnow())
+    elif selected == 'jobs':
+        jobs = Job.objects.filter(deadline__gte=datetime.utcnow())
+    elif selected == 'grants':
+        grants = Grant.objects.filter(deadline__gte=datetime.utcnow())
+        
+    return render(request,'tutorial/opportunities.html',{'meetings_list':meetings,
+                                                         'jobs_list':jobs,
+                                                         'grant_list':grants, 
+                                                         'selected':selected})
     
 def interactive(request,pk=None):
     tool_list = InteractiveTool.objects.all()
