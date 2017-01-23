@@ -112,7 +112,9 @@ class SitePage(models.Model):
         
 
 class InteractiveTool(models.Model):
+    author = models.ForeignKey(Author,null=True)
     name = models.CharField(max_length=20)
+    title = models.CharField(max_length=200)
     text = models.TextField()
     tools_index = models.IntegerField(null=True)
     last_modified_date = models.DateTimeField(
@@ -184,3 +186,54 @@ class Picture(models.Model):
         
     def __str__(self):
         return self.name
+
+class Meeting(models.Model):
+    name = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    date_start = models.DateField()
+    date_end = models.DateField()
+    registration_deadline = models.DateField(null=True)
+    abstract_deadline = models.DateField(null=True)
+    url = models.URLField(null=True)
+    topic = models.CharField(max_length=500,null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+            
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name
+
+class Job(models.Model):
+    title = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    deadline = models.DateField(null=True)
+    description = models.CharField(max_length=1000,null=True)
+    url = models.URLField(null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+            
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.title
+
+class Grant(models.Model):
+    title = models.CharField(max_length=100)
+    agency = models.CharField(max_length=100)
+    deadline = models.DateField(null=True)
+    description = models.CharField(max_length=1000,null=True)
+    url = models.URLField(null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+            
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.title
