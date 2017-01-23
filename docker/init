@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export PYTHONPATH="/var/www/microlensingonline"
+export DJANGO_SETTINGS_MODULE="outreach.settings"
+
+# collect static files
+python /var/www/microlensingonline/manage.py collectstatic --noinput
+
+# perform database migrations
+python /var/www/microlensingonline/manage.py migrate --noinput
+
+# run under supervisord
+exec /usr/bin/supervisord -n -c /etc/supervisord.conf
