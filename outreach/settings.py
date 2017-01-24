@@ -74,11 +74,12 @@ WSGI_APPLICATION = 'outreach.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# NAME (originally): os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join('/data/rstreet/microlensing-source-db', 'db.sqlite3'),
     }
 }
 
