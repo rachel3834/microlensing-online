@@ -25,7 +25,7 @@ SECRET_KEY = 'q2ut$jip_k2bx7fx#y8roj7wv78u%3au1)mm8wg0wguyh^vgr7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ 'einstein.lco.gtn', 'www.microlensing-source.org', 'microlensing-source.org' ]
+ALLOWED_HOSTS = [ 'einstein.lco.gtn', 'www.microlensing-source.org', 'microlensing-source.org', '127.0.0.1' ]
 
 
 # Application definition
@@ -80,6 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join('/var/www/microlensingonline/', 'sqlite.db'),
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
