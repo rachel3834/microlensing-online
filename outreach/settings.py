@@ -25,7 +25,7 @@ SECRET_KEY = 'q2ut$jip_k2bx7fx#y8roj7wv78u%3au1)mm8wg0wguyh^vgr7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ 'einstein.lco.gtn' ]
+ALLOWED_HOSTS = [ 'einstein.lco.gtn', 'www.microlensing-source.org' ]
 
 
 # Application definition
