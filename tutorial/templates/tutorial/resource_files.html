@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block mainregion %}
-<h3 class="page-header">{{title}}</h3>
+{% if resource_type == "pictures" %}
+    <a href="/pictures/"><h3 class="page-header">{{title}}</h3></a>
+{% else %}
+    <a href="/movies/"><h3 class="page-header">{{title}}</h3></a>
+{% endif %}
 {% if index|length > 0 %}
 	<!-- Tutorial navigation sidebar -->
 	<div class="container-fluid">
