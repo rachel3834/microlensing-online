@@ -25,7 +25,11 @@
                     {% elif resource_type == "movies" %}
                         <p>
                         <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></br>
-                            <img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/>
+                            {% if "gif" in resource.filename %}
+                                <img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/>
+                            {% else %}
+                                <a href="/static/tutorial/movies/{{resource.filename}}">Right-click here to download</a><br>
+                            {% endif %}
                         </center></p>
                     {% endif %}
                 {% else %}

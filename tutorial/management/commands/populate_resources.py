@@ -17,10 +17,10 @@ class Command(BaseCommand):
     
     def _create_resource_entries(self):
         
-        for resource in [ 'movies', 'pictures' ]:
-            file_list = glob.glob(path.join('static/tutorial',resource,'*'))
+        for resource in [ 'movies' ]:
+            file_list = glob.glob(path.join('tutorial/static/tutorial',resource,'*'))
             for f in file_list:
-                filename = '/'.join(f.split('/')[1:])
+                filename = path.basename(f)
                 credit = filename.split('__')[0].replace('_',' ')
                 name = filename.split('__')[1].split('.')[0].replace('_',' ')
                 
