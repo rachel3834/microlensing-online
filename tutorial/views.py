@@ -178,8 +178,8 @@ def links(request):
                                                 'ground_surveys':ground_surveys, \
                                                 'ground_followup':ground_followup})
 
-def list_resources(request,resource_type,pk=None):
-    
+def list_resources(request,resource_type,pk=None,key=None):
+        
     if resource_type == 'movies':
         resources = Movie.objects.all()
     elif resource_type == 'pictures':
@@ -187,6 +187,16 @@ def list_resources(request,resource_type,pk=None):
     else:
         resources = []
     
+    keywords = extract_keywords(resources)
+    
+    if key != None:
+        if resource_type == 'movies':
+            resources = Movie.objects.filter(keywords__contains=key)
+        elif resource_type == 'pictures':
+            resources = Picture.objects.filter(keywords__contains=key)
+        else:
+            resources = []
+            
     if pk != None:
         if resource_type == 'movies':
             item = Movie.objects.get(pk=pk)
@@ -194,13 +204,26 @@ def list_resources(request,resource_type,pk=None):
             item = Picture.objects.get(pk=pk)
     else:
         item = None
+        
 
     title = capitalize_first_letter(resource_type)
     
     return render(request,'tutorial/resource_files.html',{'index':resources, 
                                                           'resource_type':resource_type,
                                                           'resource':item, 
-                                                          'title': title})
+                                                          'title': title,
+                                                          'keywords': keywords})
+def extract_keywords(resources):
+    if len(resources) == 0:
+        return []
+    
+    keywords = []
+    for r in resources:
+        keys = str(r.keywords).split('::')
+        for k in keys:
+            if k not in keywords:
+                keywords.append(k)
+    return keywords
  
 def capitalize_first_letter(s):
     s = s.lstrip()

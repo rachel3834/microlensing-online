@@ -1,43 +1,75 @@
 {% extends 'base.html' %}
+{% load resource_tables %}
+
 {% block mainregion %}
 {% if resource_type == "pictures" %}
-    <a href="/pictures/"><h3 class="page-header">{{title}}</h3></a>
+    <a href="{% url 'pictures' %}"><h3 class="page-header">{{title}}</h3></a>
 {% else %}
-    <a href="/movies/"><h3 class="page-header">{{title}}</h3></a>
+    <a href="{% url 'movies' %}"><h3 class="page-header">{{title}}</h3></a>
 {% endif %}
 {% if index|length > 0 %}
 	<!-- Tutorial navigation sidebar -->
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
-				{% for item in index %}
+			<div class="col-sm-10 main">
+                {% if keywords|length > 0 %}
+                    <table width="75%"><tr>
+                    {% for key in keywords %}
+                        <td>
+                            {% if resource_type == "pictures" %}
+                                <a href="{% url 'pictures_key' key %}">
+                            {% elif resource_type == "movies" %}
+                                <a href="{% url 'movies_key' key %}">
+                            {% endif %}
+                                <button type="button" class="btn btn-primary">{{key}}</button>
+                            </a>
+                        </td>
+                    {% endfor %}
+                    </tr></table>
+                {% endif %}
+                
+                {% if resource != None %}
                     {% if resource_type == "pictures" %}
-                        <a href="{% url 'pictures' item.pk %}">{{item.name}}</a><br>
-                    {% elif resource_type == "movies" %}
-                        <a href="{% url 'movies' item.pk %}">{{item.name}}</a><br>
-                    {% endif %}
-                {% endfor %}
-				</ul>
-			</div>
-			<div class="col-sm-9 main">
-				{% if resource != None %}
-                    {% if resource_type == "pictures" %}
-                <p><center><h4>{{resource.caption}}</h4> </br><i>{{resource.credit}}</i></br>
-                        <img src="/static/tutorial/pictures/{{resource.filename}}" alt="{{resource.name}}" width=500/>
-                        </centre></p>
+                        <p><center><h4>{{resource.caption}}</h4> </br><i>{{resource.credit}}</i></br>
+                            <a href="/static/tutorial/pictures/{{resource.filename}}">Right-click here to download</br>
+                            <img src="/static/tutorial/pictures/{{resource.filename}}" alt="{{resource.name}}" width=500/>
+                            </a>
+                            </centre></p>
                     {% elif resource_type == "movies" %}
                         <p>
-                        <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></br>
-                            {% if "gif" in resource.filename %}
-                                <img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/>
-                            {% else %}
-                                <a href="/static/tutorial/movies/{{resource.filename}}">Right-click here to download</a><br>
-                            {% endif %}
+                            <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></br>
+                                <a href="/static/tutorial/movies/{{resource.filename}}">Right-click here to download</br>
+                                {% if "gif" in resource.filename %}
+                                    <img src="/static/tutorial/movies/{{resource.filename}}" alt="{{resource.name}}"/></br>
+                                {% else %}
+                                    <img src="/static/tutorial/movies/{{resource.thumbnail}}" alt="{{resource.name}}"/></br>
+                                {% endif %}
+                                </a>
                         </center></p>
+                    {% else %}
+                        <p></p>
                     {% endif %}
+
                 {% else %}
-                    <p></p>
+                    {% if index|length > 0 %}
+                        <table width="75%">
+                            {% for row in index|columns:5 %}
+                                <tr>
+                                    {% for r in row %}
+                                        {% if resource_type == "pictures" %}
+                                            <td><a href="{% url 'pictures' r.pk %}">
+                                            <img src="/static/tutorial/{{resource_type}}/{{r.thumbnail}}" alt="{{r.name}}"/>
+                                            </a></td>
+                                        {% elif resource_type == "movies" %}
+                                            <td><a href="{% url 'movies' r.pk %}">
+                                            <img src="/static/tutorial/{{resource_type}}/{{r.thumbnail}}" alt="{{r.name}}"/>
+                                            </a></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
                 {% endif %}
 			</div>
 		</div>
