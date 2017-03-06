@@ -7,9 +7,9 @@
 				<ul class="nav nav-sidebar">
 					{% for t in article_list %}
                         {% if resource_type == 'concept' %}
-					       <li><a href="{% url 'concept' t.pk %}">{{t.title}}</a></li>
+					       <li><a href="{% url 'concept_article' t.short_title %}">{{t.title}}</a></li>
                         {% else %}
-                            <li><a href="{% url 'tutorial' t.pk %}">{{t.title}}</a></li>
+                            <li><a href="{% url 'tutorial_article' t.short_title %}">{{t.title}}</a></li>
                         {% endif %}
 					{% endfor %}
 				</ul>

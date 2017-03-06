@@ -29,7 +29,7 @@ def tutorial(request,pk=None):
                 {'article_list':tutorials, 'page':page,\
                     'content':content})
 
-def article(request,resource_type,pk=None):
+def article(request,resource_type,short_title=None):
     if resource_type == 'concept':
         article_list = ConceptPage.objects.all()
     else:
@@ -42,17 +42,18 @@ def article(request,resource_type,pk=None):
     course_index = zip(indices,articles)
     course_index.sort()
     (indices, articles) = zip(*course_index)
-    if pk == None:
+    if short_title == None:
         if resource_type == 'concept':
             page = ConceptPage.objects.get(course_index=0)
         else:
             page = TutorialPage.objects.get(course_index=0)
     else:
         if resource_type == 'concept':
-            page = ConceptPage.objects.get(pk=pk)
+            qs = ConceptPage.objects.filter(short_title__contains=short_title)
         else:
-            page = TutorialPage.objects.get(pk=pk)
-    
+            qs = TutorialPage.objects.filter(short_title__contains=short_title)
+        if len(qs) > 0:
+            page = qs[0]
     page,content,references = get_article_db_entries(page)
     
     return render(request,'tutorial/article_base.html',\
