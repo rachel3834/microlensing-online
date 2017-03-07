@@ -56,5 +56,6 @@ urlpatterns = [
     url(r'^opportunities/jobs/$',opportunities,{'selected':'jobs'},name="opportunities/jobs"),
     url(r'^opportunities/grants/$',opportunities,{'selected':'grants'},name="opportunities/grants"),
     url(r'^about/$',page,name="about"),
+    url(r'^license/$',page,name="license"),
     url(r'^contact/$',page,name="contact"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

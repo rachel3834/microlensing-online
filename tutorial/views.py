@@ -64,14 +64,15 @@ def article(request,resource_type,short_title=None):
 def get_article_db_entries(page):
             
     tables = {'REF': Reference, 'URL': OnlineResource, \
-                'MOVIE': Movie, 'PICTURE': Picture }
+                'MOVIE': Movie, 'PICTURE': Picture, \
+                'SITEPAGE': SitePage, 'CONCEPTPAGE': ConceptPage, \
+                'TUTORIALPAGE': TutorialPage, 'INTERACTIVETOOL': InteractiveTool}
     text = []
     dbentries = []
     references = []
     lines = page.text
     lines = lines.split('\n')
     for line in lines:
-        text.append( line )
         if 'DBENTRY' in line:
             l = line.replace('\n','').split(' ')
             idb = l[0]
@@ -91,9 +92,23 @@ def get_article_db_entries(page):
             elif table == 'PICTURE':
                 entry['type'] = 'PICTURE'
                 entry['object'] = Picture.objects.get(pk=pk)
+            elif table == 'SITELINK':
+                dbtable = l[3].replace('::','').split('=')[1]
+                linktext = line.split('::')[-2].split('=')[-1]
+                entry['type'] = dbtable
+                if dbtable == 'SITEPAGE':
+                    entry['object'] = SitePage.objects.get(pk=pk)
+                elif dbtable == 'CONCEPTPAGE':
+                    entry['object'] = ConceptPage.objects.get(pk=pk)
+                elif dbtable == 'TUTORIALPAGE':
+                    entry['object'] = TutorialPage.objects.get(pk=pk)
+                elif dbtable == 'INTERACTIVETOOL':
+                    entry['object'] = InteractiveTool.objects.get(pk=pk)
+                line = linktext
             dbentries.append( entry )
         else:
             dbentries.append( 'no_db_entry' )
+        text.append( line )
     content = zip(text,dbentries)
     
     return page, content, references
@@ -155,6 +170,7 @@ def page(request):
     except SitePage.DoesNotExist:
         page = SitePage.objects.get(name='missingpage')
     page,content,references = get_article_db_entries(page)
+
     return render(request,'site/site_page.html',{'page':page,\
                     'content':content,'references':references})
 

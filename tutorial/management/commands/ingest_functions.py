@@ -6,7 +6,8 @@ Created on Sun Oct  2 20:54:37 2016
 """
 
 from tutorial.models import Reference, OnlineResource
-from tutorial.models import Picture, Movie, Author
+from tutorial.models import Picture, Movie, Author, SitePage
+from tutorial.models import TutorialPage, ConceptPage, InteractiveTool
 from sys import exit
 
 def ingest_object(params,entry_type):
@@ -22,6 +23,7 @@ def ingest_object(params,entry_type):
         elif entry_type == 'REF':
             params['search_key'] = params['authors']+params['year']
             entry, created = Reference.objects.get_or_create(**params)
+            
     else:
         print 'Halting until formatting issues resolved'
         exit()
@@ -51,7 +53,7 @@ def parse_db_entry(line,entry_type):
     """Function to parse an entry in an input article which refers to information
     which will comprise an independent entry in the database, such as a picture,
     movie or reference.
-    Valid entry_types include HEADER, PICTURE, MOVIE, REF, URL
+    Valid entry_types include HEADER, PICTURE, MOVIE, REF, URL, SITELINK
     """
     entries = line.replace(entry_type+'::','').replace('\n','').split('::')
     params = {}
@@ -65,6 +67,27 @@ def parse_db_entry(line,entry_type):
         params[str(key).lower().lstrip()] = value
     
     return params
+
+def resolve_site_link(params,entry_type):
+    """Function to provide a handle to link to other pages within the same
+    site"""
+    
+    if str(params['table']).lower() == 'sitepage':
+        entry = SitePage.objects.get(name=params['name'])
+    elif str(params['table']).lower() == 'concept':
+        entry = ConceptPage.objects.get(short_title=params['shorttitle'])
+    elif str(params['table']).lower() == 'tutorial':
+        entry = TutorialPage.objects.get(short_title=params['shorttitle'])
+    elif str(params['table']).lower() == 'interactivetool':
+        entry = TutorialPage.objects.get(name=params['name'])
+           
+    else:
+        print 'Unrecognised sitelink table '+params['TABLE']
+        print 'Halting until formatting issues resolved'
+        print params
+        exit()
+    
+    return entry
     
 def parse_article(page_text):
     content = []
@@ -74,7 +97,7 @@ def parse_article(page_text):
     # Each line the in file is checked to see if it refers to information
     # which should be stored as entries in the database. URL should always be
     # last in this list, because the other types can have URL as a parameter
-    entry_types = [ 'HEADER', 'PICTURE', 'MOVIE', 'REF', 'URL' ]
+    entry_types = [ 'HEADER', 'PICTURE', 'MOVIE', 'REF', 'URL', 'SITELINK' ]
     
     for i in range(0,len(page_text),1):
         line = page_text[i]
@@ -99,7 +122,15 @@ def parse_article(page_text):
                             params[key] = author
                         else:
                             params[key] = value
-                        
+                
+                elif t == 'SITELINK':
+                    entry = resolve_site_link(line_entries,t)
+
+                    idb = len(dbentries) + 1
+                    dbentries[idb] = entry
+                    content.append('DBENTRY'+str(idb)+' '+t+' '+str(entry.pk)+\
+                    ' ::TABLE='+str(line_entries['table']).upper()+\
+                    ' ::LINKTEXT='+line_entries['linktext']+'::\n')
                 else:
                     entry = ingest_object(line_entries,t)
                     

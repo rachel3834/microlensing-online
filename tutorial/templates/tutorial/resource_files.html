@@ -2,11 +2,16 @@
 {% load resource_tables %}
 
 {% block mainregion %}
+<table width="100%"><tr>
 {% if resource_type == "pictures" %}
-    <a href="{% url 'pictures' %}"><h3 class="page-header">{{title}}</h3></a>
+    <td align="left"><a href="{% url 'pictures' %}"><h3 class="page-header">{{title}}</h3></a></td>
 {% else %}
-    <a href="{% url 'movies' %}"><h3 class="page-header">{{title}}</h3></a>
+    <td align="left"><a href="{% url 'movies' %}"><h3 class="page-header">{{title}}</h3></a></td>
 {% endif %}
+</tr>
+<tr><td align="right"><a href="{% url 'license' %}">Using these media</a></td></tr>
+</table>
+
 {% if index|length > 0 %}
 	<!-- Tutorial navigation sidebar -->
 	<div class="container-fluid">
