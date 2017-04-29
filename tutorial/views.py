@@ -239,7 +239,7 @@ def extract_keywords(resources):
     for r in resources:
         keys = str(r.keywords).split('::')
         for k in keys:
-            if k not in keywords:
+            if k not in keywords and str(k).lower() != 'none':
                 keywords.append(k)
     return keywords
  

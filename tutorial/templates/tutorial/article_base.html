@@ -27,7 +27,7 @@
                                         width=500/></br>
                                 <center><h4>{{dbentry.object.caption}}</h4> </br><i>{{dbentry.object.credit}}</i></center></p>
                             {% elif dbentry.type == "MOVIE" %}
-                                <p><img src="/static/tutorial/movies/{{dbentry.object.filename}}" alt="{{dbentry.object.name}}"/></br>
+                                <p><img src="/static/tutorial/movies/{{dbentry.object.filename}}" alt="{{dbentry.object.name}}" width=500/></br>
                                 <center><h4>{{dbentry.object.caption}}</h4> <i>{{dbentry.object.credit}}</i></center></p>
                             {% elif dbentry.type == "URL" %}
                                 <a href="{{dbentry.object.url}}">{{dbentry.object.name}}</a>
