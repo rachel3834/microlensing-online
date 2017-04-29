@@ -74,7 +74,7 @@ def resolve_site_link(params,entry_type):
     
     if str(params['table']).lower() == 'sitepage':
         entry = SitePage.objects.get(name=params['name'])
-    elif str(params['table']).lower() == 'concept':
+    elif str(params['table']).lower() == 'concept' or str(params['table']).lower() == 'conceptpage':
         entry = ConceptPage.objects.get(short_title=params['shorttitle'])
     elif str(params['table']).lower() == 'tutorial':
         entry = TutorialPage.objects.get(short_title=params['shorttitle'])
@@ -82,9 +82,9 @@ def resolve_site_link(params,entry_type):
         entry = TutorialPage.objects.get(name=params['name'])
            
     else:
-        print 'Unrecognised sitelink table '+params['TABLE']
-        print 'Halting until formatting issues resolved'
         print params
+        print 'Unrecognised sitelink table '+params['table']
+        print 'Halting until formatting issues resolved'
         exit()
     
     return entry

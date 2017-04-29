@@ -34,7 +34,7 @@
                             {% elif dbentry.type == "SITEPAGE" %}
                                 <a href="{% url dbentry.object.name %}">{{line|safe}}</a>
                             {% elif dbentry.type == "CONCEPTPAGE" %}
-                                <a href="{% url dbentry.object.short_title %}">{{line|safe}}</a>
+                                <a href="{% url 'concept_article' dbentry.object.short_title %}">{{line|safe}}</a>
                             {% elif dbentry.type == "TUTORIALPAGE" %}
                                 <a href="{% url dbentry.object.short_title %}">{{line|safe}}</a>
                             {% elif dbentry.type == "INTERACTIVETOOL" %}

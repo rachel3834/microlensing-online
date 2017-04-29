@@ -14,7 +14,7 @@ HEADER::NAME=glossary
     <table width="100%">
         <tr><th>Name</th><th>Commonly-used symbols</th><th>Unit</th><th>Definition</th></tr>
         <tr bgcolor="#ccdef9"><td colspan="4"><h4 id="singlelens">Single Lens Parameters</h4></td></tr>
-        <tr bgcolor="#ccdef9"><td>Einstein crossing time</td><td>t<sub>E</sub></td><td>days</td><td>Time taken for the background source to cross the diameter of the lens' Einstein radius, as seen by the observer.</td></tr>
+        <tr bgcolor="#ccdef9"><td>Einstein crossing time</td><td>t<sub>E</sub></td><td>days</td><td>Time taken for the background source to cross the lens' Einstein radius, as seen by the observer. Caution: some early microlensing papers may refer to t<sub>E</sub> as the crossing time for the lens' Einstein <i></i>diameter</i>. </td></tr>
         <tr bgcolor="#ccdef9"><td>Time of peak</td><td>t<sub>0</sub></td><td>days</td><td>Time at which the separation of lens and source reaches the minimum.</td></tr>
         <tr bgcolor="#ccdef9"><td>Source self-crossing time</td><td>t<sub>*</sub></td><td>days</td><td>Time taken to cross the source's angular radius<br>$$t_{*} \equiv \rho t_{E}$$</td>
         <tr bgcolor="#ccdef9"><td>Impact parameter</td><td>u, at minimum u<sub>0</sub></td><td>Dimensionless</td><td>The angular separation, normalized to &theta;<sub>E</sub>, between source and lens as seen by the observer<br>
@@ -52,13 +52,14 @@ HEADER::NAME=glossary
 
         <tr bgcolor="#cceef9"><td>Lens masses</td><td>M<sub>1,2,P or S</sub></td><td>M<sub>&odot;</sub> unless otherwise stated</td><td>
             Most generically, the massive components of the lensing system are refered to as "M<sub>1</sub>" or "M<sub>P</sub>" for the primary or largest mass object and "M<sub>2</sub>" or "M<sub>S</sub>" for the secondary.  In cases of a planet-star binary however, M<sub>P</sub> is sometime used to refer to the planet (i.e. secondary) while M<sub>S</sub> may refer to the star (primary)</td></tr>
-        <tr bgcolor="#cceef9"><td>Mass ratio</td><td>q</td><td></td><td>The ratio of the masses of a binary lens</td></tr>
-        <tr bgcolor="#cceef9"><td>Lens separation</td><td>s, also s<sub>0</sub> or d</td><td>Dimensionless</td><td>The projected separation of the masses of a binary lens during the event, normalized by the angular Einstein radius &theta;<sub>E</sub></td></tr>
+        <tr bgcolor="#cceef9"><td>Mass ratio</td><td>q</td><td></td><td>The ratio of the masses of a binary lens, $$M_{2}/M_{1}$$</td></tr>
+        <tr bgcolor="#cceef9"><td>Mass fraction</td><td>&epsilon;</td><td></td><td>The ratio of the one of the masses in a binary lens to the total mass of that lens, $$M_{i}/M_{tot}$$</td></tr>
+        <tr bgcolor="#cceef9"><td>Lens separation</td><td>s, also s<sub>0</sub>, d or b</td><td>Dimensionless</td><td>The projected separation of the masses of a binary lens during the event, normalized by the angular Einstein radius &theta;<sub>E</sub></td></tr>
         <tr bgcolor="#cceef9"><td>Projected lens separation</td><td>a<sub>&perp;</sub></td><td>AU</td><td>Projected separation of binary lens masses in physical units.</td></tr>
         <tr bgcolor="#cceef9"><td>Angle of lens motion</td><td>&alpha; also &alpha;<sub>0</sub></td><td>radians</td><td>Angle (counter-clockwise) between the trajectory of the source and the axis of a binary lens, which is oriented pointing from the primary towards the secondary</td></tr>
         <tr bgcolor="#cceef9"><td>Rate of change of lens separation</td><td>ds/dt</td><td>&theta;<sub>E</sub>/day</td><td>The change in the projected separation of a binary lens due to the motion of the lens components in their orbit during an event</td>
         <tr bgcolor="#cceef9"><td>Rate of change of trajectory angle</td><td>d&alpha;/dt</td><td>radians/day</td><td>The change in the trajectory of the source relative to the axis of a binary lens, due to the orbital motion of the lens components during an event.</td>
-        <tr bgcolor="#cceef9"><td>Earth velocity</td><td><b>v</b><sub>&oplus;,&perp;</sub></td><td>m/s</td><td>The component of Earth's velocity at t<sub>0,par</sub> projected onto the plane of the sky</td></tr>
+        <tr bgcolor="#cceef9"><td>Earth orbital velocity</td><td><b>v</b><sub>&oplus;,&perp;</sub></td><td>km/s</td><td>The component of Earth's velocity at t<sub>0,par</sub> projected onto the plane of the sky</td></tr>
         <tr bgcolor="#cceef9"><td>Binary lens orbital velocity</td><td><b>&gamma;</b> or &gamma;&#772;, components<br>(&gamma;<sub>&parallel;</sub>,&gamma;<sub>&perp;</sub>,&gamma;<sub>z</sub>)</td><td></td><td>Components of the velocity of the secondary lens relative to the primary due to orbital motion at time t<sub>0,kep</sub><br>
             $$\gamma_{\parallel} = (ds/dt)/s, \gamma_{\perp} = -dt\alpha/dt$$<br>
             &gamma;<sub>z</sub> is measured only in rare cases where the full Keplerian orbit can be determined (see Skowron et al. 2011), but is oriented such that positive &gamma;<sub>z</sub> points towards the observer
@@ -71,12 +72,12 @@ HEADER::NAME=glossary
         <tr bgcolor="#cceef9"><td>Projected orbital position</td><td><b>&Delta;r</b></td><td></td><td>Projected physical orbital position of the secondary of a binary lens relative to the primary<br>
             $$\bar\Delta r = D_{L}\theta_{E}(s,0,s_{z})$$</td></tr>
         <tr bgcolor="#cceef9"><td>Lens plane coordinates</td><td>(&xi;,&eta;)</td><td></td><td>Coordinate system in the plane of a binary lens, parallel and perpendicular to the binary axis respectively</td>
-        <tr bgcolor="#cceef9"><td>Orbital energy</td><td>E<sub>&perp;,kin</sub>,E<sub>&perp;,pot</sub></td><td></td><td>The kinetic and potential projected energy due to binary lens orbital motion (Batista et al. 2011)<br>
+        <tr bgcolor="#cceef9"><td>Orbital energy</td><td>E<sub>&perp;,kin</sub>,E<sub>&perp;,pot</sub></td><td></td><td>The projected kinetic and potential energy due to binary lens orbital motion (Batista et al. 2011)<br>
             $$\frac{E_{\perp,kin}}{E_{\perp,pot}} = \frac{\kappa M_{\odot} \pi_{E}(|\bar\gamma|yr)^{2}s^{3}}{8\pi^{2}\theta_{E}(\pi_{E}+\pi_{S}/\theta_{E})^{2}}$$
             </td></tr>
         
         <tr bgcolor="#ccf9d5"><td colspan="4"><h4 id="photpars">Photometric Parameters</h4></td></tr>
-        <tr bgcolor="#ccf9d5"><td>Magnification</td><td>A, at peak A<sub>max</sub> or A<sub>0</sub></td><td>mag</td><td>The magnification of the source star flux caused by the gravitational lens.  </td></tr>
+        <tr bgcolor="#ccf9d5"><td>Magnification</td><td>A, at peak A<sub>max</sub> or A<sub>0</sub></td><td></td><td>The magnification of the source star flux caused by the gravitational lens.  </td></tr>
         <tr bgcolor="#ccf9d5"><td>Event flux</td><td>f(t,k)</td><td>counts/s</td><td>The total flux measured during a lensing event as a function of time, t, is the combination of the flux from the source being lensed plus the flux from (unlensed) background stars.  Since different instruments, k, have different pixel scales and hence different degrees of blending, these are characterized with separate parameters. Commonly defined as:<br>
             $$f(t,k) = A(t)f_{S}(k) + f_{b}(k)$$
         <tr bgcolor="#ccf9d5"><td>Source flux</td><td>f<sub>S</sub></td><td>counts/s</td><td>Flux received from the source (as opposed to f<sub>b</sub>)</td></tr>

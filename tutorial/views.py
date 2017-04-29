@@ -37,8 +37,9 @@ def article(request,resource_type,short_title=None):
     indices = []
     articles = []
     for page in article_list:
-        indices.append(page.course_index)
-        articles.append(page)
+        if 'worksheet' not in page.short_title:
+            indices.append(page.course_index)
+            articles.append(page)
     course_index = zip(indices,articles)
     course_index.sort()
     (indices, articles) = zip(*course_index)
