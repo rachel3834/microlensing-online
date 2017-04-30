@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'q2ut$jip_k2bx7fx#y8roj7wv78u%3au1)mm8wg0wguyh^vgr7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [ 'einstein.lco.gtn', 'www.microlensing-source.org', 'microlensing-source.org', '127.0.0.1' ]
 

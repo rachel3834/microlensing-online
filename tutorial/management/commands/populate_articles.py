@@ -17,9 +17,22 @@ class Command(BaseCommand):
     args = ''
     help = ''
     
-    def _create_article_entries(self):
-        concepts = glob.glob('tutorial/static/tutorial/concept_*html')
-        tutorials = glob.glob('tutorial/static/tutorial/tutorial_*html')
+    def add_arguments(self, parser):
+        parser.add_argument('filename', nargs='+', type=str)
+        
+    def _create_article_entries(self,*args, **options):
+        filename = options['filename'][0]
+        concepts = []
+        tutorials = []
+        if filename == 'ALL':
+            concepts = glob.glob('tutorial/static/tutorial/concept_*html')
+            tutorials = glob.glob('tutorial/static/tutorial/tutorial_*html')
+        else:
+            if 'concept' in filename:
+                concepts = glob.glob('tutorial/static/tutorial/'+filename)
+            else:
+                tutorials = glob.glob('tutorial/static/tutorial/'+filename)
+                
         for f in concepts:
             file_lines = open(f,'r').readlines()
             params = ingest_functions.parse_article(file_lines)
@@ -32,4 +45,4 @@ class Command(BaseCommand):
     
     
     def handle(self,*args, **options):
-        self._create_article_entries()
+        self._create_article_entries(*args, **options)

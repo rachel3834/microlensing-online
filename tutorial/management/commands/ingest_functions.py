@@ -11,14 +11,22 @@ from tutorial.models import TutorialPage, ConceptPage, InteractiveTool
 from sys import exit
 
 def ingest_object(params,entry_type):
+    def get_thumb_name(params):
+        if 'thumbnail' not in params.keys():
+            components = str(params['filename']).split('.')
+            params['thumbnail'] = components[0]+'_tb.'+components[1]
+        return params
+        
     params_ok = verify_db_entry(entry_type,params)
     
     if params_ok:
         if entry_type == 'URL':
             entry, created = OnlineResource.objects.get_or_create(**params)
         elif entry_type == 'PICTURE':
+            params= get_thumb_name(params)
             entry, created = Picture.objects.get_or_create(**params)
         elif entry_type == 'MOVIE':
+            params= get_thumb_name(params)
             entry, created = Movie.objects.get_or_create(**params)
         elif entry_type == 'REF':
             params['search_key'] = params['authors']+params['year']
