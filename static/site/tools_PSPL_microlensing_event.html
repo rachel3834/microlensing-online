@@ -1,0 +1,159 @@
+HEADER::NAME=pspl_simulator
+HEADER::TITLE=Point Source, Point Lens Simulator
+HEADER::TOOLS_INDEX=1
+HEADER::AUTHOR=Shanen Cross
+
+  <div class="row" style="width:1200px; margin-left:auto; margin-right:auto; position:relative;">
+        <canvas id="lcurveCanvas" style="float:left; border:1px solid black;" width="550" height="400">
+        Your browser does not support HTML5 canvas. Please use a compatible browser.
+        </canvas>
+        <canvas id="lensPlaneCanvas" style="margin-left:10px; border:1px solid black;" width="550" height="400">
+        </canvas>
+  </div>
+
+  <div class="row" style="text-align:center; position:relative;">
+    <input type="button" id="stepBack" value="&#9194;">
+    <input type="button" id="play" value="&#9654;">
+    <input type="button" id="pause" value="&#9646;&#9646;">
+    <input type="button" id="stepForward" value="&#9193;">
+    <input type="button" id="timeReset" value="Reset">
+  </div>
+
+    <div class="row" style="text-align:center; position:relative; padding: 5px 10px;">
+        <div class="col-sm-2"><td>Time: <span id="timeReadout">-16.0000</span> days</td></div>
+            <!-- thetaE probably just for testing? Maybe should be slider? -->
+        <div class="col-sm-2"><td>&theta;<sub>E</sub>: <span id="thetaEreadout">0.1206</span> mas</td></div>
+        <div class="col-sm-2"><td>&theta;<sub>x</sub>: <span id="thetaXreadout">0.3066</span> mas</td></div>
+        <div class="col-sm-2"><td>&rho;: <span id="sourceRadiusNormalizedReadout">0.1105</span></td></div>
+        <div class="col-sm-2"><input type="checkbox" id="fixU0checkbox">Hold u0 fixed when changing other quantities</div>
+        <div class="col-sm-2"><input type="checkbox" id="imageShapeCheckbox" checked>Display image shapes</div>
+  </div>
+
+  <div style="text-align:center; position:relative; padding: 5px 10px;">
+    <!-- <a href="javascript:show_hide_test.toggleDiv('myContent');"
+          style="text-align:center; position:relative; padding: 5px 10px;">
+          + Show Options For Finite Source Effects</a> -->
+
+   <!-- <a id="displayText" href="javascript:show_or_hide.toggle();">+ Show Options For Finite Source Effects</a>-->
+      <a id="displayText" href="javascript:show_or_hide.toggle();"> </a>
+    <!-- <div id="myContent" style="padding: 5px 10px;"> -->
+    <div id="toggleText" style="display: none; padding: 5px 10px;">
+
+      <div><input type="checkbox" id="finiteSourceCheckbox"></input>Use finite source</div>
+
+      <div>
+        source radius <input type="range" id="sourceRadiusSlider" min="0.0001" max="0.5000" step="0.0001" value="0.0133">
+        <span id="sourceRadiusReadout" style="display:inline-block;
+                        width:3.8em; text-align:right;">0.0133</span> mas
+      </div>
+
+    </div>
+  </div>
+
+
+    <div class="row justify-content-center" style="width:1200px; padding: 5px 10px;">
+        <table width="900px" style="border:1px solid black;">
+            <tr>
+                <td valign="top" halign="left" style="background-color:#eff;padding:10px"><h3>Event Parameters</h3>
+        
+                <table>
+                    <tr>
+                        <td>Einstein crossing time, t<sub>E</sub> </td>
+                        <td><input type="range" id="tEslider" min="0.001" max="365" step="0.001" value="6.293">
+                            <span id="tEreadout" style="display:inline-block;
+                                            width:3.8em; text-align:right;">6.293</span> days </td>
+                    </tr>
+                    <tr>
+                        <td>Impact parameter, u<sub>0</sub> <br>[units of &theta;<sub>E</sub>]</td>
+                        <td><input type="range" id="u0slider" min="-2" max="2" step="0.001" value="0.1">
+                            <span id="u0readout" style="display:inline-block;
+                            width:2.3em; text-align:right;">0.100</span></td>
+                    </tr>
+                    <tr>
+                        <td>Time of peak, t<sub>0</sub></td>
+                        <td><input type="range" id="t0slider" min="-75" max="75" step="0.1" value="0">
+                            <span id="t0readout" style="display:inline-block;
+                            width:2.3em; text-align:right;">0.0</span> days</td>
+                    </tr>
+                    <tr>
+                        <td>Lens-source relative <br>proper motion, &mu;<sub>rel</sub> </td>
+                        <td><input type="range" id="muSlider" min="0.01" max="10" step="0.01" value="7">
+                            <span id="muReadout" style="display:inline-block;
+                            width:2.3em; text-align:right;">7.00</span> mas/yr</td>
+                    </tr>
+                    <tr>
+                        <td>Impact parameter, &theta;<sub>y</sub> <br>[units of mas]</td>
+                        <td><input type="range" id="thetaYslider" min="-2" max="2" step="0.001" value="0.012">
+                            <span id="thetaYreadout" style="display:inline-block;
+                                                 width:2.6em; text-align:right;">0.012</span> mas</td>
+                    </tr>
+                </table>
+                </td>
+                
+                <td valign="top" halign="right" style="background-color:#eff;padding:10px"><h3>Physical Parameters</h3>
+                <table>
+                    <tr>
+                        <td>Lens mass, M<sub>l</sub></td>
+                        <td><input type="range" id="MlSlider" min="0.000001" max="15" step="0.000001" value="0.1">
+                        <!-- subscript after M is sun symbol, to make solar mass symbol -->
+                        <span id="MlReadout" style="display:inline-block;
+                                width:4.8em; text-align:right;">0.100000</span> M<sub>&#9737;</sub></td>
+                    </tr>
+                    <tr>
+                        <td>Source distance, D<sub>s</sub></td>
+                        <td><input type="range" id="DsSlider" min="0.01" max="8.5" step="0.01" value="8.0">
+                        <span id="DsReadout" style="display:inline-block;
+                                width:2.3em; text-align:right;">8.00</span> kpc</td>
+                    </tr>
+                    <tr>
+                        <td>Lens distance, D<sub>l</sub></td>
+                        <td><input type="range" id="DlSlider" min="0.01" max="8.5" step="0.01" value="7">
+                            <span id="DlReadout" style="display:inline-block;
+                                    width:2.3em; text-align:right;">7.00</span> kpc</td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                    <tr valign="bottom" halign="right">
+                        <td valign="bottom" halign="right"><input type="button" id="resetParams" value="Reset Parameters"></td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+  <div class="row justify-content-center" style="width:1200px; padding: 5px 10px;">
+        <table width="900px" style="border:1px solid black;">
+            <tr style="background-color:#ffffe6;">
+                <td valign="top" halign="left" colspan="5"><h4>Plotting range controls</h4>
+                </td>
+            </tr>
+            <tr style="background-color:#ffffe6;">
+                <td><input type="button" id="xLeft" value="x<--">
+                    <input type="button" id="xRight" value="x-->"></td>
+                <td><input type="button" id="xZoomIn" value="x+">
+                    <input type="button" id="xZoomOut" value="x-"></td>
+                <td><input type="button" id="yUp" value="y ^">
+                    <input type="button" id="yDown" value="y v"></td>
+                <td><input type="button" id="yZoomIn" value="y+">
+                    <input type="button" id="yZoomOut" value="y-"></td>
+                <td><input type="button" id="resetGraph" value="Reset Range/Scale"></td>
+            </tr>
+      </table>
+  </div>
+
+
+
+  <!--jQuery library-->
+  <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
+  <!--Everpolate library: for interpolation of finite source
+      correction factor table-->
+  <script src="/static/site/libraries/everpolate.browserified.min.js"></script>
+  <!-- Microlensing Event scripts -->
+  <!-- <script src="PSPL_microlensing_event_main.js"></script> -->
+  <script src="/static/site/PSPL_microlensing_event.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_lens_plane.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_finite_source_table.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_finite_source.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_animation.js"></script>
+  <script src="/static/site/show_or_hide.js"></script>

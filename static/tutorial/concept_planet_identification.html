@@ -1,0 +1,211 @@
+HEADER::TITLE=Is There a Planet in that Microlensing Event?
+HEADER::SHORT_TITLE=planet-identification
+HEADER::COURSE_INDEX=2
+HEADER::AUTHOR=Jennifer Yee
+
+<p> The fundamental scale in microlensing is the Einstein ring whose
+size is proportional to the square root of the mass of the lens. Given
+that planets are 10<sup>-3</sup> to 10<sup>-5</sup> times less massive
+than their host stars, a microlensing event is dominated by the signal
+from the lens star. Because a planet is so much smaller than its host
+star, its microlensing signal will be a much smaller perturbation
+superposed on the light curve of the host star. </p>
+<!-- This paragraph could link to a more mathematical description of a
+point lens light curve. That description could include A(u) and also
+typical values of tE.-->
+
+<h3> Exercise </h3>
+
+Some of the following light curves have planetary signals, and some do
+not. Can you tell which ones are planets?
+
+<!--
+These light curves come from 
+<ul style="list-style-type:none">
+  <li> <a href="http://adsabs.harvard.edu/abs/2002ApJ...566..463G">
+  Gaudi, Albrow, An, et al. 2002 ApJ 566, 463 </a></li>
+  <li> <a href=" http://adsabs.harvard.edu/abs/2004ApJ...606L.155B">
+  Bond, Udalski, Jaroszy&nacute;ski, et al. 2004 ApJL 606, 155</a></li>
+  <li> <a href="http://adsabs.harvard.edu/abs/2006Natur.439..437B">
+  Beaulieu, Bennett, Fouqu&eacute;, et al. 2006 Nature 439,
+  437 </a></li>
+</ul>
+But don't peek!
+--> 
+
+<h3> MOA-1998-BLG-033 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=MB98033_lc.jpg::CAPTION=Lightcurve of MOA-1998-BLG-033::CREDIT=Gaudi et al. 2002.::NAME=Lightcurve of MOA-1998-BLG-033
+        REF::AUTHORS=Gaudi et al.::YEAR=2002::JOURNAL=ApJ::VOLUME=566::PAGE=463::URL=http://adsabs.harvard.edu/abs/2002ApJ...566..463G
+    </td>
+    <td id="mb98033Answer"></td>
+  </tr>
+  <tr>
+    <td id="mb98033Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="mb98033Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Is there a planet?</p>
+<button id="mb98033yesBtn">Yes</button>
+<button id="mb98033noBtn">No</button>
+
+<script>
+document.getElementById("mb98033yesBtn").addEventListener("click", show_mb98033_yes)
+document.getElementById("mb98033noBtn").addEventListener("click", show_mb98033_no)
+
+function show_mb98033_yes() {
+  document.getElementById("mb98033Answer").innerHTML = "Previous authors did not note a planet."
+  show_mb98033_info()
+}
+
+function show_mb98033_no() {
+  document.getElementById("mb98033Answer").innerHTML = "Correct. There is no planet."
+  show_mb98033_info()
+}
+
+function show_mb98033_info(){
+  document.getElementById("mb98033Explanation").innerHTML = "This event was originally published as a point lens event." 
+  document.getElementById("mb98033Reference").innerHTML = "Gaudi, Albrow, An, et al. 2002 ApJ 566, 463"
+  document.getElementById("mb98033Reference").href = "http://adsabs.harvard.edu/abs/2002ApJ...566..463G"
+}
+</script>
+
+<h3> OGLE-1998-BLG-014 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=OB98014_lc.jpg::CAPTION=Lightcurve of OGLE-1998-BLG-014::CREDIT=Gaudi et al.2002.::NAME=Lightcurve of OGLE-1998-BLG-014
+        REF::AUTHORS=Gaudi et al.::YEAR=2002::JOURNAL=ApJ::VOLUME=566::PAGE=463::URL=http://adsabs.harvard.edu/abs/2002ApJ...566..463G
+    </td>
+    <td id="OB98014Answer"></td>
+  </tr>
+  <tr>
+    <td id="OB98014Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="OB98014Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Is there a planet?</p>
+<button id="OB98014yesBtn">Yes</button>
+<button id="OB98014noBtn">No</button>
+
+<script>
+document.getElementById("OB98014yesBtn").addEventListener("click", show_OB98014_yes)
+document.getElementById("OB98014noBtn").addEventListener("click", show_OB98014_no)
+
+function show_OB98014_yes() {
+  document.getElementById("OB98014Answer").innerHTML = "Previous authors did not note a planet."
+  show_OB98014_info()
+}
+
+function show_OB98014_no() {
+  document.getElementById("OB98014Answer").innerHTML = "Correct. There is no planet."
+ show_OB98014_info()
+}
+
+function show_OB98014_info(){
+  document.getElementById("OB98014Explanation").innerHTML = "This event was originally published as a point lens event." 
+  document.getElementById("OB98014Reference").innerHTML = "Gaudi, Albrow, An, et al. 2002 ApJ 566, 463"
+  document.getElementById("OB98014Reference").href = "http://adsabs.harvard.edu/abs/2002ApJ...566..463G"
+}
+</script>
+
+<h3> OGLE-1999-BLG-036 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=OB99036_lc.jpg::CAPTION=Lightcurve of OGLE-1999-BLG-036::CREDIT=Bond et al.2004::NAME=Lightcurve of OGLE-1999-BLG-036
+        REF::AUTHORS=Bond, Udalski, Jaroszy&nacute;ski, et al.::YEAR=2004::JOURNAL=ApJL::VOLUME=606::PAGE=155::URL=http://adsabs.harvard.edu/abs/2004ApJ...606L.155B
+    </td>
+    <td id="OB99036Answer"></td>
+  </tr>
+  <tr>
+    <td id="OB99036Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="OB99036Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Is there a planet?</p>
+<button id="OB99036yesBtn">Yes</button>
+<button id="OB99036noBtn">No</button>
+
+<script>
+document.getElementById("OB99036yesBtn").addEventListener("click", show_OB99036_yes)
+document.getElementById("OB99036noBtn").addEventListener("click", show_OB99036_no)
+
+function show_OB99036_yes() {
+  document.getElementById("OB99036Answer").innerHTML = "Previous authors did not note a planet."
+  show_OB99036_info()
+}
+
+function show_OB99036_no() {
+  document.getElementById("OB99036Answer").innerHTML = "Correct. There is no planet."
+ show_OB99036_info()
+}
+
+function show_OB99036_info(){
+  document.getElementById("OB99036Explanation").innerHTML = "This event was originally published as a point lens event." 
+  document.getElementById("OB99036Reference").innerHTML = "Gaudi, Albrow, An, et al. 2002 ApJ 566, 463"
+  document.getElementById("OB99036Reference").href = "http://adsabs.harvard.edu/abs/2002ApJ...566..463G"
+}
+</script>
+
+<h3> OGLE-2005-BLG-390 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=OB05390_lc.jpg::CAPTION=Lightcurve of OGLE-2005-BLG-390::CREDIT=Beaulieu et al.2006::NAME=Lightcurve of OGLE-2005-BLG-390
+        REF::AUTHORS=Beaulieu, Bennett, Fouqu&eacute;, et al.::YEAR=2006::JOURNAL=Nature::VOLUME=439::PAGE=437::URL=http://adsabs.harvard.edu/abs/2006Natur.439..437B
+    </td>
+    <td id="ob05390Answer"></td>
+  </tr>
+  <tr>
+    <td id="ob05390Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="ob05390Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Is there a planet?</p>
+<button id="ob05390yesBtn">Yes</button>
+<button id="ob05390noBtn">No</button>
+
+<script>
+document.getElementById("ob05390yesBtn").addEventListener("click", show_ob05390_yes)
+document.getElementById("ob05390noBtn").addEventListener("click", show_ob05390_no)
+
+function show_ob05390_yes() {
+  document.getElementById("ob05390Answer").innerHTML = "Yes! There's a planet!"
+  show_ob05390_info()
+}
+
+function show_ob05390_no() {
+  document.getElementById("ob05390Answer").innerHTML = "Check around t=3592. Do you see it now?"
+ show_ob05390_info()
+}
+
+function show_ob05390_info(){
+  document.getElementById("ob05390Explanation").innerHTML = "OGLE-2005-BLG-390 is a classic planetary signal: a little bump from the planet superposed on the underlying microlensing event due to the host star." 
+  document.getElementById("ob05390Reference").innerHTML = "Beaulieu, Bennett, Fouqu&eacute;, et al. 2006 Nature 439,437"
+  document.getElementById("ob05390Reference").href = "http://adsabs.harvard.edu/abs/2006Natur.439..437B"
+}
+</script>
+

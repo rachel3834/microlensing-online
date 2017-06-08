@@ -1,0 +1,77 @@
+NAME pspl_simulator
+TOOLINDEX 1
+  <h1 style="font-size:26px; text-align:center;">Point Source, Point Lens Microlensing Event</h1>
+
+  <div style="width:1200px; margin-left:auto; margin-right:auto; position:relative;">
+    <canvas id="lcurveCanvas" style="float:left; border:1px solid black;" width="550" height="400">
+      Your browser does not support HTML5 canvas. Please use a compatible browser.
+    </canvas>
+    <canvas id="lensPlaneCanvas" style="margin-left:10px; border:1px solid black;" width="550" height="400">
+    </canvas>
+  </div>
+  <div style="text-align:center; position:relative;">
+    t<sub>E</sub> <input type="range" id="tEslider" min="0.001" max="365" step="0.001" value="110.5">
+    <span id="tEreadout" style="display:inline-block;
+                     width:3.8em; text-align:right;">110.500</span> days
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    M<sub>l</sub> <input type="range" id="MlSlider" min="0.000001" max="15" step="0.000001" value="1">
+
+     <!-- subscript after M is sun symbol, to make solar mass symbol -->
+    <span id="MlReadout" style="display:inline-block;
+                     width:4.2em; text-align:right;">1.000</span> M<sub>&#9737;</sub>
+    &nbsp; &nbsp; &nbsp;
+    D<sub>s</sub> <input type="range" id="DsSlider" min="0.01" max="8.5" step="0.01" value="6.5">
+    <span id="DsReadout" style="display:inline-block;
+                    width:2.3em; text-align:right;">6.50</span> kpc
+  </div>
+  <div style="text-align:center; position:relative;">
+    u<sub>0</sub> <input type="range" id="u0slider" min="-2" max="2" step="0.001" value="0.1">
+    <span id="u0readout" style="display:inline-block;
+                   width:2.3em; text-align:right;">0.100</span>
+
+    <!-- I know this sort of spacing is bad practice. Need to change this.
+         Meant to make Dl an Ds sliders line up, since one's range limits the other's.-->
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    D<sub>l</sub> <input type="range" id="DlSlider" min="0.01" max="8.5" step="0.01" value="3">
+    <span id="DlReadout" style="display:inline-block;
+                    width:2.3em; text-align:right;">3.00</span> kpc
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    t<sub>0</sub> <input type="range" id="t0slider" min="-75" max="75" step="0.1" value="0">
+    <span id="t0readout" style="display:inline-block;
+                    width:2.3em; text-align:right;">15.0</span> days
+    &nbsp; &nbsp; &nbsp;
+    &mu;<sub>rel</sub> <input type="range" id="muSlider" min="0.01" max="10" step="0.01" value="4">
+    <span id="muReadout" style="display:inline-block;
+                    width:2.3em; text-align:right;">4.00</span> mas/yr
+  </div>
+
+  <br>
+  <div style="text-align:center; position:relative">
+    <input type="button" id="resetParams" value="Reset Parameters">
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    <p>Debug controls:</p>
+    <input type="button" id="xLeft" value="x<--">
+    <input type="button" id="xRight" value="x-->">
+    <input type="button" id="yUp" value="y ^">
+    <input type="button" id="yDown" value="y v">
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    <input type="button" id="xZoomIn" value="x+">
+    <input type="button" id="xZoomOut" value="x-">
+    <input type="button" id="yZoomIn" value="y+">
+    <input type="button" id="yZoomOut" value="y-">
+  </div>
+
+  <div style="text-align:center; position:relative;">
+    <input type="button" id="resetGraph" value="Reset Range/Scale">
+  </div>
+  <!-- <script src="PSPL_microlensing_event_main.js"></script> -->
+  <script src="/static/site/PSPL_microlensing_event.js"></script>
+  <script src="/static/site/PSPL_microlensing_event_lens_plane.js"></script>
