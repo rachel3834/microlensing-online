@@ -77993,6 +77993,59 @@ module.exports = E;
 }));
 
 },{}],523:[function(require,module,exports){
+/** Module containing Lens class
+  * Class represents lens object, including pixel location and radius, and
+  * ring radius
+  * @module Lens
+  */
+
+/**Lens class
+  * Represents lens object, including pixel location and radius, and ring radius
+  * @class Lens
+  */
+
+function Lens(xPixelScale, yPixelScale,
+              thetaXtoPixel, thetaYtoPixel,
+              xPos, yPos, pixelRadius, color, outlineWidth, outlineColor,
+              ringRadius_mas,
+              ringColor, ringWidth, dashedRingLength, dashedRingSpacing) {
+  this.updatePos = function(xPos, yPos) {
+    this.pos = {
+      x: xPos,
+      y: yPos,
+    };
+
+    this.pixelPos = {
+      x: thetaXtoPixel(xPos),
+      y: thetaYtoPixel(yPos),
+    };
+  }
+
+  this.updatePos(xPos, yPos);
+
+  this.pixelRadius = pixelRadius;
+
+  this.color = color;
+  this.outlineWidth = outlineWidth;
+  this.outlineColor = outlineColor;
+
+  this.ring = {
+    radius: ringRadius_mas,
+
+    pixelRadius: {
+      x: xPixelScale * ringRadius_mas,
+      y: yPixelScale * ringRadius_mas,
+    },
+    color: ringColor,
+    width: ringWidth,
+    dashedLength: dashedRingLength,
+    dashedSpacing: dashedRingSpacing,
+  };
+}
+
+module.exports = Lens;
+
+},{}],524:[function(require,module,exports){
 /** Almost Equals.
   * Function that checks if two numbers are almost equal.
   * @module almost-equals
@@ -78002,7 +78055,7 @@ module.exports = function almostEquals(a, b, epsilon=1e-12) {
   return (Math.abs(a - b) < epsilon);
 }
 
-},{}],524:[function(require,module,exports){
+},{}],525:[function(require,module,exports){
 /** Binary image modules.
   * Calculates binary image parameters for a particular source position.
   *
@@ -78017,24 +78070,23 @@ var almostEquals = require("./utils.js").almostEquals;
 
 /** bin_ima */
 function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
-  // console.log("Executing bin_ima function");
   if (timeDebug === true)
     console.time();
 
   // GM1 = mass of object 1 (as a % of total mass) e.g. 0.1
-  // GM2 = mass of object 2 (as a % of total mass) e.g  0.9
-  // D = half binary separation (between components) in Einstein radii
-  // XS, YS = x,y coordinates of the source (in x/R_E, y/R_E)
-  // var scope = {GM1: GM1, GM2: GM2, D: D, XS: XS, YS: YS,};
 
+  // GM2 = mass of object 2 (as a % of total mass) e.g  0.9
+
+  // D = half binary separation (between components) in Einstein radii
+
+  // XS, YS = x,y coordinates of the source (in x/R_E, y/R_E)
 
   // XI, YI, AI = image coordinates (x,y) and magnification for
   // each of the five (max) images
 
   // Complex coefficients ZC of the 5th order polynomial
   var ZC = new Array(6).fill(0);
-  // Image positions, complex notation
-  // ZIC = new Array(5).fill(0);
+
   // Image parity
   var IP = new Array(5).fill(0);
 
@@ -78042,19 +78094,12 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
 
   // Set up parameters for the calculation of the coefficients
 
-  // console.time();
-  // HSM = math.eval("(GM1 + GM2)/2.0", scope);    // half sum of masses
-  // HDM = math.eval("(GM2 - GM1)/2.0", scope);     // half difference of masses
+  // half sum of masses
   var HSM = math.multiply(math.add(GM1, GM2), 1/2.0);
+  // half difference of masses
   var HDM = math.multiply(math.subtract(GM2, GM1), 1/2.0);
-  // console.timeEnd();
 
-  // HSM = 1.5;
-  // HDM = 0.5;     // half difference of masses
-
-  // console.time();
   var HSDM = math.multiply(HSM, HDM);
-  // console.timeEnd();
   var HSSM = math.multiply(HSM, HSM);
   var HDDM = math.multiply(HDM, HDM);
   var Z1 = math.complex(math.multiply(-1,D), 0.0);
@@ -78068,127 +78113,175 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
   var ZSC = math.complex(XS, math.multiply(-1, YS));
   var ZSS = math.multiply(ZS, ZSC);
 
-  // console.time();
   // Complex coefficients
+
   // ----------------------------------------------------------------------------------
-  /******* Caclulating ZC[0] *********/
-  // ZC[0] = math.eval("Z1 * Z1 * (4 * HDDM * ZS + Z1 * (4 * HSDM + 4 * HDM * ZSS + Z1 * \
-  //                    (2 * HSM * ZSC + ZSS * ZSC - Z1 * (2 * HDM + Z1 * ZS) ) ) )", scope);
 
+  //------- Caclulating ZC[0] ----------
+
+  // ```
   // Z1 * Z1 * (4 * HDDM * ZS + Z1 * (4 * HSDM + 4 * HDM * ZSS + Z1 * (2 * HSM * ZSC + ZSS * ZSC - Z1 * (2 * HDM + Z1 * ZS) ) ) )
+  // ```
 
-  //  (2 * HDM + Z1 * ZS)
+  // ```
+  // (2 * HDM + Z1 * ZS)
+  // ```
   var ZC_0_paren1 = math.add(math.multiply(2, HDM), math.multiply(Z1, ZS))
 
+  // ```
   // (2 * HSM * ZSC + ZSS * ZSC - Z1 * (ZC_0_paren1) )
+  // ```
   var ZC_0_paren2 = math.subtract(math.add(math.multiply(math.multiply(2, HSM), ZSC), math.multiply(ZSS, ZSC)),
                                   math.multiply(Z1, ZC_0_paren1))
 
+  // ```
   // (4 * HSDM + 4 * HDM * ZSS + Z1 * (ZC_0_paren2) )
+  // ```
   var ZC_0_paren3 = math.add(math.add(math.multiply(4, HSDM), math.multiply(4, math.multiply(HDM, ZSS))),
                              math.multiply(Z1, ZC_0_paren2))
 
+  // ```
   // 4 * HDDM * ZS + Z1 * (ZC_0_paren3) )
+  // ```
   var ZC_0_paren4 = math.add(math.multiply(4, math.multiply(HDDM, ZS)), math.multiply(Z1, ZC_0_paren3))
 
+  // ```
   // Z1 * Z1 * (ZC_0_paren4)
+  // ```
   ZC[0] = math.multiply(Z1, math.multiply(Z1, ZC_0_paren4))
 
   // ----------------------------------------------------------------------------------
-  /******* Caclulating ZC[1] *********/
-  // ZC[1] = math.eval("-Z1 * (8 * HSDM * ZS + Z1 * (4 * HDDM + 4 * HSSM + 4 * HSM * ZSS + Z1 * \
-  //                     (4 * HDM * ZSC + Z1 * (ZSC * ZSC - Z1 * Z1) ) ) )", scope);
 
-  // -Z1 * (8 * HSDM * ZS + Z1 * (4 * HDDM + 4 * HSSM + 4 * HSM * ZSS + Z1 * (4 * HDM * ZSC + Z1 * (ZSC * ZSC - Z1 * Z1) ) ) )
+  // ------- Caclulating ZC[1] ---------
 
+  // ```
+  // ZC_1 = -Z1 * (8 * HSDM * ZS + Z1 * (4 * HDDM + 4 * HSSM + 4 * HSM * ZSS + Z1 * (4 * HDM * ZSC + Z1 * (ZSC * ZSC - Z1 * Z1) ) ) )
+  // ```
+
+  // ```
   // ZSC * ZSC - Z1 * Z1
+  // ```
   var ZC_1_paren1 = math.subtract(math.multiply(ZSC, ZSC), math.multiply(Z1, Z1));
 
+  // ```
   // 4 * HDM * ZSC + Z1 * (ZC_1_paren1)
+  // ```
   var ZC_1_paren2 = math.add(math.multiply(4, math.multiply(HDM, ZSC)), math.multiply(Z1, ZC_1_paren1))
 
+  // ```
   // 4 * HDDM + 4 * HSSM + 4 * HSM * ZSS + Z1 * (ZC_1_paren2)
+  // ```
   var ZC_1_paren3 = math.add(math.add(math.add(math.multiply(4, HDDM), math.multiply(4, HSSM)),
                                       math.multiply(4, math.multiply(HSM, ZSS))),
                              math.multiply(Z1, ZC_1_paren2));
 
+  // ```
   // 8 * HSDM * ZS + Z1 * (ZC_1_paren3)
+  // ```
   var ZC_1_paren4 = math.add(math.multiply(8, math.multiply(HSDM, ZS)),
                              math.multiply(Z1, ZC_1_paren3));
 
+  // ```
   //-Z1 * (ZC_1_paren4)
+  // ```
   ZC[1] = math.multiply(-1, math.multiply(Z1, ZC_1_paren4));
 
   // ----------------------------------------------------------------------------------
-  /******* Caclulating ZC[2] *********/
-  // ZC[2] = math.eval("4 * HSSM * ZS + Z1 * (4 * HSDM - 4 * HDM * ZSS + Z1 * \
-  //                     (-2 * ZSS * ZSC + Z1 * (4 * HDM + 2 * ZS * Z1 ) ) )", scope);
 
-  // 4 * HSSM * ZS + Z1 * (4 * HSDM - 4 * HDM * ZSS + Z1 * (-2 * ZSS * ZSC + Z1 * (4 * HDM + 2 * ZS * Z1 ) ) )
+  // ------- Caclulating ZC[2] ---------
 
+  // ```
+  // ZC_2 = 4 * HSSM * ZS + Z1 * (4 * HSDM - 4 * HDM * ZSS + Z1 * (-2 * ZSS * ZSC + Z1 * (4 * HDM + 2 * ZS * Z1 ) ) )
+  // ```
+
+  // ```
   // 4 * HDM + 2 * ZS * Z1
+  // ```
   var ZC_2_paren1 = math.add(math.multiply(4, HDM),
                              math.multiply(2, math.multiply(ZS, Z1)));
 
+  // ```
   // -2 * ZSS * ZSC + Z1 * (ZC_2_paren1)
+  // ```
   var ZC_2_paren2 = math.add(math.multiply(-2, math.multiply(ZSS, ZSC)),
                              math.multiply(Z1, ZC_2_paren1));
 
+  // ```
   //  4 * HSDM - 4 * HDM * ZSS + Z1 * (ZC_2_paren2)
+  // ```
   var ZC_2_paren3 = math.add(math.subtract(math.multiply(4, HSDM),
                                            math.multiply(4, math.multiply(HDM, ZSS))),
                              math.multiply(Z1, ZC_2_paren2));
 
+  // ```
   // 4 * HSSM * ZS + Z1 * (ZC_2_paren3)
+  // ```
   ZC[2] = math.add(math.multiply(4, math.multiply(HSSM, ZS)),
                    math.multiply(Z1, ZC_2_paren3));
 
   // ----------------------------------------------------------------------------------
-  /******* Caclulating ZC[3] *********/
-  // ZC[3] = math.eval("4 * HSM * ZSS + Z1 * (4 * HDM * ZSC + Z1 * (2 * ZSC * ZSC - 2 * Z1 * Z1) )", scope);
 
-  // 4 * HSM * ZSS + Z1 * (4 * HDM * ZSC + Z1 * (2 * ZSC * ZSC - 2 * Z1 * Z1) )
+  // ------- Caclulating ZC[3] ---------
 
+  // ```
+  // ZC_3 = 4 * HSM * ZSS + Z1 * (4 * HDM * ZSC + Z1 * (2 * ZSC * ZSC - 2 * Z1 * Z1) )
+  // ```
+
+  // ```
   // 2 * ZSC * ZSC - 2 * Z1 * Z1
+  // ```
   var ZC_3_paren1 = math.subtract(math.multiply(2, math.multiply(ZSC, ZSC)),
                                   math.multiply(2, math.multiply(Z1, Z1)))
 
+  // ```
   // 4 * HDM * ZSC + Z1 * (ZC_3_paren1)
+  // ```
   var ZC_3_paren2 = math.add(math.multiply(4, math.multiply(HDM, ZSC)),
                              math.multiply(Z1, ZC_3_paren1));
 
+  // ```
   // 4 * HSM * ZSS + Z1 * (ZC_3_paren2)
+  // ```
   ZC[3] = math.add(math.multiply(4, math.multiply(HSM, ZSS)),
                          math.multiply(Z1, ZC_3_paren2));
 
   // ----------------------------------------------------------------------------------
-  /******* Caclulating ZC[4] *********/
-  // ZC[4] = math.eval("ZSC * (ZSS -2 * HSM) - Z1 * (2 * HDM + ZS * Z1)", scope);
 
-  // ZSC * (ZSS -2 * HSM) - Z1 * (2 * HDM + ZS * Z1)
+  //------- Caclulating ZC[4] ---------
 
+  // ```
+  // ZC_4 = ZSC * (ZSS -2 * HSM) - Z1 * (2 * HDM + ZS * Z1)
+  // ```
+
+  // ```
   // ZSS -2 * HSM
+  // ```
   var ZC_4_paren1 = math.subtract(ZSS, math.multiply(2, HSM));
 
+  // ```
   // 2 * HDM + ZS * Z1
+  // ```
   var ZC_4_paren2 = math.add(math.multiply(2, HDM), math.multiply(ZS, Z1));
 
+  // ```
   //ZSC * (ZC_4_paren1) - Z1 * (ZC_4_paren2)
+  // ```
   ZC[4] = math.subtract(math.multiply(ZSC, ZC_4_paren1), math.multiply(Z1, ZC_4_paren2));
 
   // ----------------------------------------------------------------------------------
-  /******* Caclulating ZC[5] *********/
+
+  //------- Caclulating ZC[5] ---------
   // ZC[5] = math.eval("Z1 * Z1 - ZSC * ZSC", scope);
 
   // Z1 * Z1 - ZSC * ZSC
   ZC[5] = math.subtract(math.multiply(Z1, Z1), math.multiply(ZSC, ZSC));
 
   // ----------------------------------------------------------------------------------
-  M = 5                     // Number of possible solutions
-  // ZI = poly.polyroots(ZC)   // Find roots of the polynomial
-  // ZI = new Array(5).fill(0); // DEBUG: temp
 
-  // DEBUG: temp test
+  // Number of possible solutions
+  M = 5
+
+  // Find roots of the polynomial
 
   var ZC_real = [];
   var ZC_imag = [];
@@ -78197,12 +78290,9 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
     ZC_imag.push(math.complex(ZC[i]).im);
   }
 
-  // console.time();
-  // var ZC_roots = findRoots(ZC_real, ZC_imag);
   ZC_real_reverse = ZC_real.slice().reverse();
   ZC_imag_reverse = ZC_imag.slice().reverse();
   var ZC_roots = cpoly(ZC_real_reverse, ZC_imag_reverse);
-  // console.timeEnd();
 
   var ZI = [];
   for (var i=0; i<ZC_roots[0].length; i++) {
@@ -78214,61 +78304,81 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
     ZI.push(math.complex(ZC_roots[0][i], ZC_roots[1][i]));
   }
 
-  // ZI = [ math.complex(-1.11803399e+00, -8.26372302e-20),
-                        // math.complex(-1.38344197e-16, 8.66025404e-01),
-                        // math.complex(0.00000000e+00, 0.00000000e+00),
-                        // math.complex(8.12052344e-17, -8.66025404e-01),
-                        // math.complex(1.11803399e+00, -2.22044605e-16)]
-
+  /* Testing ZI:
+  ZI = [ math.complex(-1.11803399e+00, -8.26372302e-20),
+                        math.complex(-1.38344197e-16, 8.66025404e-01),
+                        math.complex(0.00000000e+00, 0.00000000e+00),
+                        math.complex(8.12052344e-17, -8.66025404e-01),
+                        math.complex(1.11803399e+00, -2.22044605e-16)]
+  */
   var SA = 0.0;
 
-  // result = [[0, 0, 0, 0],
-                        // [0, 0, 0, 0],
-                        // [0, 0, 0, 0],
-                        // [0, 0, 0, 0],
-                        // [0, 0, 0, 0]];
+  /* Testing result:
+  result = [[0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]];
+  */
 
 
   resultColumns = [];
 
   var XI = math.re(ZI);
-  resultColumns.push(XI); // result_0
+  // result_0
+  resultColumns.push(XI);
   var YI = math.im(ZI);
-  resultColumns.push(YI); // result_1
+  // result_1
+  resultColumns.push(YI);
 
   var ZR = ZI;
-  // ----------------------------------------------------------------------------------
-  /******* Caclulating ZP *********/
-  // WARNING: THIS MAY NOT BE REQUIRED? DELETE FOR SPEED IF SO
-  // return {ZR: ZR, ZC: ZC};
-  // mathjs eval syntax has one-based numbering, so array indicies increment by one
-  // ZP = math.eval("ZC[0+1] + ZR * (ZC[1+1] + ZR * (ZC[2+1] + ZR * (ZC[3+1] + \
-  //                                 ZR * (ZC[4+1] + ZR * ZC[5+1]) ) ) )", {ZR: math.matrix(ZR),
-  //                                                                                        ZC: math.matrix(ZC)}).toArray();
-
-  // ZC[0+1] + ZR * (ZC[1+1] + ZR * (ZC[2+1] + ZR * (ZC[3+1] + ZR * (ZC[4+1] + ZR * ZC[5+1]) ) ) )
-
-  // ZC[4+1] + ZR * ZC[5+1]
-
-  /*
-
-  var ZP_paren1 = math.add(ZC[4], math.multiply(ZR, ZC[5]));
-
-  // ZC[3+1] + ZR * (ZR_paren1)
-  var ZP_paren2 = math.add(ZC[3], math.multiply(ZR, ZP_paren1));
-
-  // ZC[2+1] + ZR * (ZR_paren2)
-  var ZP_paren3 = math.add(ZC[2], math.multiply(ZR, ZP_paren2));
-
-  // ZC[1+1] + ZR * (ZR_paren3)
-  var ZP_paren4 = math.add(ZC[1], math.multiply(ZR, ZP_paren3));
-
-  // ZC[0+1] + ZR * (ZR_paren4)
-  var ZP = math.add(ZC[0], math.multiply(ZR, ZP_paren4));
-
-  */
 
   // ----------------------------------------------------------------------------------
+
+  // ------- Caclulating ZP ---------
+
+  // WARNING: Code should NOT actually calculate this.
+
+  // Python code does this, but we don't need to to get results we want.
+
+  // ZP calculation flag should be set to false for our purposes.
+
+  // If you want to test this or calculate ZP for some reason,
+  // set this flag to true.
+  var doZPcalculation = false;
+  if (doZPcalculation === true) {
+    // ```
+    // ZP = ZC[0] + ZR * (ZC[1] + ZR * (ZC[2] + ZR * (ZC[3] + ZR * (ZC[4] + ZR * ZC[5]) ) ) )
+    // ```
+
+    // ```
+    // ZC[4] + ZR * ZC[5]
+    // ```
+    var ZP_paren1 = math.add(ZC[4], math.multiply(ZR, ZC[5]));
+
+    // ```
+    // ZC[3] + ZR * (ZR_paren1)
+    // ```
+    var ZP_paren2 = math.add(ZC[3], math.multiply(ZR, ZP_paren1));
+
+    // ```
+    // ZC[2] + ZR * (ZR_paren2)
+    // ```
+    var ZP_paren3 = math.add(ZC[2], math.multiply(ZR, ZP_paren2));
+
+    // ```
+    // ZC[1] + ZR * (ZR_paren3)
+    // ```
+    var ZP_paren4 = math.add(ZC[1], math.multiply(ZR, ZP_paren3));
+
+    // ```
+    // ZC[0] + ZR * (ZR_paren4)
+    // ```
+    var ZP = math.add(ZC[0], math.multiply(ZR, ZP_paren4));
+    // ----------------------------------------------------------------------------------
+  }
+
+  // Image positions, complex notation
   var ZIC = math.conj(ZI);
 
   var ZDC1 = math.subtract(ZIC, Z1C);
@@ -78289,7 +78399,8 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
   var VJ = math.subtract(1, CJ);
   var AJ = math.dotPow(VJ, -1); // 1/VJ
   var AI = AJ;
-  resultColumns.push(AI); // result_2
+  // result_2
+  resultColumns.push(AI);
   SA = math.add(SA, AJ);
 
   for (var i=0; i<M; i++) {
@@ -78297,37 +78408,42 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
     var firstComparison = compareComplexNumToZero(AJ[i]);
     var secondComparison = compareComplexNumToZero(math.subtract(math.abs(math.subtract(ZE[i], ZS)), EP));
 
-    // console.log(`first comparison: ${firstComparison}`);
-    // console.log(`second comparison: ${secondComparison}`);
     // case #1
+    // ```
     // if (AJ[I] < 0 and not np.abs(ZE[I] - ZS) - EP > 0):
+    // ```
     if (firstComparison === -1 && secondComparison < 1) {
-      // console.log("adding -1 to IP");
       IP[i] = -1;
     }
 
     // case #2
+    // ```
     // if (AJ[I] == 0 and np.abs(ZE[I] - ZS) - EP > 0):
+    // ```
     if (firstComparison === 0 && secondComparison === 1) {
-      // console.log("adding 0 to IP");
       IP[i] = 0;
     }
 
     // case #3
+    // ```
     // if (AJ[I] > 0 and not np.abs(ZE[I] - ZS) - EP > 0):
+    // ```
     if (firstComparison === 1 && secondComparison < 1) {
-      // console.log("adding +1 to IP");
       IP[i] = 1;
     }
   }
-  // IP = math.complex(IP); // DEBUG: temp? maybe not needed or not best way?
-  resultColumns.push(IP); // result_3
+  /*
+  // DEBUG: This doesn't appear to be needed, though I'm not entirely sure?
+  IP = math.complex(IP);
+  */
+  // result_3
+  resultColumns.push(IP);
 
   results = math.transpose(resultColumns);
 
   if (timeDebug === true)
     console.timeEnd();
-  // return scope; // DEBUG: temp
+
   return results;
 }
 
@@ -78347,8 +78463,6 @@ function compareComplexNumToZero(num) {
     var comparisonNum = complexNum.re;
   }
 
-  // console.log(`comparisonNum is: ${comparisonNum}`);
-
   if (almostEquals(comparisonNum, 0) === true) {
     return 0;
   }
@@ -78360,17 +78474,13 @@ function compareComplexNumToZero(num) {
    console.log(`ERROR: comparisonNum is: ${comparisonNum}`);
 }
 
-
-// var scope = bin_ima(); // debug
-
 module.exports = {
   bin_ima: bin_ima,
-  // scope: scope, // debug
   almostEquals: almostEquals,
   compareComplexNumToZero: compareComplexNumToZero,
 };
 
-},{"./utils.js":531,"mathjs":6,"poly-roots":519}],525:[function(require,module,exports){
+},{"./utils.js":533,"mathjs":6,"poly-roots":519}],526:[function(require,module,exports){
 /** Binary lens module.
   * Calculates binary image parameters for a range of source positions.
   *
@@ -78389,28 +78499,25 @@ var almostEquals = require("./utils.js").almostEquals;
 /** plot_binary */
 function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
                              minXLM=-3, maxXLM=3, NPN=40, NR=30000,
-                             DR=0.0001, debug=false) {
-  if (debug === true)
+                             DR=0.0001, timeDebug=false) {
+
+  // NPN: the number of points to use for the trajectory
+  // timeDebug: timing debug flag -- if on, records execution time of function
+  // and outputs to console
+
+  if (timeDebug === true)
     console.time();
-  // console.log("executing plot_binary function");
-  // console.log(`${GM1}, ${GM2}, ${D}, ${cof1}, ${cof2}`)
 
-  // var scope = {GM1: GM1, GM2: GM2, D: D, cof1: cof1, cof2: cof2,
-  //                    minXLM:minXLM, maxXLM:maxXLM, NPN:NPN};
-
-  // # Initialize arrays
-  // # y,x coords of source and magnification ASA
-  // # Define the number of points (NPN) to use for the trajectory
-  // NPN = 40;
-  // var XSA = new Array(NPN).fill(0);
-  // var YSA = new Array(NPN).fill(0);
+  // Initialize array
   var ASA = new Array(NPN).fill(0);
 
-  // adapted from python: AIA = np.zeros(shape = (5, NPN))
-  // var AIA = [];
-  // for (var i=0; i<5; i++) {
-  //   AIA.push(new Array(NPN).fill(0));
-  // }
+  /* adapted from Python code:
+    AIA = np.zeros(shape = (5, NPN))
+    var AIA = [];
+    for (var i=0; i<5; i++) {
+      AIA.push(new Array(NPN).fill(0));
+    }
+  */
 
   var XIA = [];
   for (var i=0; i<5; i++) {
@@ -78420,22 +78527,25 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
   for (var i=0; i<5; i++) {
     YIA.push(new Array(NPN));
   }
+  var IMPA = [];
+  for (var i=0; i<5; i++) {
+    IMPA.push(new Array(NPN));
+  }
 
   GM2 = 1 - GM1
 
-  // console.time();
   var causticAndCrit = findCausticAndCritCurves(GM1, GM2, D, NR, DR);
-  // console.timeEnd();
 
-  // # Evaluate the (linear) trajectory path
-  // # NXS is the trajectory length (NPN points)
+  // Evaluate the (linear) trajectory path
+  // NXS is the trajectory length (NPN points)
   var NXS = NPN;
-  // XLM = 3;
   var XSC = numeric.linspace(minXLM, maxXLM, NXS);
+  // x coord of source and magnification ASA
   var XSA = XSC;
 
-  // # Specify the trajectory
+  // Specify the trajectory
   var YSC = math.add(math.multiply(-cof1, XSC), cof2)
+  // y coords of source and magnification ASA
   var YSA = YSC;
 
   var NT = 1;
@@ -78447,22 +78557,13 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
   var XS = math.add(XSC, math.multiply(RC, math.cos(T)))
   var YS = math.add(YSC, math.multiply(RC, math.sin(T)));
 
-  // # Evaluate the magnification
-  // # Loop over source positions
+  // Evaluate the magnification
+  // Loop over source positions
   for (var IXS=0; IXS<NXS; IXS++) {
-    // # Calculate positions of images given a source position
-    // console.log(`GM1: ${GM1}`);
-    // console.log(`GM2: ${GM2}`);
-    // console.log(`D: ${D}`);
-    // console.log(`XS[IXS]: ${XS[IXS]}`);
-    // console.log(`YS[IXS]: ${YS[IXS]}`);
+    // Calculate positions of images given a source position
 
     XS[IXS] = math.round(XS[IXS], 12);
     YS[IXS] = math.round(YS[IXS], 12);
-    // console.log(`rounded XS[IXS]: ${XS[IXS]}`);
-    // console.log(`rounded YS[IXS]: ${YS[IXS]}`);
-
-
 
     imageparms = bin_ima.bin_ima(GM1, GM2, D,
                                        XS[IXS], YS[IXS]);
@@ -78473,23 +78574,18 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
     var AI = transposed_imageparms[2];
     var IMP = transposed_imageparms[3];
 
-    // console.log(`XI: ${XI}`);
-    // console.log(`YI: ${YI}`);
-    // console.log(`AI: ${AI}`);
-    // console.log(`IMP: ${IMP}`);
-
-    // console.log("---------------------------");
-
-    // for (var i in imageparms)
-      // console.log(imageparms[i]);
-
-    // # Loop over all images
+    // Loop over all images
     for (var IM=0; IM<5; IM++) {
-      // AIA[IM][IXS] = AI[IM];
+      /*
+      The python code does this, but not needed to get the results we want:
+      AIA[IM][IXS] = AI[IM];
+      */
       ASA[IXS] = math.add(ASA[IXS], math.multiply(IMP[IM], AI[IM]));
 
       XIA[IM][IXS] = XI[IM];
       YIA[IM][IXS] = YI[IM];
+
+      IMPA[IM][IXS] = IMP[IM];
     }
   }
 
@@ -78499,11 +78595,13 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
   // XIA/YIA row: x index (ranges from 0 to NPN)
   var normalizedImagePositions = {x: XIA, y: YIA};
 
-  if (debug === true) {
+  if (timeDebug === true) {
     console.timeEnd();
     console.log('done');
 
-    /*console.log("XSA:");
+    /*
+    Optional output for timeDebug:
+    console.log("XSA:");
     for (var i in XSA) {
       console.log(XSA[i]);
     }
@@ -78512,23 +78610,25 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
     console.log("ASA:");
     for (var i in ASA) {
       console.log(ASA[i]);
-    }*/
+    }
+    */
+  }
 
-    // return scope; // DEBUG: temp
-  }
-  else {
-    return {
-      normalizedSourcePositions: normalizedSourcePositions,
-      normalizedImagePositions: normalizedImagePositions,
-      magnifs: ASA,
-      causticAndCrit: causticAndCrit,
-    };
-  }
+  return {
+    normalizedSourcePositions: normalizedSourcePositions,
+    normalizedImagePositions: normalizedImagePositions,
+    imageParities: IMPA,
+    magnifs: ASA,
+    causticAndCrit: causticAndCrit,
+  };
 }
 
 /** findCausticAndCritCurves */
 function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
                                   DR=0.0001) {
+  // NR (Default: 30000): Points to use to plot critical curves and caustics
+  // DR (Default: 0.0001): Used to define the sampling density of the caustics
+
   var IP = -1;
   var D2 = D * D;
   var D4 = D2 * D2;
@@ -78539,11 +78639,8 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     DR = 3.0/NR;
   }
 
-  // var NR = 30000; // # Points to use to plot critical curves and caustics
-  // var DR = 0.0001; // # Used to define the sampling density of the caustics
-
-  // # Estimate criticals and caustics
-  // # Perform repeat calculations with masses swapped over
+  // Estimate criticals and caustics
+  // Perform repeat calculations with masses swapped over
   var critical_points_x1 = [];
   var critical_points_x2 = [];
   var critical_points_y1 = [];
@@ -78555,7 +78652,6 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
   var caustic_points_y2 = [];
   for (var IQ=0; IQ<2; IQ++) {
     var IR = _.range(1, NR);
-    // var IR = Array(NR).fill().map((e,i)=>i+1);
 
     var R = numeric.mul(IR, DR);
     var R2 = numeric.mul(R, R);
@@ -78567,59 +78663,108 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     var R2P = numeric.add(R2, 4 * D2);
     var R4M = numeric.sub(R4, GM2S);
 
+    // Polynomial coeffs A, B, C
+    // as described in Schneider & Weiss 1986 (eqn 9b)
+
+    // Since these are arrays, calculations must use numeric package functions,
+    // and so the equations are broken up into steps for readability.
+
+    // The original coeff equation is commented at the top of each section,
+    // and each step is commented with the part of the equation that it
+    // corresponds to.
+
+    // ```
     // A = 16 * D2 * R2 * (R4M - GMXM)
+    // ```
+
     // 16 * D2 * R2
     var A_part1 = numeric.mul(16 * D2, R2)
+    // ```
     // (R4M - GMXM)
+    // ```
     var A_paren1 = numeric.sub(R4M, GMXM);
+    // ```
     // A_part1 * A_paren1
+    // ```
     var A = numeric.mul(A_part1, A_paren1);
 
-    // 8 * R * D * (GMXM * R2 - (R2 + 4 * D2) * R4M)
+    // ```
+    // B = 8 * R * D * (GMXM * R2 - (R2 + 4 * D2) * R4M)
+    // ```
+
+    // ```
     // (R2 + 4 * D2)
+    // ```
     var B_paren1 = numeric.add(R2, 4 * D2);
 
+    // ```
     // GMXM * R2 - (B_paren1) * R4M
+    // ```
     var B_paren2 = numeric.sub(numeric.mul(GMXM, R2),
                                  numeric.mul(B_paren1, R4M));
+    // ```
     // 8 * R * D * (B_paren2)
+    // ```
     var B = numeric.mul(8 * D,
                         numeric.mul(R,
                                     B_paren2));
 
+    // ```
     //  C = (R2P * R2P) * R4M - GM1S * R4
     //      - 2 * GMXM * R2 * (R2 + 4 * D2)
+    // ```
 
+    // ```
     // (R2P * R2P)
+    // ```
     var C_paren1 = numeric.mul(R2P, R2P);
+    // ```
     // (R2 + 4 * D2)
+    // ```
     var C_paren2 = numeric.add(R2, 4 * D2);
+    // ```
     // (C_paren1) * R4M - GM1S * R4
+    // ```
     var C_part1 = numeric.sub(numeric.mul(C_paren1, R4M),
                                 numeric.mul(GM1S, R4));
+    // ```
     // 2 * GMXM * R2 * (C_paren2)
+    // ```
     var C_part2 = numeric.mul(2 * GMXM,
                               numeric.mul(R2,
                                           C_paren2));
+    // ```
     // C_part1 - C_part2
+    // ```
     var C = numeric.sub(C_part1, C_part2);
 
+    // Python code modifies C again after this:
+    // ```
     // C = C + 16 * GM1 * GM2 * D2 * R2
+    // ```
+
+    // ```
     // 16 * GM1 * GM2 * D2 * R2
+    // ```
     var C_product = numeric.mul(16 * D2 * GM1 * GM2, R2);
+
+    // ```
     // C + C_product
+    // ```
     C = numeric.add(C, C_product);
 
-    // # Calculate the determinant DT
+    // Calculate the determinant DT
+    // ```
     // DT = B * B - 4 * A * C
+    // ```
     var DT = numeric.sub(numeric.mul(B,
                                      B),
                          numeric.mul(4,
                                      numeric.mul(A,
                                                  C)));
 
-    // # When the determinant is >= 0 calculate the values of cos(theta) C1, C2
-    // # Modify relevant arrays accordingly
+    // When the determinant is >= 0 calculate the values of cos(theta) C1, C2
+    // Modify relevant arrays accordingly
     var DTge0 = [];
     var DTge0_sqrt = [];
     var DTge0_neg_sqrt = [];
@@ -78628,7 +78773,6 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     var B_DTgt0 = [];
     var A_DTgt0 = [];
     for (var i=0; i<DT.length; i++) {
-      // might need "almostEquals" here
       if (DT[i] >= 0 || almostEquals(DT[i], 0) === true) {
         DTge0.push(DT[i]);
         var DT_element_sqrt = Math.sqrt(DT[i]);
@@ -78641,7 +78785,7 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
       }
     }
 
-    // # Evaluate C1, C2
+    // Evaluate C1, C2
     var C_denominator = numeric.mul(2, A_DTgt0);
     var C1_numerator = numeric.sub(DTge0_sqrt, B_DTgt0)
     var C2_numerator = numeric.sub(DTge0_neg_sqrt, B_DTgt0);
@@ -78650,8 +78794,8 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     var C2 = numeric.div(C2_numerator, C_denominator);
 
 
-    // # When abs(C1) or abs(C2) are <=1 append point to critical and caustic curves
-    // # Isolate the indexes of where the absolute values of C1 and C2 are <= 1
+    // When abs(C1) or abs(C2) are <=1 append point to critical and caustic curves
+    // Isolate the indexes of where the absolute values of C1 and C2 are <= 1
     var idxC1le1 = [];
     var idxC2le1 = [];
 
@@ -78665,8 +78809,9 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
       }
     }
 
-    // # Set up subsamples from relevant arrays
-    var Rmod2_C1 = []; // Debug: optimize by setting array length from start?
+    // Set up subsamples from relevant arrays
+    // Debug: optimize by setting array length from start?
+    var Rmod2_C1 = [];
     var R2mod2_C1 = [];
     var C1le1 = [];
     for (var i=0; i<idxC1le1.length; i++) {
@@ -78704,7 +78849,7 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     var Y_C1 = Y1;
     var Y_C2 = Y2;
 
-    // # Append to critical points
+    // Append to critical points
     var PXCRIT_C1 = numeric.mul(IP, X_C1);
     var PYCRIT_C1 = numeric.mul(IP, Y_C1);
 
@@ -78716,12 +78861,6 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     // a gap we should jump over if connecting points with lines
     // when drawing
     var C1_C2_transitionIndex = PXCRIT_C1.length;
-
-    // var critical_points_x1 = PXCRIT_C1.concat(PXCRIT_C2);
-    // var critical_points_x2 = critical_points_x1; // Debug: make a copy of the array?
-    //
-    // var critical_points_y1 = PYCRIT_C1.concat(PYCRIT_C2);
-    // var critical_points_y2 = numeric.neg(PYCRIT_C1).concat(numeric.neg(PYCRIT_C2));
 
     critical_points_x1 = critical_points_x1.concat(PXCRIT_C1);
     critical_points_x1 = critical_points_x1.concat(PXCRIT_C2);
@@ -78735,7 +78874,7 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     critical_points_y2 = critical_points_y2.concat(numeric.neg(PYCRIT_C1));
     critical_points_y2 = critical_points_y2.concat(numeric.neg(PYCRIT_C2));
 
-    // # Set up arrays to use for mapping to caustics
+    // Set up arrays to use for mapping to caustics
     var RD2_C1 = numeric.add(R2mod2_C1, 4 * D2);
     var RD2_C2 = numeric.add(R2mod2_C2, 4 * D2);
 
@@ -78751,7 +78890,7 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     var DN2_C1 = R2mod2_C1;
     var DN2_C2 = R2mod2_C2;
 
-    // # Map critical curves to caustics
+    // Map critical curves to caustics
     var XC_C1_part1 = numeric.mul(GM1, numeric.div(UP1_C1, DN1_C1));
     var XC_C1_part2 = numeric.mul(GM2, numeric.div(UP2_C1, DN2_C1));
     var XC_C1 = numeric.sub(numeric.sub(X1, XC_C1_part1), XC_C1_part2);
@@ -78793,21 +78932,12 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
     caustic_points_y2 = caustic_points_y2.concat(numeric.neg(PYCAUS_C1));
     caustic_points_y2 = caustic_points_y2.concat(numeric.neg(PYCAUS_C2));
 
-    // var caustic_points_x1 = PXCAUS_C1.concat(PXCAUS_C2);
-    // var caustic_points_x2 = caustic_points_x1; // Debug: make a copy of the array?
-    //
-    // var caustic_points_y1 = PYCAUS_C1.concat(PYCAUS_C2);
-    // var caustic_points_y2 = numeric.neg(PYCAUS_C1).concat(numeric.neg(PYCAUS_C2));
-
-    // # Swap the masses and repeat the calculation
+    // Swap the masses and repeat the calculation
     var GM0 = GM1;
     GM1 = GM2;
     GM2 = GM0;
     IP = -IP;
   }
-  // window.alert("PXCAUS_C1 length: " + PXCAUS_C1.length);
-  // window.alert("PXCAUS_C2 length: " + PXCAUS_C2.length);
-  // window.alert("caustic_points_x1 length: " + caustic_points_x1.length);
 
   var caustic = {
     x1: caustic_points_x1,
@@ -78835,10 +78965,30 @@ function findCausticAndCritCurves(GM1=0.5, GM2=0.5, D=0.5, NR=30000,
 
 module.exports = {
   plot_binary: plot_binary,
-  // findCausticAndCritCurves: findCausticAndCritCurves,
 };
 
-},{"./bin-ima.js":524,"./utils.js":531,"lodash":4,"mathjs":6,"numeric":518}],526:[function(require,module,exports){
+},{"./bin-ima.js":525,"./utils.js":533,"lodash":4,"mathjs":6,"numeric":518}],527:[function(require,module,exports){
+/** Ellipse.
+  * Draw an ellipse (but don't actually perform the stroke or fill) on a
+  * Canvas element.
+  * Unlike the native JS ellipse ellipse function,
+  * this is compatible with Firefox.
+  * @module ellipse
+  */
+
+module.exports = function ellipse(context, xPos, yPos, xRadius, yRadius) {
+  context.save();
+
+  context.translate(xPos, yPos);
+  context.scale(xRadius, yRadius);
+
+  context.beginPath();
+  context.arc(0, 0, 1, 0, Math.PI * 2, false);
+
+  context.restore();
+}
+
+},{}],528:[function(require,module,exports){
 /** Error handler module.
   * Handles exceptions.
   *
@@ -78860,15 +79010,20 @@ module.exports = function handleError(ex) {
   }
 }
 
-},{}],527:[function(require,module,exports){
+},{}],529:[function(require,module,exports){
 /** Main module.
   * Main module for interactive microlensing simulator.
   *
   * @module main
   */
-// console.log = function() {} // uncomment this to disable all console.log messages
 
-var eventModule = require("./psbl-microlensing-event.js")
+// set flag to true to disable all console output for performance
+var disableConsole = false;
+
+if (disableConsole === true)
+   console.log = function() {};
+
+var eventModule = require("./psbl-microlensing-event.js");
 var lensPlaneModule = require("./psbl-microlensing-event-lens-plane.js");
 var animationModule = require("./psbl-microlensing-event-animation.js");
 
@@ -78882,7 +79037,7 @@ function init() {
 
 window.onload = init;
 
-},{"./psbl-microlensing-event-animation.js":528,"./psbl-microlensing-event-lens-plane.js":529,"./psbl-microlensing-event.js":530}],528:[function(require,module,exports){
+},{"./psbl-microlensing-event-animation.js":530,"./psbl-microlensing-event-lens-plane.js":531,"./psbl-microlensing-event.js":532}],530:[function(require,module,exports){
 /** Animation module.
   * Handles animated playback of microlensing event.
   *
@@ -78891,17 +79046,16 @@ window.onload = init;
 
 console.log("Executing psbl-microlensing-event-animation.js");
 
-// var eventModule = PSBL_microlensing_event;
-// var lensPlaneModule = PSBL_microlensing_event_lens_plane;
-
 var eventModule = require("./psbl-microlensing-event.js");
 var lensPlaneModule = require("./psbl-microlensing-event-lens-plane.js");
 
 var almostEquals = require("./utils.js").almostEquals;
 
-var initialized = false; // whether module init function has been executed
+// whether module init function has been executed
+var initialized = false;
 
-var fps = 60; // frames rendered per second (ideally; runs slow in non-Chrome browsers now)
+// frames rendered per second (ideally; runs slow in non-Chrome browsers now)
+var fps = 60;
 
 var time;
 var timer;
@@ -78909,8 +79063,10 @@ var running = false;
 
 var minTime;
 var maxTime;
-var animationStep = 0.1; // (days) time step per frame of animation
-var playbackControlStep = 5; // (days) time step for "stepBack" and "stepForward" playback commands
+// (days) time step per frame of animation
+var animationStep = 0.1;
+// (days) time step for "stepBack" and "stepForward" playback commands
+var playbackControlStep = 5;
 
 var timeReadout = document.getElementById("timeReadout");
 var stepBackButton = document.getElementById("stepBack");
@@ -78919,8 +79075,9 @@ var pauseButton = document.getElementById("pause");
 var stepForwardButton = document.getElementById("stepForward");
 var timeResetButton = document.getElementById("timeReset");
 
-var roundingErrorThreshold = 1e-12; // if values passed to almostEquals have a smaller difference
-                                    // than this, they will pass as "almost" equal
+// if values passed to almostEquals have a smaller difference
+// than this, they will pass as "almost" equal
+var roundingErrorThreshold = 1e-12;
 
 /** init */
 function init() {
@@ -79000,6 +79157,7 @@ function updateTime(newTime) {
   time = newTime;
 
   // update time readout on page
+
   // makes sure we display "0.00" instead of "-0.00" if 0 time has rounding error
   var newTimeReadout = Number(time).toFixed(4);
   if (almostEquals(time, 0) === true) {
@@ -79012,8 +79170,10 @@ function updateTime(newTime) {
 function animateFrame() {
   console.log("animating frame");
 
-  eventModule.plotLightcurve(time); // animate frame for lightcurve
-  animateFrameSource(); // animate frame for source movement on lens plane figure
+  // animate frame for lightcurve
+  eventModule.plotLightcurve(time);
+  // animate frame for source movement on lens plane figure
+  animateFrameSource();
   console.log("TIME: " + time);
   var u = eventModule.getU(eventModule.getTimeTerm(time));
   var magnif = eventModule.getMagnif(time);
@@ -79074,7 +79234,9 @@ function updatePlayback(command="play", updateFrame=true) {
     if (animationStep >= 0)
       newTime = minTime;
     // if playing backwards (negative step), reset to maximum time
-    else // animationStep < 0
+
+    // animationStep < 0
+    else
       newTime = maxTime;
 
     updateTime(newTime);
@@ -79085,8 +79247,11 @@ function updatePlayback(command="play", updateFrame=true) {
 
 module.exports = {
   //initialization
-  init: init, // initialization function
-  get initialized() { return initialized; }, // whether initialization is done
+
+  // initialization function
+  init: init,
+  // whether initialization is done
+  get initialized() { return initialized; },
 
   get running() { return running; },
   get time() { return time; },
@@ -79095,7 +79260,7 @@ module.exports = {
   animateFrame: animateFrame,
 }
 
-},{"./psbl-microlensing-event-lens-plane.js":529,"./psbl-microlensing-event.js":530,"./utils.js":531}],529:[function(require,module,exports){
+},{"./psbl-microlensing-event-lens-plane.js":531,"./psbl-microlensing-event.js":532,"./utils.js":533}],531:[function(require,module,exports){
 /** Lens Plane Module.
   * Handles calculation and drawing of the lens plane plot for the microlensing
   * event.
@@ -79114,8 +79279,11 @@ var _ = require("lodash");
 var eventModule = require("./psbl-microlensing-event.js")
 
 var almostEquals = require("./utils.js").almostEquals;
+var ellipse = require("./utils.js").ellipse;
+var Lens = require("./Lens.js");
 
-var initialized = false; // whether module init function has been executed
+// whether module init function has been executed
+var initialized = false;
 
 // base variables (borders)
 var picLeftBorder = 50;
@@ -79131,56 +79299,14 @@ var picBottomTrail = 10;
 
 // plot range/scale
 var dayWidth = 30;
-// var thetaXwidth = 4/3;
 var thetaXwidth = 4;
-// var thetaYheight = 1; // mas
 var thetaYheight = 3;
 var xAxisInitialDay = -15;
-// var xAxisInitialThetaX = -(4/3)/2
 var xAxisInitialThetaX = -(4)/2
-// var yAxisInitialThetaY = -0.5; // half of thetaYheight so that 0 is the middle
+// half of thetaYheight so that 0 is the middle
 var yAxisInitialThetaY = -3/2;
-// var xGridStepDefault = 0.1;
 var xGridStepDefault = 0.25;
-// var yGridStepDefault = 0.1;
 var yGridStepDefault = 0.25;
-
-/** A lens -- one of the two binary lenses.
-  * @class Lens */
-function Lens(xPos, yPos, radius, color, outlineWidth, outlineColor,
-              ringRadiusX, ringRadiusY,
-              ringColor, ringWidth, dashedRingLength, dashedRingSpacing) {
-  this.updatePos = function(xPos, yPos) {
-    this.pos = {
-      x: xPos,
-      y: yPos,
-    };
-
-    this.pixelPos = {
-      x: thetaXtoPixel(xPos),
-      y: thetaYtoPixel(yPos),
-    };
-  }
-
-  this.updatePos(xPos, yPos);
-
-  this.radius = 2;
-
-  this.color = "red";
-  this.outlineWidth = outlineWidth;
-  this.outlineColor = outlineColor;
-
-  this.ring = {
-    radius: {
-      x: ringRadiusX,
-      y: ringRadiusY,
-    },
-    color: ringColor,
-    width: ringWidth,
-    dashedLength: dashedRingLength,
-    dashedSpacing: dashedRingSpacing,
-  };
-}
 
 var lens1;
 var lens2;
@@ -79204,13 +79330,16 @@ var dashedPathWidth = 2;
 var dashedPathLength = 8;
 var dashedPathSpacing = 10;
 
-var sourceColor = "#004d4d"; // darker teal
+// darker teal
+var sourceColor = "#004d4d";
 // initialized elsewhere in function
-var sourceRadius; // mas
+
+// mas
+var sourceRadius;
 var sourceOutlineWidth = 2;
 var sourceOutlineColor = "teal";
 
-var lensRadius = 2;
+var lensPixelRadius = 2;
 var lensColor = "red";
 var lensOutlineWidth = 2;
 var lensOutlineColor = lensColor;
@@ -79233,11 +79362,15 @@ var lensedImagePlusOutlineColor = "fuchsia";
 var lensedImageMinusColor = "green";
 var lensedImageMinusOutlineColor = "lime";
 
-var causticColor1 = "fuchsia";
+// when not debugging, caustic colors 1 & 2 should be the same
+var causticColor1 = "purple";
 var causticColor2 = "purple";
-// causticColor1 = causticColor2; // when not debugging, these should be the same
-var critColor1 = "orangeRed";
+
+
+// when not debugging, crit colors 1 & 2 should be the same
+var critColor1 = "crimson";
 var critColor2 = "crimson";
+
 // critColor1 = critColor2; // when not debugging, these should be the same
 var causticPointSizeX = 2;
 var causticPointSizeY = 2;
@@ -79246,8 +79379,7 @@ var critPointSizeY = 2;
 
 var binaryLensedImagePointSizeX = 2;
 var binaryLensedImagePointSizeY = 2;
-// var binaryLensedImageOutlineColors = ["aqua", "teal", "orange", "black", "pink"];
-// var binaryLensedImageFillColors = ["pink", "aqua", "teal", "orange", "black"];
+
 var binaryLensedImageOutlineColors = ["black", "black", "black", "black", "black"];
 var binaryLensedImageFillColors = ["orange", "orange", "orange", "orange", "orange"];
 
@@ -79256,12 +79388,15 @@ var tickLabelFont = "8pt Arial";
 var tickLabelColor = "black";
 var tickLabelAlign = "center";
 var tickLabelBaseline = "middle";
-var tickLabelSpacing = 7; // spacking between tick label and end of trailing gridline
+// spacing between tick label and end of trailing gridline
+var tickLabelSpacing = 7;
 
 // base variables (axis labels)
 var xDayLabel = "time (days)";
-var xLabel = String.fromCharCode(952) + "x (mas)"; // thetaX
-var yLabel = String.fromCharCode(952) + "y (mas)"; // thetaY
+// thetaX
+var xLabel = String.fromCharCode(952) + "x (mas)";
+// thetaY
+var yLabel = String.fromCharCode(952) + "y (mas)";
 var axisLabelFont = "10pt Arial";
 var axisLabelColor = "black";
 var axisLabelAlign = "center";
@@ -79296,12 +79431,11 @@ var xGridStep;
 var yGridStep;
 
 // derived variable (source/lens/ring)
-var sourcePos; // x value: time (days); y value: thetaY
-var sourcePixelPos; // pixel x and y values
-// var lens1pixelPos;
-// var lens2pixelPos;
+// x value: time (days), y value: thetaY
+var sourcePos;
+// pixel x and y values
+var sourcePixelPos;
 var ringRadius = {x: undefined, y: undefined}
-var sourceOutline;
 var lensedImageOutlines;
 
 // caustic and crit
@@ -79316,64 +79450,69 @@ var lensedImagesPixelPos;
 var mainCanvas = document.getElementById("lensPlaneCanvas");
 var mainContext = mainCanvas.getContext("2d");
 
-// off-screen canvas for critical/caustic curves
-var curveCanvas = document.createElement("canvas");
-curveCanvas.width = mainCanvas.width;
-curveCanvas.height = mainCanvas.width;
-var curveContext = curveCanvas.getContext("2d");
+// off-screen canvases for critical/caustic curves
+var critCanvas = document.createElement("canvas");
+critCanvas.width = mainCanvas.width;
+critCanvas.height = mainCanvas.width;
+var critContext = critCanvas.getContext("2d");
 
-var thetaXreadout = document.getElementById("thetaXreadout"); // readout of current source thetaX position
-                                                              // mainly for debugging, but may keep
+var causticCanvas = document.createElement("canvas");
+causticCanvas.width = mainCanvas.width;
+causticCanvas.height = mainCanvas.width;
+var causticContext = causticCanvas.getContext("2d");
+
+var curveCanvases = {crit:critCanvas, caustic:causticCanvas};
+var curveContexts = {crit:critContext, caustic:causticContext};
+
+// readout of current source thetaX position
+var thetaXreadout = document.getElementById("thetaXreadout");
+
 var sourceRadiusNormalizedReadout = document.getElementById("sourceRadiusNormalizedReadout");
-var imageShapeCheckbox = document.getElementById("imageShapeCheckbox");
 var sourceRadiusSlider = document.getElementById("sourceRadiusSlider");
 var sourceRadiusReadout = document.getElementById("sourceRadiusReadout");
 
-// if on, display shapes for the lensed images, not just points;
-// toggled by checkbox
-var displayImageShapeFlag = false;
+// checkboxes
+var displayImagesCheckbox = document.getElementById("displayImagesCheckbox");
+var displayRingsCheckbox = document.getElementById("displayRingsCheckbox");
+var displayCritCheckbox = document.getElementById("displayCritCheckbox");
+var displayCausticCheckbox = document.getElementById("displayCausticCheckbox");
 
-var numPointsDefault = 360; // number of points into which source outline is divided
-                         // i.e. a value of 8 would divide the outline into 8
-                         // evenly spaced points
 
-var numExtraPointsDefault = 360;
+// flags toggled by checkbox
+var displayFlags = {
+  // display lensed images of source
+  images: displayImagesCheckbox.checked,
+  // display separate rings for each lens
+  rings: displayRingsCheckbox.checked,
+  // display critical curve
+  crit: displayCritCheckbox.checked,
+  // display caustic curve
+  caustic: displayCausticCheckbox.checked,
+}
 
 // debug flags
-var animationFlag = true;
 var centerLayoutFlag = false;
 var drawGridFlag = true;
-var drawFullLensedImagesFlag = true; //NOTE: Hammers performance currently
-// if on, grid lines/ticks for that axis are created in steps starting from 0,
+var drawFullLensedImagesFlag = true;
+
+// if true, grid lines/ticks for that axis are created in steps starting from 0,
 // rather than starting from the lowest x-axis value or y-axis value
 var centerXgridOnZeroFlag = true;
 var centerYgridOnZeroFlag = true;
-// need on to work in Firefox;
-// replaces context.ellipse with context.arc since firefox doesn't support ellipse;
-// however, y-scaling of ring won't be correct if x/y aspect ratio is not square;
+
+// firefox doesn't support context.ellipse, so this replaces it with a custom
+// ellipse function using context.arc and canvas rescaling/translating
 var firefoxCompatibilityFlag = true;
-// add more points to outline if source is close to lens
-var lensProximityCheckFlag = true;
-var clippingImageFlag = false;
-var binaryFlag = true;
-var separateBinaryRingsFlag = true; // desplay separate rings for each lens;
-                                    // for debugging/testing
-var causticCurveFlag = true; // display caustic curve
-var critCurveFlag = true; // display critical curve
 
 var updateOnSliderMovementFlag = eventModule.updateOnSliderMovementFlag;
 var updateOnSliderReleaseFlag = eventModule.updateOnSliderReleaseFlag;
 
-// called from PSPL_microlensing_event.js (or whichever script holds the parameter
-// values) after initializations and slider updates),
-// because we NEED parameters initialized first to do drawing and scaling
-
 /** init */
-function init(animation=animationFlag) {
+function init() {
   initListeners();
   updateScaleAndRangeValues();
   initLenses();
-  initSourcePos(animation=animation);
+  initSourcePos();
   initSourceRadius();
   drawing.renderCurves();
   redraw();
@@ -79384,21 +79523,54 @@ function init(animation=animationFlag) {
 /** initListeners */
 function initListeners(updateOnSliderMovement=updateOnSliderMovementFlag,
                        updateOnSliderRelease=updateOnSliderReleaseFlag) {
-  imageShapeCheckbox.addEventListener("change", function() { displayImageShapeFlag = imageShapeCheckbox.checked;
-                                                             redraw();
-                                                             console.log(`displayImageShapeFlag: ${displayImageShapeFlag}`); }, false);
+  initCheckboxes();
+  initSliders(updateOnSliderMovement, updateOnSliderRelease);
+}
+
+/** initCheckboxes() */
+function initCheckboxes() {
+  displayImagesCheckbox.addEventListener("change",
+                                         function() {
+                                           displayFlags.images = displayImagesCheckbox.checked;
+                                           redraw();
+                                         },
+                                         false);
+
+  displayRingsCheckbox.addEventListener("change",
+                                        function() {
+                                          displayFlags.rings = displayRingsCheckbox.checked;
+                                          redraw();
+                                        },
+                                        false);
+
+  displayCritCheckbox.addEventListener("change",
+                                        function() {
+                                          displayFlags.crit = displayCritCheckbox.checked;
+                                          redraw();
+                                        },
+                                        false);
+
+  displayCausticCheckbox.addEventListener("change",
+                                        function() {
+                                          displayFlags.caustic = displayCausticCheckbox.checked;
+                                          redraw();
+                                        },
+                                        false);
+}
+
+/** initSliders */
+function initSliders(updateOnSliderMovement=updateOnSliderMovementFlag,
+                       updateOnSliderRelease=updateOnSliderReleaseFlag) {
   console.log("(binary_lens_plane) updateOnSliderMovement: " + updateOnSliderMovement);
   console.log("(binary_lens_plane) updateOnSliderRelease: " + updateOnSliderRelease);
 
   // update plot when slider is moved
-
   if (sourceRadiusSlider !== null) {
     if (updateOnSliderMovement === true) {
       sourceRadiusSlider.addEventListener("input", function() { updateSourceRadius(); }, false);
     }
 
     // update plot when slider is released
-
     if (updateOnSliderRelease === true) {
       sourceRadiusSlider.addEventListener("change", function() { updateSourceRadius(); }, false);
 
@@ -79407,45 +79579,43 @@ function initListeners(updateOnSliderMovement=updateOnSliderMovementFlag,
       // without recalculating/updating other sliders (until after current slider is released)
       if (updateOnSliderMovement === false) {
         sourceRadiusSlider.addEventListener("input",
-                                            function() { eventModule.updateSliderReadout(sourceRadiusSlider,
-                                                                                        sourceRadiusReadout,
-                                                                                        "sourceRadius"); }, false);
+                                            function() {
+                                              eventModule.updateSliderReadout(sourceRadiusSlider,
+                                                                              sourceRadiusReadout,
+                                                                              "sourceRadius");
+                                            },
+                                            false);
       }
-
     }
   }
 }
 
 /** initLenses */
-function initLenses(isBinary=binaryFlag) {
-  var ring1radius_mas = eventModule.calculateThetaE(get_mas=true, useBinaryMass=false, lensToUse=1);
-  var ring1radiusX = ring1radius_mas * xPixelScale;
-  var ring1radiusY = ring1radius_mas * yPixelScale;
+function initLenses() {
+  var lensSep = eventModule.lensSep;
 
-  lens1 = new Lens(0, 0, lensRadius, lensColor,
+  var ring1radius_mas = eventModule.calculateThetaE(get_mas=true, useBinaryMass=false, lensToUse=1);
+
+  lens1 = new Lens(xPixelScale, yPixelScale,
+                   thetaXtoPixel, thetaYtoPixel,
+                   -lensSep/2, 0, lensPixelRadius, lensColor,
                    lensOutlineWidth, lensOutlineColor,
-                   ring1radiusX, ring1radiusY,
+                   ring1radius_mas,
                    ringColor, ringWidth, dashedRingLength, dashedRingSpacing);
 
-  if (isBinary === true) {
-    var ring2radius_mas = eventModule.calculateThetaE(get_mas=true, useBinaryMass=false, lensToUse=2);
-    var ring2radiusX = ring2radius_mas * xPixelScale;
-    var ring2radiusY = ring2radius_mas * yPixelScale;
+  var ring2radius_mas = eventModule.calculateThetaE(get_mas=true, useBinaryMass=false, lensToUse=2);
 
-    var lensSep = eventModule.lensSep;
-    lens1.updatePos(-lensSep/2, 0);
-    lens2 = new Lens(lensSep/2, 0, lensRadius, lensColor,
-                     lensOutlineWidth, lensOutlineColor,
-                     ring2radiusX, ring2radiusY,
-                     ringColor, ringWidth, dashedRingLength, dashedRingSpacing);
-  }
+  lens2 = new Lens(xPixelScale, yPixelScale,
+                   thetaXtoPixel, thetaYtoPixel,
+                   lensSep/2, 0, lensPixelRadius, lensColor,
+                   lensOutlineWidth, lensOutlineColor,
+                   ring2radius_mas,
+                   ringColor, ringWidth, dashedRingLength, dashedRingSpacing);
 }
 
 /** initSourceRadius */
 function initSourceRadius() {
   sourceRadius = 4/xPixelScale; // source radius in mas
-  // sourceRadius = 0.0133; // mas
-  // sourceRadius = 0.0636; // mas
 
   lensedImageRadius = sourceRadius*xPixelScale;
 
@@ -79455,52 +79625,54 @@ function initSourceRadius() {
 
 /** updateSourceRadiusSlider */
 function updateSourceRadiusSlider() {
-  sourceRadiusSlider.value = sourceRadius; // source radius in mas
+  // source radius in mas
+  sourceRadiusSlider.value = sourceRadius;
   eventModule.updateSliderReadout(sourceRadiusSlider, sourceRadiusReadout, "sourceRadius");
-  // sourceRadiusReadout.innerHTML = Number(sourceRadiusSlider.value).toFixed(4);
 }
 
 /** updateSourceRadius */
 function updateSourceRadius() {
-  sourceRadius = sourceRadiusSlider.value; // source radisu in mas
+  // source radisu in mas
+  sourceRadius = sourceRadiusSlider.value;
   lensedImageRadius = sourceRadius * xPixelScale;
   updateSourceRadiusSlider();
   eventModule.updateCurveData();
   eventModule.redrawCanvases();
-  // eventModule.plotLightcurve();
-  // redraw();
 }
 
 /** initSourcePos */
-function initSourcePos(animation=animationFlag) {
+function initSourcePos() {
   var sourcePosY = eventModule.thetaY;
   sourcePos = {x: getThetaX(eventModule.xAxisInitialDay), y: sourcePosY};
-
-  if (animation === false) {
-    sourcePos.x = xAxisFinalThetaX;
-    // sourcePos.x = xAxisInitialThetaX;
-  }
 }
 
 /** redraw */
-function redraw(animation=animationFlag) {
-  updateDrawingValues(animation=animation);
+function redraw() {
+  updateDrawingValues();
   drawing.drawPic();
 }
 
 /** updateScaleAndRangeValues */
 function updateScaleAndRangeValues() {
   // borders
-  picRightBorder = picLeftBorder + picWidth; // right border of picture x-pixel value, NOT including any trailing gridlines
-  picBottomBorder = picTopBorder + picHeight; // bottom border of picture y-pixel value, NOT including any trailing gridlines
+
+  // right border of picture x-pixel value, NOT including any trailing gridlines
+  picRightBorder = picLeftBorder + picWidth;
+  // bottom border of picture y-pixel value, NOT including any trailing gridlines
+  picBottomBorder = picTopBorder + picHeight;
   centerX = picWidth/2 + picLeftBorder;
   centerY = picHeight/2 + picTopBorder;
 
   // trails
-  picLeftTrailingBorder = picLeftBorder - picLeftTrail; // left border of picture x-pixel value, INCLUDING any trailing gridlines
-  picRightTrailingBorder = picRightBorder + picRightTrail; // right border of picture x-pixel value, INCLUDING any trailing gridlines
-  picTopTrailingBorder = picTopBorder - picTopTrail; // top border of picture y-pixel value, INCLUDING any trailing gridlines
-  picBottomTrailingBorder = picBottomBorder + picBottomTrail; // bottom border of picture y-pixel value, INCLUDING any trailing gridlines
+
+  // left border of picture x-pixel value, INCLUDING any trailing gridlines
+  picLeftTrailingBorder = picLeftBorder - picLeftTrail;
+  // right border of picture x-pixel value, INCLUDING any trailing gridlines
+  picRightTrailingBorder = picRightBorder + picRightTrail;
+  // top border of picture y-pixel value, INCLUDING any trailing gridlines
+  picTopTrailingBorder = picTopBorder - picTopTrail;
+  // bottom border of picture y-pixel value, INCLUDING any trailing gridlines
+  picBottomTrailingBorder = picBottomBorder + picBottomTrail;
 
   // range/scale
   xDayPixelScale = picWidth/dayWidth;
@@ -79511,15 +79683,15 @@ function updateScaleAndRangeValues() {
   xAxisFinalThetaX = xAxisInitialThetaX + thetaXwidth;
   yAxisFinalThetaY = yAxisInitialThetaY + thetaYheight;
 
-  //grid values
-  updateGridRange(xGridStepDefault, yGridStepDefault); // initialize gridline vars
+  // grid values
+  // initialize gridline vars
+  updateGridRange(xGridStepDefault, yGridStepDefault);
 }
 
 /** updateDrawingValues */
-function updateDrawingValues(animation=animationFlag) {
-  // if (animation === true)
-  //   sourcePos.x = getThetaX(eventModule.xAxisInitialDay);
-  sourcePos.y = getThetaYpathValue(sourcePos.x); // update source thetaY
+function updateDrawingValues() {
+  // update source thetaY
+  sourcePos.y = getThetaYpathValue(sourcePos.x);
 
   // makes sure "0.0000" is displayed instead of "-0.0000" if rounding error
   // occurs
@@ -79541,11 +79713,6 @@ function updateDrawingValues(animation=animationFlag) {
 
   // convert position to pixel units
   sourcePixelPos = {x: thetaXtoPixel(sourcePos.x), y: thetaYtoPixel(sourcePos.y)};
-  // ringRadius.x = eventModule.thetaE_mas * xPixelScale;
-  // ringRadius.y = eventModule.thetaE_mas * yPixelScale;
-
-  // lens pixel position
-  // lens1.pixelPos = {x:thetaXtoPixel(lens1.pos.x), y: thetaYtoPixel(lens1.pos.y)};
   initLenses();
 }
 
@@ -79571,8 +79738,10 @@ function thetaYtoPixel(yPicThetaY) {
 function getThetaX(t) {
   var mu = eventModule.mu;
   var t0 = eventModule.t0;
-  var yearToDay = 365.25; // day/year; const
-  var eqMu = mu / yearToDay; // convert mu to milliarcseconds/day
+   // day/year; const
+  var yearToDay = 365.25;
+  // convert mu to milliarcseconds/day
+  var eqMu = mu / yearToDay;
   var thetaX = eqMu * (t - t0);
   return thetaX;
 }
@@ -79591,9 +79760,11 @@ function getThetaYpathValue(thetaX) {
 function updateGridRange(xStep, yStep, centerXgridOnZero=centerXgridOnZeroFlag,
                          centerYgridOnZero=centerYgridOnZeroFlag) {
   // update grid with new step values,
+
   // and/or update grid for new initial/final axis values using
 
   // if new step values are passed in, update grid step values;
+
   // otherwise leave grid steps unchanged when updating grid
   if ( !(xStep === undefined) && !(yStep === undefined)) {
     xGridStep = xStep;
@@ -79621,20 +79792,12 @@ function updateGridRange(xStep, yStep, centerXgridOnZero=centerXgridOnZeroFlag,
 
   // same rounding for final y grid line placement
   yGridFinal = yAxisFinalThetaY;
-
-  // console.log(Math.floor)
-  // console.log("MathFloored xAxisInitialDay: " + Math.floor(xAxisInitialDay));
-  // console.log("xGridInitial: " + xGridInitial);
-  // console.log("xGridFinal: " + xGridFinal);
-  // console.log("MathFloored yAxisInitialThetaY: " + Math.floor(yAxisInitialThetaY));
-  // console.log("yGridInitial: " + yGridInitial);
-  // console.log("yGridFinal: " + yGridFinal);
 }
 
 /** xDayToThetaX */
 function xDayToThetaX() {}
 /** drawing */
-var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCanvas) {
+var drawing = (function(context=mainContext, canvas=mainCanvas) {
   /** clearPic */
   function clearPic(context=mainContext) {
     context.clearRect(picLeftBorder, picTopBorder, picWidth, picHeight);
@@ -79684,7 +79847,7 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
   /** drawLens */
   function drawLens(lens=lens1) {
     context.beginPath();
-    context.arc(lens.pixelPos.x, lens.pixelPos.y, lens.radius, 0, 2*Math.PI, false);
+    context.arc(lens.pixelPos.x, lens.pixelPos.y, lens.pixelRadius, 0, 2*Math.PI, false);
     context.fillStyle = lens.color;
     context.fill();
     context.lineWidth = lens.outlineWidth;
@@ -79698,48 +79861,39 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     context.beginPath();
     // ellipse not compatible with firefox
     if (firefoxCompatibility === true)
-      context.arc(lens.pixelPos.x, lens.pixelPos.y, ring.radius.x, 0, 2*Math.PI, false);
+      ellipse(context, lens.pixelPos.x, lens.pixelPos.y, ring.pixelRadius.x, ring.pixelRadius.y);
     else
-      context.ellipse(lens.pixelPos.x, lens.pixelPos.y, ring.radius.x,
-                      ring.radius.y, 0, 0, 2*Math.PI)
+      context.ellipse(lens.pixelPos.x, lens.pixelPos.y, ring.pixelRadius.x,
+                      ring.pixelRadius.y, 0, 0, 2*Math.PI)
     context.strokeStyle = ring.color;
     context.lineWidth = ring.width;
-    context.setLineDash([ring.dashedLength, ring.dashedSpacing]); // turn on dashed lines
+     // turn on dashed lines
+    context.setLineDash([ring.dashedLength, ring.dashedSpacing]);
     context.stroke();
-    context.setLineDash([]); // turn off dashed-line drawing
+    // turn off dashed-line drawing
+    context.setLineDash([]);
   }
 
-  // use this for when implementing animation;
+  // use this for when implementing animation
+
   // for now, should be at end of path, if we bother placing it
   /** drawSource */
-  /** drawSource */
-  function drawSource(useOutline=false) {
+  function drawSource() {
     // set aesthetics
     context.lineWidth = sourceOutlineWidth;
     context.strokeStyle = sourceOutlineColor;
     context.fillStyle = sourceColor;
 
     // draw source
-    if (useOutline === true) {
-      for (i in sourceOutline) {
-        context.fillStyle = "SpringGreen";
-        context.beginPath();
-        context.arc(thetaXtoPixel(sourceOutline[i].x), thetaYtoPixel(sourceOutline[i].y), 1, 0, 2*Math.PI, false);
-        context.fill();
-      }
-    }
-    else {
-      context.beginPath();
-      var radiusPixels = sourceRadius * xPixelScale;
-      context.arc(sourcePixelPos.x, sourcePixelPos.y, radiusPixels, 0, 2*Math.PI, false);
-      context.fill();
-      context.stroke();
-    }
+    context.beginPath();
+    var radiusPixels = sourceRadius * xPixelScale;
+    context.arc(sourcePixelPos.x, sourcePixelPos.y, radiusPixels, 0, 2*Math.PI, false);
+    context.fill();
+    context.stroke();
   }
 
   /** drawSourcePath */
   function drawSourcePath() {
-
     var thetaYleft = getThetaYpathValue(xAxisInitialThetaX);
     var thetaYright = getThetaYpathValue(xAxisFinalThetaX);
     var thetaYpixelLeft = thetaYtoPixel(thetaYleft);
@@ -79747,9 +79901,7 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
 
     // dashed line (path yet to be travelled)
     context.beginPath();
-    // context.moveTo(picLeftBorder, sourcePixelPos.y);
     context.moveTo(picLeftBorder, thetaYpixelLeft);
-    // context.lineTo(picRightBorder, sourcePixelPos.y);
     context.lineTo(picRightBorder, thetaYpixelRight);
     context.setLineDash([dashedPathLength, dashedPathSpacing]); // turn on dashed lines
     context.strokeStyle = dashedPathColor;
@@ -79759,9 +79911,7 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
 
     // solid line (path traveled so far)
     context.beginPath();
-    // context.moveTo(picLeftBorder, sourcePixelPos.y);
     context.moveTo(picLeftBorder, thetaYpixelLeft);
-    // context.lineTo(sourcePixelPos.x, sourcePixelPos.y);
     context.lineTo(sourcePixelPos.x, sourcePixelPos.y);
     context.strokeStyle = pathColor;
     context.lineWidth = pathWidth;
@@ -79786,16 +79936,18 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
       context.beginPath();
 
       // x axis
+
       // the -axisWidth/2 makes the x and y axes fully connect
       // at their intersection for all axis linewidths
       context.moveTo(picLeftBorder - axisWidth/2, picBottomBorder);
       context.lineTo(picRightBorder + 15, picBottomBorder);
 
-      // y axis;
+      // y axis
       context.moveTo(picLeftBorder, picBottomBorder);
       context.lineTo(picLeftBorder, picTopBorder - 15);
 
       // x axis arrow
+
       // NOTE: Doesn't look right for linewidth > 2
       context.moveTo(picRightBorder + 15, picBottomBorder);
       context.lineTo(picRightBorder + 8, picBottomBorder - 5);
@@ -79803,6 +79955,7 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
       context.lineTo(picRightBorder + 8, picBottomBorder + 5);
 
       // thetaT axis arrow
+
       // NOTE: Doesn't look right for linewidth > 2
       context.moveTo(picLeftBorder, picTopBorder - 15);
       context.lineTo(picLeftBorder - 5, picTopBorder - 8);
@@ -79855,7 +80008,6 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     context.beginPath();
     console.log(`yGridStep: ${yGridStep}`);
     for (var thetaX = xGridInitial; thetaX <= xGridFinal; thetaX+=xGridStep) {
-      // console.log(thetaX);
       var xPixel = thetaXtoPixel(thetaX);
       // line starts from bottom trail
       context.moveTo(xPixel, picBottomTrailingBorder);
@@ -79875,7 +80027,8 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
 
       // catches if yTickLabel is set to "-0.00" due to rounding error and
       // converts to "0.00";
-      // (note 0 === -0 in javascript)
+
+      // (NOTE: 0 === -0 in javascript)
       if (Number(xTickLabel) === -0) {
         xTickLabel = Number(0).toFixed(2);
       }
@@ -79901,7 +80054,8 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
       var yTickLabel = Number(thetaY).toFixed(2);
 
       // catches if yTickLabel is set to "-0.00" due to rounding error and
-      // converts to "0.00";
+      // converts to "0.00"
+
       // (note 0 === -0 in javascript)
       if (Number(yTickLabel) === -0) {
         yTickLabel = Number(0).toFixed(2);
@@ -79955,14 +80109,14 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
 
   /** renderCaustic */
   function renderCaustic(color1="purple", color2="green", pointSizeX,
-                        pointSizeY, context=curveContext) {
+                        pointSizeY, context=causticContext) {
     renderCurve(eventModule.causticNormalized, color1, color2, pointSizeX,
                 pointSizeY, context);
   }
 
   /** renderCrit */
   function renderCrit(color1="purple", color2="green", pointSizeX,
-                      pointSizeY, context=curveContext) {
+                      pointSizeY, context=critContext) {
     renderCurve(eventModule.critNormalized, color1, color2, pointSizeX,
                 pointSizeY, context);
   }
@@ -79974,15 +80128,17 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
                         causPointSizeY=causticPointSizeY,
                         crtPointSizeX=critPointSizeX,
                         crtPointSizeY=critPointSizeY,
-                        caustic=causticCurveFlag, crit=critCurveFlag,
-                        context=curveContext) {
-    clearPic(context); // clear off-screen canvas
+                        contexts=curveContexts) {
+    // clear off-screen canvases
+    for (key in contexts) {
+      if (contexts.hasOwnProperty(key)) {
+        var context = contexts[key];
 
-    if (caustic === true)
-      renderCaustic(causColor1, causColor2, causPointSizeX, causPointSizeY, context);
-
-    if (crit === true)
-      renderCrit(crtColor1, crtColor2, crtPointSizeX, crtPointSizeY, context);
+        clearPic(context);
+      }
+    }
+    renderCaustic(causColor1, causColor2, causPointSizeX, causPointSizeY, contexts.caustic);
+    renderCrit(crtColor1, crtColor2, crtPointSizeX, crtPointSizeY, contexts.crit);
   }
 
   /** setPixel */
@@ -80016,18 +80172,6 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     xList.push(x);
     yList.push(y - 1);
 
-    // xList.push(x + 1);
-    // yList.push(y + 1);
-
-    // xList.push(x - 1);
-    // yList.push(y + 1);
-
-    // xList.push(x + 1);
-    // yList.push(y - 1);
-
-    // xList.push(x - 1);
-    // yList.push(y - 1);
-
     for (var i=0; i<xList.length; i++) {
       setPixel(imageData, xList[i], yList[i], r, g, b, a);
     }
@@ -80039,8 +80183,10 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     // color must be a valid canvas fillStyle. This will cover most anything
     // you'd want to use.
     // Examples:
-    // colorToRGBA("red")  # [255, 0, 0, 255]
-    // colorToRGBA(""#f00") # [255, 0, 0, 255]
+    // ```
+    // colorToRGBA("red")  // [255, 0, 0, 255]
+    // colorToRGBA(""#f00") // [255, 0, 0, 255]
+    // ```
     var tempCanvas = document.createElement("canvas");
     tempCanvas.height = 1;
     tempCanvas.width = 1;
@@ -80052,14 +80198,20 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
 
   /** renderCurve */
   function renderCurve(curveNormalized, color1="purple", color2="green",
-                       pointSizeX, pointSizeY, context=curveContext) {
+                       pointSizeX, pointSizeY, context=critContext) {
     var curve = unNormalizeCurve(curveNormalized);
     var pixelCurve = pixelizeCurve(curve);
 
-    var drawPointsDebugTest = false; // fast, but looks kinda bad
-    var drawPoints = true;  // not quite as fast, but looks good
-    var drawCircles = false; // slow; don't use this
-    var drawLines = false; // fastest, but doesn't work right
+    // debug: check if following comments on performance are obsolete or not
+
+    // fast, but looks kinda bad
+    var drawPointsDebugTest = false;
+    // not quite as fast, but looks good
+    var drawPoints = true;
+    // slow; don't use this
+    var drawCircles = false;
+    // fastest, but doesn't work right
+    var drawLines = false;
 
     if (drawPointsDebugTest === true) {
 
@@ -80067,22 +80219,23 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
       var color2RGBA = colorToRGBA(color2);
 
       context.beginPath();
-      var imageData = context.getImageData(0, 0, canvas.width, canvas.height); // only do this once per page
+      // only do this once per page
+      var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
       for (var i=1; i<pixelCurve.x1.length; i+=1) {
         var x1 = Math.round(pixelCurve.x1[i]);
         var y1 = Math.round(pixelCurve.y1[i]);
         // debug default: 138, 43, 226, 255
-        setPicPixel(imageData, x1, y1, color1RGBA[0], color1RGBA[1], color1RGBA[2], color1RGBA[3]);
-        // context.fillRect(x1, y1, 1, 1);
-        // window.alert(x1 + " " + y1);
+        setPicPixel(imageData, x1, y1, color1RGBA[0], color1RGBA[1],
+                    color1RGBA[2], color1RGBA[3]);
       }
 
       for (var i=1; i<pixelCurve.x2.length; i+=1) {
         var x2 = Math.round(pixelCurve.x2[i]);
         var y2 = Math.round(pixelCurve.y2[i]);
         // debug default: 0, 128, 0, 255);
-        setPicPixel(imageData, x2, y2, color2RGBA[0], color2RGBA[1], color2RGBA[2], color2RGBA[3]);
+        setPicPixel(imageData, x2, y2, color2RGBA[0], color2RGBA[1],
+                    color2RGBA[2], color2RGBA[3]);
       }
 
       context.putImageData(imageData, 0, 0);
@@ -80146,16 +80299,15 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     }
 
     if (drawLines === true) {
-      var pointSeparationThreshold = 1; // minimum pixel separation allowed
-                                               // between points that we connect
-                                               // with lines
+      // minimum pixel separation allowed between points that we connect with
+      // lines
+      var pointSeparationThreshold = 1;
+
       context.beginPath();
       context.moveTo(pixelCurve.x1[0], pixelCurve.y1[0]);
-      // window.alert(pixelCurve.x1.length);
 
       var prevX1;
       var prevY1;
-      // window.alert("length: " + pixelCurve.x1.length);
       // debugging: for length 16220, line starts displaying wrong at i=2411
       for (var i=1; i<pixelCurve.x1.length; i+=1) {
         var x1 = pixelCurve.x1[i];
@@ -80168,12 +80320,6 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
           var dist1 = Math.sqrt(x1Diff*x1Diff + y1Diff*y1Diff);
 
           if (i === curveNormalized.transitionIndex ) {
-            // window.alert("i: " + i + "\nlength: " + pixelCurve.x1.length
-            //              + "\n\nprevX1: " + prevX1 + "\nprevY1: " + prevY1
-            //              + "\n\nx1: " + x1 + "\ny1: " + y1
-            //              + "\n\ndist1: " + dist1
-            //              + "\n\ntransitionIndex: " + curveNormalized.transitionIndex);
-
             context.moveTo(x1, y1);
           }
           else {
@@ -80205,11 +80351,6 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
           var dist2 = Math.sqrt(x2Diff*x2Diff + y2Diff*y2Diff);
 
           if (i === curveNormalized.transitionIndex ) {
-            // window.alert("i: " + i + "\nlength: " + pixelCurve.x2.length
-            //              + "\n\nprevX2: " + prevX2 + "\nprevY2: " + prevY2
-            //              + "\n\nx2: " + x2 + "\ny2: " + y2
-            //              + "\n\ndist2: " + dist2);
-
             context.moveTo(x2, y2);
           }
           else {
@@ -80227,9 +80368,9 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     }
   }
 
-  /** drawRenderedCurves */
-  function drawRenderedCurves(context=mainContext, imgCanvas=curveCanvas) {
-    // Draw image from image canvas onto (most likely main) context
+  /** drawRenderedCurve */
+  function drawRenderedCurve(context=mainContext, imgCanvas=critCanvas) {
+    // Draw images from image canvases onto (most likely main) context
     context.drawImage(imgCanvas, 0, 0);
   }
 
@@ -80240,9 +80381,6 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
     // pixel coordinates.
 
     var imagesNormalizedPos = eventModule.imagesNormalizedPos;
-
-    // console.log(`(binary) imagesNormalizedPos.x.length: ${imagesNormalizedPos.x.length}`);
-    // console.log(`(binary) imagesNormalizedPos.x.length: ${imagesNormalizedPos.x[0].length}`);
 
     var imageCount = imagesNormalizedPos.x.length;
     imagesPos = new Array(imageCount);
@@ -80306,21 +80444,29 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
       if (timeIndex === undefined)
         timeIndex = times.length-1;
 
+      var imageParities = eventModule.imageParities;
+
       for (var i=0; i<lensedImagesPixelPos.length; i++) {
-        var imagePixelPos = lensedImagesPixelPos[i];
-        var x = imagePixelPos.x[timeIndex];
-        var y = imagePixelPos.y[timeIndex];
-        context.beginPath();
-        context.strokeStyle = outlineColors[i];
-        context.fillStyle = fillColors[i];
-        context.arc(x, y, 4, 0, 2*Math.PI, false);
-        context.fill();
-        context.stroke();
+        var imageParity = imageParities[i][timeIndex];
+
+        // only draw the image if its parity is non-zero.
+        // images with parity 0 are non-physical solutions.
+        if (imageParity !== 0) {
+          var imagePixelPos = lensedImagesPixelPos[i];
+          var x = imagePixelPos.x[timeIndex];
+          var y = imagePixelPos.y[timeIndex];
+          context.beginPath();
+          context.strokeStyle = outlineColors[i];
+          context.fillStyle = fillColors[i];
+          context.arc(x, y, 4, 0, 2*Math.PI, false);
+          context.fill();
+          context.stroke();
+        }
       }
     }
 
-    // debug: plots every x,y point in image arrays, coded by color, regardless of
-    // time; produces some wacky looking curves; neato
+    // debug: plots every x,y point in image arrays, coded by color, regardless
+    // of time; produces some wacky looking curves; neato
     if (debugPlotAllPoints === true) {
       for (var i=0; i<lensedImagesPixelPos.length; i++) {
         var imagePixelPos = lensedImagesPixelPos[i];
@@ -80340,59 +80486,38 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
   }
 
   /** drawPic */
-  function drawPic(isBinary=binaryFlag, displayImageShape=displayImageShapeFlag,
-                   context=mainContext, canvas=mainCanvas) {
+  function drawPic(display=displayFlags,
+                   context=mainContext, canvas=mainCanvas,
+                   crvCanvases=curveCanvases) {
     clearPic();
     drawBackgrounds();
     drawBorder();
     drawGridlinesAndTicks();
     toggleClippingRegion(turnOn=true);
-    // drawSource(useOutline=true);
     drawUarrow();
-    if (displayImageShape === true && isBinary === false) {
-      if (eventModule.finiteSourceFlag === false ||
-          eventModule.finiteSourceFlag !== undefined)
-        drawPointLensedImages();
-      else {
-        if (clippingImageFlag === true) {
-          context.save();
-          context.beginPath();
-          context.rect(0, 0, canvas.width, context.canvas.height);
-          context.arc(lens1.pixelPos.x, lens1.pixelPos.y, ringRadius.x, 0, Math.PI * 2, true);
-          context.clip();
-        }
-        drawFullLensedImages(debug=false, fillOn=true, strokeOn=true);
-        //drawFullLensedImages(debug=true);
-        if (clippingImageFlag === true)
-          context.restore();
-      }
-    }
-    // drawPointLensedImages();
+
     drawLens(lens1);
+    drawLens(lens2);
 
-    // drawPointLensedImages();
-    if (isBinary === true) {
-      // draw second lens
-      drawLens(lens2);
-
-      if (causticCurveFlag === true || critCurveFlag === true) {
-        // draw caustic and/or crit
-
-        drawRenderedCurves();
-        // context.fillRect(canvas.width/2, canvas.height/2, 50*Math.random(), 50);
-      }
-
-      if (separateBinaryRingsFlag === true) {
-
-        // draw separate rings for each lens
-        drawRing(lens1);
-        drawRing(lens2);
-      }
-      drawBinaryPointLensedImages();
+    if (display.caustic === true) {
+      // draw prerendered caustic
+      drawRenderedCurve(context, crvCanvases.caustic);
     }
-    else { // single, non-binary lens
+
+    if (display.crit === true) {
+      // draw prerendered crit
+      drawRenderedCurve(context, crvCanvases.crit)
+    }
+
+    if (display.rings === true) {
+
+      // draw separate rings for each lens
       drawRing(lens1);
+      drawRing(lens2);
     }
+
+    if (display.images === true)
+      drawBinaryPointLensedImages();
     drawSourcePath();
     drawSource();
 
@@ -80410,15 +80535,20 @@ var drawing = (function(isBinary=binaryFlag, context=mainContext, canvas=mainCan
 
 // public properties to be stored in module object,
 // accessible via module object by code executed after this script
-
 module.exports = {
-  //initialization
-  init: init, // initialization function
-  get initialized() { return initialized; }, // whether initialization is done
+  // initialization
 
-  get sourcePos() { return sourcePos; }, // mas
-  get xAxisInitialThetaX() { return xAxisInitialThetaX; }, // mas
-  get sourceRadius() { return sourceRadius; }, // mas
+  // initialization function
+  init: init,
+  // whether initialization is done
+  get initialized() { return initialized; },
+
+  // mas
+  get sourcePos() { return sourcePos; },
+  // mas
+  get xAxisInitialThetaX() { return xAxisInitialThetaX; },
+  // mas
+  get sourceRadius() { return sourceRadius; },
   renderCurves: drawing.renderCurves,
   convertLensedImagesPos: drawing.convertLensedImagesPos,
   redraw: redraw,
@@ -80426,7 +80556,7 @@ module.exports = {
   initSourceRadius: initSourceRadius,
 };
 
-},{"./psbl-microlensing-event.js":530,"./utils.js":531,"lodash":4}],530:[function(require,module,exports){
+},{"./Lens.js":523,"./psbl-microlensing-event.js":532,"./utils.js":533,"lodash":4}],532:[function(require,module,exports){
 /** Event module.
   * Handles calculation and drawing lightcurve plot for the microlensing.
   * event.
@@ -80444,13 +80574,16 @@ var bin_len_faster = require("./bin-len-faster.js");
 
 var handleError = require("./utils.js").handleError;
 
-var initialized = false; // whether module init function has been executed
+// whether module init function has been executed
+var initialized = false;
 
 var canvas = document.getElementById("lcurveCanvas");
 var context = canvas.getContext("2d");
 
-var graphLeftBorder = 50; // left border of graph x-pixel value, NOT including any trailing gridlines
-var graphTopBorder = 50; // top border of graph y-pixel value, NOT including any trailing gridlines
+// left border of graph x-pixel value, NOT including any trailing gridlines
+var graphLeftBorder = 50;
+ // top border of graph y-pixel value, NOT including any trailing gridlines
+var graphTopBorder = 50;
 
 var graphWidth = 400;
 var graphHeight = 300;
@@ -80461,53 +80594,72 @@ var graphRightTrail = 0;
 var graphTopTrail = 0;
 var graphBottomTrail = 10;
 
-var graphRightBorder = graphLeftBorder + graphWidth; // right border of graph x-pixel value, NOT including any trailing gridlines
-var graphBottomBorder = graphTopBorder + graphHeight; // bottom border of y-pixel value, NOT including any trailing gridlines
+// right border of graph x-pixel value, NOT including any trailing gridlines
+var graphRightBorder = graphLeftBorder + graphWidth;
+// bottom border of y-pixel value, NOT including any trailing gridlines
+var graphBottomBorder = graphTopBorder + graphHeight;
 
-var graphLeftTrailingBorder = graphLeftBorder - graphLeftTrail; // left border of graph x-pixel value, INCLUDING any trailing gridlines
-var graphRightTrailingBorder = graphRightBorder + graphRightTrail; // right border of graph x-pixel value, INCLUDING any trailing gridlines
-var graphTopTrailingBorder = graphTopBorder - graphTopTrail; // top border of graph y-pixel value, INCLUDING any trailing gridlines
-var graphBottomTrailingBorder = graphBottomBorder + graphBottomTrail; // bottom border of graph y-pixel value, INCLUDING any trailing gridlines
-
-// var graphRightBorder = canvas.width - 50; // right border of graph x-pixel value, NOT including any trailing gridlines
-// var graphBottomBorder = canvas.height - 50; // bottom border of graph y-pixel value
-// var graphWidth = graphRightBorder - graphLeftBorder;
-// var graphHeight = graphBottomBorder - graphTopBorder;
+// left border of graph x-pixel value, INCLUDING any trailing gridlines
+var graphLeftTrailingBorder = graphLeftBorder - graphLeftTrail;
+// right border of graph x-pixel value, INCLUDING any trailing gridlines
+var graphRightTrailingBorder = graphRightBorder + graphRightTrail;
+// top border of graph y-pixel value, INCLUDING any trailing gridlines
+var graphTopTrailingBorder = graphTopBorder - graphTopTrail;
+// bottom border of graph y-pixel value, INCLUDING any trailing gridlines
+var graphBottomTrailingBorder = graphBottomBorder + graphBottomTrail;
 
 var centerX = graphWidth/2 + graphLeftBorder;
 var centerY = graphHeight/2 + graphTopBorder;
 
-// slider parameters; only tE, t0, and thetaY work/have reasonable ranges/values
-// NOTE: There are/should be corellations between several of these for instance tE depends
-// on the rest, and mu depends on Ds and Dl;
-// need to figure that out so that updating one changes the related ones
-
 // Physical constants
-var G = 6.67384e-11; // m3 kg−1 s−2 (astropy value); const
-var c = 299792458.0; // m s-1 (astropy value); const
+
+// m3 kg−1 s−2 (astropy value); const
+var G = 6.67384e-11;
+ // m s-1 (astropy value); const
+var c = 299792458.0;
 
 // conversion constants
-var masToRad = 4.84813681109536e-9; // rad/mas; const
+
+// rad/mas; const
+var masToRad = 4.84813681109536e-9;
 
 // Dl slider/value is kept one "step" below Ds; determines size of that step
-var sourceLensMinSeparation = 0.01; // kpc; const
+
+// kpc; const
+var sourceLensMinSeparation = 0.01;
 
 // base quantities set by user
-var Ml1; // solMass
-var Ml2; // solMass
-var Ds; // kpc: Ds =  Dl / (1 - 1/mu)
-var thetaY; // milliarcseconds (mas)
-var Dl; // kpc: Dl = Ds * (1 - 1/mu)
-var t0; // days
-var mu; // mas/yr: mu = thetaE / tE; mu = Ds / (Ds - Dl) = 1/(1 - Dl/Ds)
+
+// solMass
+var Ml1;
+// solMass
+var Ml2;
+// kpc: Ds =  Dl / (1 - 1/mu)
+var Ds;
+// milliarcseconds (mas)
+var thetaY;
+// kpc: Dl = Ds * (1 - 1/mu)
+var Dl;
+// days
+var t0;
+// mas/yr:
+// ```
+// mu = thetaE / tE; mu = Ds / (Ds - Dl) = 1/(1 - Dl/Ds)
+// ```
+var mu;
 var lensSep;
 var incline;
 
 // derived quantities
+
+// unitless
 var u0;
-var tE; // days
-var Drel; // kpc
-var thetaE; // radians (or should we use milliarcsecond?)
+// days
+var tE;
+// kpc
+var Drel;
+// radians (or should we use milliarcsecond?)
+var thetaE;
 
 // lightcurve information
 var lightcurveData = null;
@@ -80518,8 +80670,10 @@ var fixU0;
 // plot scale
 var dayWidth;
 var magnifHeight;
-var xPixelScale; // pixels per day
-var yPixelScale; // pixels per magnif unit
+// pixels per day
+var xPixelScale;
+// pixels per magnif unit
+var yPixelScale;
 
 // plot range
 var xAxisInitialDay;
@@ -80527,12 +80681,14 @@ var yAxisInitialMagnif;
 var xAxisFinalDay;
 var yAxisFinalMagnif;
 
-// var dayWidthDefault = 32; // const
-var dayWidthDefault = 200; // debug value; temp
-var magnifHeightDefault = 10; // const
-// var xAxisInitialDayDefault = -16; // const
-var xAxisInitialDayDefault = -100; // debug value; temp
-var yAxisInitialMagnifDefault = 0.5; // const
+// arbitrarily chosen value; const
+var dayWidthDefault = 200;
+// const
+var magnifHeightDefault = 10;
+// arbitrarily chosen value; const
+var xAxisInitialDayDefault = -100;
+// const
+var yAxisInitialMagnifDefault = 0.5;
 
 // gridlines
 var xGridInitial;
@@ -80542,9 +80698,10 @@ var yGridFinal;
 var xGridStep;
 var yGridStep;
 
-// var xGridStepDefault = 2; // const
-var xGridStepDefault = 20; // debug value; temp
-var yGridStepDefault = 1; // const
+// arbitrarily chosen value; const
+var xGridStepDefault = 20;
+// const
+var yGridStepDefault = 1;
 
 // Step increments used by debug buttons to alter range/scale
 var xGraphShiftStep = 0.25;
@@ -80573,7 +80730,8 @@ var tickLabelFont = "10pt Arial";
 var tickLabelColor = "black";
 var tickLabelAlign = "center";
 var tickLabelBaseline = "middle";
-var tickLabelSpacing = 7; // spacking between tick label and end of trailing gridline
+// spacing between tick label and end of trailing gridline
+var tickLabelSpacing = 7;
 
 // axis label text aesthetics
 var xLabel = "time (days)";
@@ -80639,8 +80797,8 @@ var yZoomOutButton = document.getElementById("yZoomOut");
 
 var resetGraphButton = document.getElementById("resetGraph");
 
-var centerLayout = false; // const
-var binaryFlag = true; // switch between binary and single lens modes
+// const
+var centerLayout = false;
 
 // controls whether plot updates when slider is moved
 // or when slider is released
@@ -80657,8 +80815,6 @@ function init() {
                           xAxisInitialDayDefault, yAxisInitialMagnifDefault);
   updateCurveData();
 
-  // display lightcurve after all modules have been loaded
-  // window.onload = function() { plotLightcurve(); }
   plotLightcurve();
   console.log(`tE: ${tE}`);
   console.log(`thetaE: ${thetaE}`);
@@ -80738,7 +80894,8 @@ function initListeners(updateOnSliderMovement=updateOnSliderMovementFlag,
   yZoomOutButton.addEventListener("click", function() { updateGraph("yZoomOut"); }, false);
 
   resetGraphButton.addEventListener("click", function() { updateGraph("reset"); }, false)
-  updateSliders(); // in case HTML slider values differ from actual starting values
+   // in case HTML slider values differ from actual starting values
+  updateSliders();
 }
 
 /** initParams */
@@ -80746,29 +80903,32 @@ function initParams() {
   // set lense curve parameters to defaults
 
   // set base quantity defaults
-  // tE = 10; // tE = thetaE / mu // old, don't use
-  // Ml1 = 0.1; // solMass
-  // Ds = 8.0; // kpc: Ds =  Dl / (1 - 1/mu)
-  // thetaY = 0.0121; // milliarcseconds (mas)
-  // Dl = 7.0; // kpc: Dl = Ds * (1 - 1/mu)
-  // t0 = 0; // days
-  // mu = 7; // mas/yr  (milliarcseconds/year): mu = thetaE / tE
 
   fixU0 = fixU0checkbox.checked
-  // Ml1 = 0.1;
-  // Ml2 = 0.1;
+  // solMass
   Ml1 = 1*0.62
+  // solMass
   Ml2 = 1*1 - Ml1;
+  // kpc: Ds =  Dl / (1 - 1/mu)
   Ds = 8.0;
-  // thetaY = -0.05463809952990817329;
+  // milliarcseconds (mas)
   thetaY =  -0.03 * 0.8346900557366428;
+  // kpc:
+  // ```
+  // Dl = Ds * (1 - 1/mu)
+  // ```
   Dl = 4.75;
+  // days
   t0 = 0;
+  // mas/yr (milliarcseconds/year):
+  // ```
+  // mu = thetaE/tE
+  // ```
   mu = 7;
-  // mu = 20; // DEBUG value, TEMPORARY
-  // lensSep = 1 * 0.8346900557366428; // mas (milliarcseconds)
+  // mas (milliarcseconds)
   lensSep = 2.150;
-  incline = Math.atan(0.12) * 180/Math.PI; // degrees
+  // degrees
+  incline = Math.atan(0.12) * 180/Math.PI;
 
   // set derived quantities
   updateDerivedQuantities(initializing=true);
@@ -80783,26 +80943,29 @@ function updateDerivedQuantities(initializing=false) {
   else
     updateThetaY();
 
-  // console.log(`tE before: ${tE}`);
   updateTE();
-  // console.log(`tE after: ${tE}`);
 }
 
 /** updateU0 */
 function updateU0() {
-  var thetaY_rad = thetaY * masToRad; // convert from mas to radians
-  u0 = thetaY_rad / thetaE; // unitless ("units" of thetaE)
+  // convert from mas to radians
+  var thetaY_rad = thetaY * masToRad;
+  // unitless ("units" of thetaE)
+  u0 = thetaY_rad / thetaE;
 }
 
 /** updateThetaY */
 function updateThetaY() {
-  var thetaE_mas = thetaE / masToRad ;// convert from radians to mas
-  thetaY = u0 * thetaE_mas; // mas
+  // convert from radians to mas
+  var thetaE_mas = thetaE / masToRad ;
+  // mas
+  thetaY = u0 * thetaE_mas;
 }
 
 /** updateDrel */
 function updateDrel() {
-  Drel = 1/((1/Dl) - (1/Ds)); // kpc
+  // kpc
+  Drel = 1/((1/Dl) - (1/Ds));
 }
 
 /** updateThetaE */
@@ -80811,7 +80974,7 @@ function updateThetaE() {
 }
 
 /** calculateThetaE */
-function calculateThetaE(get_mas=false, useBinaryMass=binaryFlag, lensToUse=1) {
+function calculateThetaE(get_mas=false, useBinaryMass=true, lensToUse=1) {
   /*
   G: m3 kg−1 s−2 (astropy value)
   c: 299792458.0; // m s-1 (astropy value)
@@ -80825,31 +80988,37 @@ function calculateThetaE(get_mas=false, useBinaryMass=binaryFlag, lensToUse=1) {
   m -> kpc: 3.240779289469756e-20 kpc/m
   */
 
-  var solMassToKg = 1.9891e30; // kg/solMass; const
-  var kpcToM = 3.0856775814671917e19; // m/kpc; const
+  // kg/solMass; const
+  var solMassToKg = 1.9891e30;
+  // m/kpc; const
+  var kpcToM = 3.0856775814671917e19;
 
-  var eqMl1 = Ml1 * solMassToKg; // Ml1 converted for equation to kg
-  var eqMl2 = Ml2 * solMassToKg; // Ml2 converted for equation to kg
-  var eqDrel = Drel * kpcToM; // Drel converted for equation to m
+  // Ml1 converted for equation to kg
+  var eqMl1 = Ml1 * solMassToKg;
+  // Ml2 converted for equation to kg
+  var eqMl2 = Ml2 * solMassToKg;
+  // Drel converted for equation to m
+  var eqDrel = Drel * kpcToM;
 
   if (useBinaryMass === true) {
-    // var eqReducedMl = (eqMl1 * eqMl2)/(eqMl1 + eqMl2); // reduced mass from
-    //                                                    // Ml1 and Ml2 in kg
-    var eqTotalMl = eqMl1 + eqMl2; // total mass from Ml1 and Ml2 in kg
+    // total mass from Ml1 and Ml2 in kg
+    var eqTotalMl = eqMl1 + eqMl2;
 
     eqMl = eqTotalMl;
   }
-
-  else { // single lens, not binary
+  else {
+    // single lens, not binary
     if (lensToUse === 2) {
       eqMl = eqMl2;
     }
-    else { // lensToUse === 1 or otherwise
+    // lensToUse === 1 or otherwise
+    else {
       eqMl = eqMl1;
     }
   }
 
   // G is m^3 /(kg * s^2)
+
   // c is m/s
   var thetaEresult = Math.sqrt(4 * G * eqMl/(c*c*eqDrel)); // radians (i.e. unitless)
 
@@ -80860,21 +81029,24 @@ function calculateThetaE(get_mas=false, useBinaryMass=binaryFlag, lensToUse=1) {
 }
 
 /** updateTE */
-function updateTE(debug=false) {
+function updateTE() {
   var yearToDay = 365.25; // day/year; const
 
-  var eqMu = mu * masToRad / yearToDay // mu converted for equation to rad/yr
+  // mu converted for equation to rad/yr
+  var eqMu = mu * masToRad / yearToDay
+
   // thetaE is in radians
-  tE = thetaE/eqMu; // days
-  if (debug)
-    tE *= 1e10; // something is wrong; have to multiply by 1e9+ to get reasonable plot
+
+  // days
+  tE = thetaE/eqMu;
 }
 
 /** updateSliderReadout */
 function updateSliderReadout(slider, readout, sliderName="") {
   // Update individual slider readout to match slider value
 
-  var fixedDecimalPlace = 3; // Default value for tE, u0, thetaY, lensSep
+  // Default value for tE, u0, thetaY, lensSep
+  var fixedDecimalPlace = 3;
 
   if (sliderName === "Ml1" || sliderName === "Ml2")
     fixedDecimalPlace = 6;
@@ -80896,97 +81068,94 @@ function updateSliderReadout(slider, readout, sliderName="") {
 /** updateSliders */
 function updateSliders() {
   // maximum parameter values that can be displayed;
+
   // need to match up with max value on HTML sliders
-  var tEmax = 365; // days
-  var u0max = 2; // unitless (einstein radii)
-  var Ml1Max = 15; // solMass
-  var Ml2Max = 15; // solMass
-  var DsMax = 8.5 // kpc
-  var thetaYmax = 2; // mas
-  var DlMax = 8.5 // kpc
-  var t0max = 75 // days
-  var muMax = 10 // milliarcseconds/year
-  // var lensSepMax = 0.7; // milliarcseconds
+
+  // days
+  var tEmax = 365;
+  // unitless (einstein radii)
+  var u0max = 2;
+  // solMass
+  var Ml1Max = 15;
+  // solMass
+  var Ml2Max = 15;
+  // kpc
+  var DsMax = 8.5
+  // mas
+  var thetaYmax = 2;
+  // kpc
+  var DlMax = 8.5
+  // days
+  var t0max = 75
+  // milliarcseconds/year
+  var muMax = 10
 
   // update slider values and readouts to reflect current variable values
   tEslider.value = tE;
   // tEreadout.innerHTML = Number(tEslider.value).toFixed(3);
   updateSliderReadout(tEslider, tEreadout, "tE");
   // add "+" once after exceeding maximum slider value;
+
   // NOTE: Very hacky. Improve this
   if (tE > tEmax) {
     tEreadout.innerHTML += "+";
   }
 
   u0slider.value = u0;
-  // u0readout.innerHTML = Number(u0slider.value).toFixed(3);
   updateSliderReadout(u0slider, u0readout, "u0");
   if (u0 > u0max) {
     u0readout.innerHTML += "+";
   }
 
   Ml1slider.value = Ml1;
-  // Ml1readout.innerHTML = Number(Ml1slider.value).toFixed(6);
   updateSliderReadout(Ml1slider, Ml1readout, "Ml1");
   if (Ml1 > Ml1Max) {
     Ml1readout.innerHTML += "+";
   }
 
   Ml2slider.value = Ml2;
-  // Ml2readout.innerHTML = Number(Ml2slider.value).toFixed(6);
   updateSliderReadout(Ml2slider, Ml2readout, "Ml2");
   if (Ml2 > Ml2Max) {
     Ml2readout.innerHTML += "+";
   }
 
   DsSlider.value = Ds;
-  // DsReadout.innerHTML = Number(DsSlider.value).toFixed(2);
   updateSliderReadout(DsSlider, DsReadout, "Ds");
   if (Ds > DsMax) {
     DsReadout.innerHTML += "+";
   }
 
   thetaYslider.value = thetaY;
-  // thetaYreadout.innerHTML = Number(thetaYslider.value).toFixed(3);
   updateSliderReadout(thetaYslider, thetaYreadout, "thetaY");
   if (thetaY > thetaYmax) {
     thetaYreadout.innerHTML += "+";
   }
 
-  DlSlider.value = Dl;
-  // DlReadout.innerHTML = Number(DlSlider.value).toFixed(2);
+  DlSlider.value = Dl;;
   updateSliderReadout(DlSlider, DlReadout, "Dl");
   if (Dl > DlMax) {
     DlReadout.innerHTML += "+";
   }
 
   t0slider.value = t0;
-  // t0readout.innerHTML = Number(t0slider.value).toFixed(1);
   updateSliderReadout(t0slider, t0readout, "t0");
   if (t0 > t0max) {
     t0Readout.innerHTML += "+";
   }
 
   muSlider.value = mu;
-  // muReadout.innerHTML = Number(muSlider.value).toFixed(2);
   updateSliderReadout(muSlider, muReadout, "mu");
   if (mu > muMax) {
     muReadout.innerHTML += "+";
   }
 
   inclineSlider.value = incline;
-  // inclineReadout.innerHTML = Number(inclineSlider.value).toFixed(2);
   updateSliderReadout(inclineSlider, inclineReadout, "incline");
 
   lensSepSlider.value = lensSep;
-  // lensSepReadout.innerHTML = Number(lensSepSlider.value).toFixed(3);
   updateSliderReadout(lensSepSlider, lensSepReadout, "lensSep");
-  // if (lensSep > lensSepMax) {
-    // lensSepReadout.innerHTML += "+";
-  // }
 
   // update thetaE readout (no slider)
-
   if (thetaEreadout !== null) {
     var thetaE_mas = thetaE / masToRad;
     console.log(`thetaE (mas): ${thetaE_mas}`);
@@ -81007,7 +81176,6 @@ function resetParams() {
     handleError(ex);
   }
 
-
   if (lensPlaneModule !== undefined && lensPlaneModule.initialized === true) {
     lensPlaneModule.initSourceRadius();
   }
@@ -81026,7 +81194,8 @@ function updateParam(param) {
     Ml2 = Number(Ml2slider.value);
   }
   else if (param === "Ds") {
-    if (Number(DsSlider.value) > Dl) { // source must be farther than lens
+    // source must be farther than lens
+    if (Number(DsSlider.value) > Dl) {
       Ds = Number(DsSlider.value);
     }
     // If Ds slider is less than or equal to Dl, we should set Ds to one step above Dl
@@ -81039,7 +81208,8 @@ function updateParam(param) {
     thetaY = Number(thetaYslider.value);
   }
   else if (param === "Dl") {
-    if (Number(DlSlider.value) < Ds) { // lens must be closer than source
+     // lens must be closer than source
+    if (Number(DlSlider.value) < Ds) {
       Dl = Number(DlSlider.value);
     }
     // If Dl slider is less than or equal to Dl, we should set Dl to one step below Ds
@@ -81059,26 +81229,19 @@ function updateParam(param) {
     console.log("Can't change tE yet (since it's a derived quantity)");
     var oldTE = tE;
     tE = Number(tEslider.value);
-    /*
-    thetaE = k * sqrt(M)
-    tE = thetaE / mu
 
-    tE = (k/mu) * sqrt(M)
-       = k2 * sqrt(M)
+    // NOTE: Pretty hacky way of doing this
 
-     M = (tE/k2)**2
-     M = k3 * tE**2
-     */
-
-     // NOTE: Pretty hacky way of doing this
-     // modify Ml1 accordingly of tE is changed, where
-     // Ml1 is propotional to tE^2
-     Ml1 *= (tE/oldTE)*(tE/oldTE);
+    // modify Ml1 accordingly of tE is changed, where
+    // Ml1 is propotional to tE^2
+    Ml1 *= (tE/oldTE)*(tE/oldTE);
   }
   else if (param === "u0") {
     u0 = Number(u0slider.value);
-    var thetaY_rad = u0 * thetaE; // thetaY in radians
-    thetaY = thetaY_rad / masToRad; // converted to milliarcseconds (mas)
+    // thetaY in radians
+    var thetaY_rad = u0 * thetaE;
+    // converted to milliarcseconds (mas)
+    thetaY = thetaY_rad / masToRad;
   }
 
   else if (param === "incline") {
@@ -81090,9 +81253,9 @@ function updateParam(param) {
   }
 
   // updates Drel, then thetaE, then tE, each of which depends on the last,
-  // and collectively depends on some of these base quantities;
+  // and collectively depends on some of these base quantities
+
   // not necessary for every option, but probably cleaner code this way
-  //
   updateDerivedQuantities();
   updateSliders();
   updateCurveData();
@@ -81176,6 +81339,7 @@ function updateGridRange(xStep, yStep) {
   // and/or update grid for new initial/final axis values using
 
   // if new step values are passed in, update grid step values;
+
   // otherwise leave grid steps unchanged when updating grid
   if ( xStep !== undefined && yStep !== undefined) {
     xGridStep = xStep;
@@ -81209,14 +81373,6 @@ function updateGridRange(xStep, yStep) {
     yGridFinal = yAxisFinalMagnif;
   else
     yGridFinal = yGridStep * (Math.floor(yAxisFinalMagnif / yGridStep));
-
-  // console.log(Math.floor)
-  // console.log("MathFloored xAxisInitialDay: " + Math.floor(xAxisInitialDay));
-  // console.log("xGridInitial: " + xGridInitial);
-  // console.log("xGridFinal: " + xGridFinal);
-  // console.log("MathFloored yAxisInitialMagnif: " + Math.floor(yAxisInitialMagnif));
-  // console.log("yGridInitial: " + yGridInitial);
-  // console.log("yGridFinal: " + yGridFinal);
 }
 
 /** clearGraph */
@@ -81241,6 +81397,7 @@ function drawAxes() {
   context.beginPath();
 
   // x axis
+
   // the -axisWidth/2 makes the x and y axes fully connect
   // at their intersection for all axis linewidths
   context.moveTo(graphLeftBorder - axisWidth/2, graphBottomBorder);
@@ -81251,6 +81408,7 @@ function drawAxes() {
   context.lineTo(graphLeftBorder, graphTopBorder - 15);
 
   // x axis arrow
+
   // NOTE: Doesn't look right for linewidth > 2
   context.moveTo(graphRightBorder + 15, graphBottomBorder);
   context.lineTo(graphRightBorder + 8, graphBottomBorder - 5);
@@ -81258,6 +81416,7 @@ function drawAxes() {
   context.lineTo(graphRightBorder + 8, graphBottomBorder + 5);
 
   // y axis arrow
+
   // NOTE: Doesn't look right for linewidth > 2
   context.moveTo(graphLeftBorder, graphTopBorder - 15);
   context.lineTo(graphLeftBorder - 5, graphTopBorder - 8);
@@ -81305,8 +81464,6 @@ function drawAxisLabels() {
 function updatePlotScaleAndRange(width, height, xInit, yInit) {
   // Change range/scale of plot
 
-  //  console.log("updatePlotScale: " + width + " " + height + " "
-  //                                  + xInit + " " + yInit);
   // plot scale
   if (width !== undefined)
     dayWidth = width;
@@ -81327,10 +81484,7 @@ function updatePlotScaleAndRange(width, height, xInit, yInit) {
 /** initPlot */
 function initPlot() {
   clearGraph();
-  // updatePlotScaleAndRange(undefined, undefined, undefined,
-  //                         undefined, undefined, 1.5);
-  // console.log("tE: " + tE);
-  // console.log("dayWidth: " + dayWidth);
+
   // fill in canvas background
   context.fillStyle = canvasBackgroundColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -81402,13 +81556,17 @@ function plotLightcurveAlone(tDayFinal=xAxisFinalDay, inputData, dashedCurve=fal
   if (inputData !== undefined) {
     curveData = inputData;
   }
-  else { // no input parameter given
-    if (lightcurveData !== null) { // module lightcurve variable already initialized
-      curveData = lightcurveData; // use module variable in function
+  // no input parameter given
+  else {
+    // module lightcurve variable already initialized
+    if (lightcurveData !== null) {
+      // use module variable in function
+      curveData = lightcurveData;
     }
-    else { // module lightcurve variable not initialized yet
-      // window.alert("lightcurveData uninitialized; updating");
-      updateCurveData(); // initialize module variable
+    // module lightcurve variable not initialized yet
+    else {
+      // initialize module variable
+      updateCurveData();
       curveData = lightcurveData; // use newly initialized module variable in function
     }
   }
@@ -81425,7 +81583,8 @@ function plotLightcurveAlone(tDayFinal=xAxisFinalDay, inputData, dashedCurve=fal
     context.clip();
 
     if (dashedCurve === true)
-      context.setLineDash([dashedCurveLength, dashedCurveSpacing]); // turn on dashed lines
+      // turn on dashed lines
+      context.setLineDash([dashedCurveLength, dashedCurveSpacing]);
 
     // prepare to draw curve and move to initial pixel coordinate
     var tPixel = xDayToPixel(tDay);
@@ -81436,7 +81595,8 @@ function plotLightcurveAlone(tDayFinal=xAxisFinalDay, inputData, dashedCurve=fal
     // Iterate over remaining days and draw lines from each pixel coordinate
     // to the next
 
-    var index = 0; // // Index tracks place in data arrays if reading in data
+    // Index tracks place in data arrays if reading in data
+    var index = 0;
     while (tDay < tDayFinal) {
       // proceed to the next elements for the day and magnification arrays
       index += 1;
@@ -81466,122 +81626,102 @@ function plotLightcurveAlone(tDayFinal=xAxisFinalDay, inputData, dashedCurve=fal
 
 /** getThetaX */
 function getThetaX(t) {
-  var yearToDay = 365.25; // day/year; const
-  var eqMu = mu / yearToDay; // convert mu to milliarcseconds/day
+  // day/year; const
+  var yearToDay = 365.25;
+  // convert mu to milliarcseconds/day
+  var eqMu = mu / yearToDay;
   var thetaX = eqMu * (t - t0);
   return thetaX;
 }
 
 /** updateCurveData */
 function updateCurveData() {
-  if (binaryFlag === true) {
-    // send GM1, GM2, D, cof1, cof2, minXLM, maxXLM, and NPN
-    // to bin_len_faster.plot_binary() function
-    var debug = false; // use debug values for binary variables
+  // send GM1, GM2, D, cof1, cof2, minXLM, maxXLM, and NPN
+  // to bin_len_faster.plot_binary() function
+  var debug = false; // use debug values for binary variables
 
-    var thetaE_mas = thetaE / masToRad;
-    var totalMass = Ml1 + Ml2;
-    var GM1 = Ml1/totalMass;
-    var GM2 = Ml2/totalMass;
-    var D = (lensSep/2)/thetaE_mas; // "D" is the half-separation in units of
+  var thetaE_mas = thetaE / masToRad;
+  var totalMass = Ml1 + Ml2;
+  var GM1 = Ml1/totalMass;
+  var GM2 = Ml2/totalMass;
+  // "D" is the half-separation in units of ?? (debug: check units for D)
+  var D = (lensSep/2)/thetaE_mas;
 
-    var cof2 = thetaY/thetaE_mas;
+  var cof2 = thetaY/thetaE_mas;
 
-    // var cof1 = incline; // DEBUG: temp, not correct;
-                        // cof1 should be negative slope,
-                        // incline should be degrees, need conversion
+  var incline_radians = incline * Math.PI/180;
+  var cof1 = -Math.tan(incline_radians);
+  var minXLM = getThetaX(xAxisInitialDay) / thetaE_mas;
+  var maxXLM = getThetaX(xAxisFinalDay) / thetaE_mas;
 
-    var incline_radians = incline * Math.PI/180;
-    var cof1 = -Math.tan(incline_radians);
-    var minXLM = getThetaX(xAxisInitialDay) / thetaE_mas;
-    // window.alert(minXLM*thetaE_mas);
-    // var minXLM = -0.5;
-    var maxXLM = getThetaX(xAxisFinalDay) / thetaE_mas;
+  // Number of points for lightcurve
+  var NPN = 4000;
+  // Number of points for critical and caustic curves
+  var NR = 30000;
 
-    var NPN = 4000; // Number of points for lightcurve
-    var NR = 30000; // Number of points for critical and caustic curves
+  // Sampling density of critical and caustic curve points
+  /* For a while, was using this so we could automatically change DR
+     when changing NR.
 
-    // Sampling density of critical and caustic curve points
-    // var DR = 3/NR;vv
-    var DR = 0.0003; // was 0.0001 by default, but this seems to work better
+     var DR = 3/NR;
+  */
+  // was 0.0001 by default, but this seems to work better
+  var DR = 0.0003;
 
-    if (debug === true) {
-      // GM1 = 0.2;
-      // GM2 = 0.8;
-      // D = 0.5;
-      // cof1 = 0;
-      // cof2 = -0.5;
-      // var thetaE_mas_temp = 0.6539599913692768;
-      // minXLM = -1.1617229221914211;
-      // maxXLM = 1.1617229221914211;
-      //
-      // NPN = 4000;
+  if (debug === true) {
+    // testing function with some default values
 
-      // GM1 = 0.61383532827548774
-      // GM2 = 1 - GM1;
-      // D = lensSep/2;
-      // cof1 = 0;
-      // cof2 = thetaY;
-      // NPN = 4000;
-    }
+    GM1 = 0.2;
+    GM2 = 0.8;
+    D = 0.5;
+    cof1 = 0;
+    cof2 = -0.5;
+    var thetaE_mas_temp = 0.6539599913692768;
+    minXLM = -1.1617229221914211;
+    maxXLM = 1.1617229221914211;
 
-    console.log(`(binary) GM1: ${GM1}`);
-    console.log(`(binary) GM2: ${GM2}`);
-    console.log(`(binary) D: ${D}`);
+    NPN = 4000;
 
-    console.log(`(binary) cof1: ${cof1}`);
-    console.log(`(binary) cof2: ${cof2}`);
-    console.log(`(binary) NPN: ${NPN}`);
-    console.log(`(binary) minXLM: ${minXLM}`);
-    console.log(`(binary) maxXLM: ${maxXLM}`);
-    console.log(`(binary) xAxisInitialDay: ${xAxisInitialDay}`);
-    console.log(`(binary) xAxisFinalDay: ${xAxisFinalDay}`);
-    console.log(`(binary) thetaE_mas: ${thetaE_mas}`);
-
-
-    var windowAlertParamDebugFlag = false;
-
-    if (windowAlertParamDebugFlag === true) {
-      window.alert(`\
-        GM1: ${GM1}
-        GM2: ${GM2}
-        D: ${D}
-        cof1: ${cof1}
-        cof2: ${cof2}`);
-    }
-
-    var binaryCaclulationResults = bin_len_faster.plot_binary(GM1, GM2, D, cof1, cof2,
-                                                              minXLM, maxXLM, NPN, NR, DR);
-
-    var times = numeric.linspace(xAxisInitialDay, xAxisFinalDay, NPN);
-    var magnifs = binaryCaclulationResults.magnifs;
-    var normalizedImagePositions = binaryCaclulationResults.normalizedImagePositions;
-    var causticAndCritNormalized = binaryCaclulationResults.causticAndCrit; // units of thetaE
-
-    // window.alert(times.length + " " + magnifs.length)
-    console.log(`(binary) times.length: ${times.length}`);
-    console.log(`(binary) magnifs.length: ${magnifs.length}`);
-    // console.log(`(binary) times: ${times}`);
-    // console.log(`(binary) magnifs: ${magnifs}`);
-    console.log(`(binary) crit.x1.length: ${causticAndCritNormalized.crit.x1.length}`);
-    console.log(`(binary) caustic.x1.length: ${causticAndCritNormalized.caustic.x1.length}`);
+    GM1 = 0.61383532827548774
+    GM2 = 1 - GM1;
+    D = lensSep/2;
+    cof1 = 0;
+    cof2 = thetaY;
+    NPN = 4000;
   }
 
-  else  {
-    var times = [];
-    var magnifs = [];
+  console.log(`(binary) GM1: ${GM1}`);
+  console.log(`(binary) GM2: ${GM2}`);
+  console.log(`(binary) D: ${D}`);
 
-    for (var tDay = xAxisInitialDay; tDay <= xAxisFinalDay; tDay += dt) {
-      var magnif = getMagnif(tDay);
-      // if (tDay === 0)
-        // console.log("magnif: " + magnif);
-      times.push(tDay);
-      magnifs.push(magnif);
-    }
-  }
+  console.log(`(binary) cof1: ${cof1}`);
+  console.log(`(binary) cof2: ${cof2}`);
+  console.log(`(binary) NPN: ${NPN}`);
+  console.log(`(binary) minXLM: ${minXLM}`);
+  console.log(`(binary) maxXLM: ${maxXLM}`);
+  console.log(`(binary) xAxisInitialDay: ${xAxisInitialDay}`);
+  console.log(`(binary) xAxisFinalDay: ${xAxisFinalDay}`);
+  console.log(`(binary) thetaE_mas: ${thetaE_mas}`);
+
+  var binaryCaclulationResults = bin_len_faster.plot_binary(GM1, GM2, D, cof1, cof2,
+                                                            minXLM, maxXLM, NPN, NR, DR);
+
+  var times = numeric.linspace(xAxisInitialDay, xAxisFinalDay, NPN);
+  var magnifs = binaryCaclulationResults.magnifs;
+  var imageParities = binaryCaclulationResults.imageParities;
+  var normalizedImagePositions = binaryCaclulationResults.normalizedImagePositions;
+  var causticAndCritNormalized = binaryCaclulationResults.causticAndCrit; // units of thetaE
+
+  console.log(`(binary) times.length: ${times.length}`);
+  console.log(`(binary) magnifs.length: ${magnifs.length}`);
+  console.log(`(binary) crit.x1.length: ${causticAndCritNormalized.crit.x1.length}`);
+  console.log(`(binary) imageParities.length: ${imageParities.length}`);
+  console.log(`(binary) caustic.x1.length: ${causticAndCritNormalized.caustic.x1.length}`);
+
   var curveData = {
     times:times,
     magnifs:magnifs,
+    imageParities: imageParities,
     // normalized (over thetaE) positions of the (five or three) lensed images
     imagesNormalizedPos: normalizedImagePositions,
     causticNormalized: causticAndCritNormalized.caustic,
@@ -81592,7 +81732,6 @@ function updateCurveData() {
   if (autoScaleMagnifHeight === true) {
     var maxMagnif = math.max(curveData.magnifs);
     updatePlotScaleAndRange(undefined, maxMagnif+1, undefined, 0.5);
-    // updateGridRange(xGridStepDefault, (maxMagnif+1)/10);
   }
   lightcurveData = curveData;
 
@@ -81634,15 +81773,19 @@ function getU(timeTerm) {
 function getMagnifFromU(u) {
   var magnifNumerator = u*u + 2;
   var magnifDenominator = u * Math.sqrt(u * u + 4);
-  magnif = magnifNumerator / magnifDenominator; // unitless
+  // unitless
+  magnif = magnifNumerator / magnifDenominator;
   return magnif;
 }
 
 /** getMagnif */
 function getMagnif(t) {
-  var timeTerm = getTimeTerm(t); // unitless
-  var u = getU(timeTerm); // unitless
-  var magnif = getMagnifFromU(u); // unitless
+    // unitless
+  var timeTerm = getTimeTerm(t);
+  // unitless
+  var u = getU(timeTerm);
+  // unitless
+  var magnif = getMagnifFromU(u);
 
   return magnif;
 }
@@ -81650,32 +81793,53 @@ function getMagnif(t) {
 // public properties to be stored in module object,
 // accessible via module object by code executed after this script
 module.exports = {
-  //initialization
-  init: init, // initialization function
-  get initialized() { return initialized; }, // whether initialization is done
+  // initialization
+
+  // initialization function
+  init: init,
+  // whether initialization is done
+  get initialized() { return initialized; },
 
   // getters for variables we want to share
-  get Ml1() { return Ml1; }, // base modeling parameters
-  get Ds() { return Ds; }, // kpc
-  get thetaY() { return thetaY; }, // milliarcseconds (mas)
-  get Dl() { return Dl; }, // kpc
-  get t0() { return t0; }, // days
-  get mu() { return mu; }, // mas/yr
 
-  get Drel() { return Drel; }, // derived modeling parameters
-  get thetaE() { return thetaE; }, // radians
-  get thetaE_mas() { return thetaE / masToRad; }, // milliarcseconds (mas)
-  get tE() { return tE; }, // days
-  get u0() { return u0; }, // unitless (units of thetaE)
-  get lensSep() { return lensSep; }, // milliarcseconds (mas)
-  get incline() { return incline; }, // degrees
+  // base modeling parameters
+  get Ml1() { return Ml1; },
+  // kpc
+  get Ds() { return Ds; },
+  // milliarcseconds (mas)
+  get thetaY() { return thetaY; },
+  // kpc
+  get Dl() { return Dl; },
+  // days
+  get t0() { return t0; },
+  // mas/yr
+  get mu() { return mu; },
+
+  // derived modeling parameters
+
+  // debug: find out units for Drel
+  get Drel() { return Drel; },
+  // radians
+  get thetaE() { return thetaE; },
+  // milliarcseconds (mas)
+  get thetaE_mas() { return thetaE / masToRad; },
+  // days
+  get tE() { return tE; },
+  // unitless (units of thetaE)
+  get u0() { return u0; },
+  // milliarcseconds (mas)
+  get lensSep() { return lensSep; },
+  // degrees
+  get incline() { return incline; },
 
   // controls if plot updates when slider is moved and/or released
   get updateOnSliderMovementFlag() { return updateOnSliderMovementFlag; },
   get updateOnSliderReleaseFlag() { return updateOnSliderReleaseFlag; },
 
   // used for animation
-  get dt() { return dt; }, // time step used for drawing curve (days)
+
+  // time step used for drawing curve (days)
+  get dt() { return dt; },
   get xAxisInitialDay() { return xAxisInitialDay; },
   get xAxisFinalDay() { return xAxisFinalDay; },
   plotLightcurve: plotLightcurve,
@@ -81686,6 +81850,11 @@ module.exports = {
   // for calculating thetaE for individual lens masses, in addition to the
   // thetaE of the summed lens masses
   calculateThetaE: calculateThetaE,
+
+  get imageParities() {
+    if (lightcurveData !== null && lightcurveData !== undefined)
+      return lightcurveData.imageParities;
+  },
 
   // normalized (over thetaE) positions of the (five or three) lensed images
   get imagesNormalizedPos() {
@@ -81719,16 +81888,9 @@ module.exports = {
 
   // for updating slider readout
   updateSliderReadout: updateSliderReadout,
-
-  // plotLightcurveSegment: plotLightcurveSegment,
-  // initPlot: initPlot,
-  // context: context,
-  // xDayToPixel: xDayToPixel,
-  // getMagnif: getMagnif,
-  // yMagnifToPixel: yMagnifToPixel,
 };
 
-},{"./bin-len-faster.js":525,"./psbl-microlensing-event-animation.js":528,"./psbl-microlensing-event-lens-plane.js":529,"./utils.js":531}],531:[function(require,module,exports){
+},{"./bin-len-faster.js":526,"./psbl-microlensing-event-animation.js":530,"./psbl-microlensing-event-lens-plane.js":531,"./utils.js":533}],533:[function(require,module,exports){
 /** Uitilities module.
   * Miscellaneous helper functions.
   * @module utils
@@ -81737,6 +81899,7 @@ module.exports = {
 module.exports = {
   almostEquals: require("./almost-equals.js"),
   handleError: require("./handle-error.js"),
+  ellipse: require("./ellipse.js"),
 };
 
-},{"./almost-equals.js":523,"./handle-error.js":526}]},{},[527]);
+},{"./almost-equals.js":524,"./ellipse.js":527,"./handle-error.js":528}]},{},[529]);

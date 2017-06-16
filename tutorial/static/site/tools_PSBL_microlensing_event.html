@@ -3,7 +3,7 @@ HEADER::TITLE=Point Source, Binary Lens Simulator
 HEADER::TOOLS_INDEX=2
 HEADER::AUTHOR=Shanen Cross
 
-  <div style="width:1200px; margin-left:auto; margin-right:auto; position:relative;">
+   <div style="width:1200px; margin-left:auto; margin-right:auto; position:relative;">
     <canvas id="lcurveCanvas" style="float:left; border:1px solid black;" width="550" height="400">
       Your browser does not support HTML5 canvas. Please use a compatible browser.
     </canvas>
@@ -21,12 +21,21 @@ HEADER::AUTHOR=Shanen Cross
 
 
   <div style="text-align:center; position:relative; padding: 5px 10px;">
-        <div class="col-sm-2"><td>Time: <span id="timeReadout">-16.0000</span> days</td></div>
+      <center>
+      <table width="100%" style="border:0px;">
+          <tr>
+            <td>Time: <span id="timeReadout">-16.0000</span> days</td>
     <!-- thetaE probably just for testing? Maybe should be slider? -->
-        <div class="col-sm-2"><td>&theta;<sub>E</sub>: <span id="thetaEreadout">0.1206</span> mas</td></div>
-        <div class="col-sm-2"><td>&theta;<sub>x</sub>: <span id="thetaXreadout">0.3066</span> mas</td></div>
-        <div class="col-sm-2"><input type="checkbox" id="fixU0checkbox">Hold u0 fixed when changing other quantities</div>
-        <div class="col-sm-2"><input type="checkbox" id="imageShapeCheckbox" checked>Display images</div>
+              <td>&theta;<sub>E</sub>: <span id="thetaEreadout">0.1206</span> mas</td>
+              <td>&theta;<sub>x</sub>: <span id="thetaXreadout">0.3066</span> mas</td>
+              <td><input type="checkbox" id="fixU0checkbox">Hold u0 fixed when changing other quantities</td>
+              <td><input type="checkbox" id="displayImagesCheckbox" checked>Display images</td>
+              <td><input type="checkbox" id="displayRingsCheckbox" checked>Display independent Einstein rings</td>
+              <td><input type="checkbox" id="displayCritCheckbox" checked>Display critical curves</td>
+              <td><input type="checkbox" id="displayCausticCheckbox" checked>Display caustic curves</td>
+          </tr>
+      </table>
+      </center>
   </div>
 
   <div class="row justify-content-center" style="width:1200px; padding: 5px 10px;">
@@ -75,7 +84,7 @@ HEADER::AUTHOR=Shanen Cross
                         </tr>
                     </table>
                 </td>
-               
+
                 <td valign="top" halign="right" style="background-color:#eff;padding:10px"><h3>Physical Parameters</h3>
                     <table>
                         <tr>
@@ -139,5 +148,5 @@ HEADER::AUTHOR=Shanen Cross
             </tr>
       </table>
   </div>
- 
+
   <script src="/static/site/PSBL_bundle.js"></script>
