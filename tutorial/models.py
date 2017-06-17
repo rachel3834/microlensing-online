@@ -196,10 +196,10 @@ class Meeting(models.Model):
     location = models.CharField(max_length=200)
     date_start = models.DateField()
     date_end = models.DateField()
-    registration_deadline = models.DateField(null=True)
-    abstract_deadline = models.DateField(null=True)
-    url = models.URLField(null=True)
-    topic = models.CharField(max_length=500,null=True)
+    registration_deadline = models.DateField(null=True,blank=True)
+    abstract_deadline = models.DateField(null=True,blank=True)
+    url = models.URLField(null=True,blank=True)
+    topic = models.CharField(max_length=500,null=True,blank=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
             
