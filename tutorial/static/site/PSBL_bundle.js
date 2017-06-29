@@ -78062,7 +78062,7 @@ module.exports = function almostEquals(a, b, epsilon=1e-12) {
   * @module bin-ima
   */
 
-console.log("Executing bin_ima.js");
+;
 var math = require("mathjs");
 var cpoly = require("poly-roots");
 
@@ -78071,7 +78071,7 @@ var almostEquals = require("./utils.js").almostEquals;
 /** bin_ima */
 function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
   if (timeDebug === true)
-    console.time();
+    ;
 
   // GM1 = mass of object 1 (as a % of total mass) e.g. 0.1
 
@@ -78442,7 +78442,7 @@ function bin_ima(GM1=0.5, GM2=0.5, D=0.5, XS=0, YS=0, timeDebug=false) {
   results = math.transpose(resultColumns);
 
   if (timeDebug === true)
-    console.timeEnd();
+    ;
 
   return results;
 }
@@ -78471,7 +78471,7 @@ function compareComplexNumToZero(num) {
   else if (comparisonNum < 0)
     return -1;
  else
-   console.log(`ERROR: comparisonNum is: ${comparisonNum}`);
+   ;
 }
 
 module.exports = {
@@ -78487,7 +78487,7 @@ module.exports = {
   * @module bin-len-faster
   */
 
-console.log("Executing bin_len_faster.js");
+;
 var _ =require("lodash");
 var numeric = require("numeric");
 var math = require("mathjs");
@@ -78506,7 +78506,7 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
   // and outputs to console
 
   if (timeDebug === true)
-    console.time();
+    ;
 
   // Initialize array
   var ASA = new Array(NPN).fill(0);
@@ -78596,8 +78596,8 @@ function plot_binary(GM1=0.5, GM2=0.5, D=0.5, cof1=0.1, cof2=-0.5,
   var normalizedImagePositions = {x: XIA, y: YIA};
 
   if (timeDebug === true) {
-    console.timeEnd();
-    console.log('done');
+    ;
+    ;
 
     /*
     Optional output for timeDebug:
@@ -78998,12 +78998,12 @@ module.exports = function ellipse(context, xPos, yPos, xRadius, yRadius) {
   * @module handle-error
   */
 
-console.log("Executing handle-error.js");
+;
 
 /** handle */
 module.exports = function handleError(ex) {
   if (ex instanceof Error && ex.code === "MODULE_NOT_FOUND") {
-    console.log(ex.toString());
+    ;
   }
   else {
     throw(ex);
@@ -79016,12 +79016,6 @@ module.exports = function handleError(ex) {
   *
   * @module main
   */
-
-// set flag to true to disable all console output for performance
-var disableConsole = false;
-
-if (disableConsole === true)
-   console.log = function() {};
 
 var eventModule = require("./psbl-microlensing-event.js");
 var lensPlaneModule = require("./psbl-microlensing-event-lens-plane.js");
@@ -79044,7 +79038,7 @@ window.onload = init;
   * @module psbl-microlensing-event-animation
   */
 
-console.log("Executing psbl-microlensing-event-animation.js");
+;
 
 var eventModule = require("./psbl-microlensing-event.js");
 var lensPlaneModule = require("./psbl-microlensing-event-lens-plane.js");
@@ -79064,9 +79058,9 @@ var running = false;
 var minTime;
 var maxTime;
 // (days) time step per frame of animation
-var animationStep = 0.1;
+var animationStep = 0.5;
 // (days) time step for "stepBack" and "stepForward" playback commands
-var playbackControlStep = 5;
+var playbackControlStep = 1;
 
 var timeReadout = document.getElementById("timeReadout");
 var stepBackButton = document.getElementById("stepBack");
@@ -79168,17 +79162,17 @@ function updateTime(newTime) {
 
 /** animateFrame */
 function animateFrame() {
-  console.log("animating frame");
+  ;
 
   // animate frame for lightcurve
   eventModule.plotLightcurve(time);
   // animate frame for source movement on lens plane figure
   animateFrameSource();
-  console.log("TIME: " + time);
+  ;
   var u = eventModule.getU(eventModule.getTimeTerm(time));
   var magnif = eventModule.getMagnif(time);
-  console.log("debugging u: " + String(u));
-  console.log("debugging magnif: " + String(magnif));
+  ;
+  ;
 }
 
 /** animateFrameSource */
@@ -79197,7 +79191,7 @@ function updatePlayback(command="play", updateFrame=true) {
   window.clearTimeout(timer);
 
   if (command === "stepBack") {
-    console.log("step back");
+    ;
     if (time > minTime && almostEquals(time, minTime) === false) {
       updateTime(time - playbackControlStep);
       if (updateFrame === true)
@@ -79205,28 +79199,28 @@ function updatePlayback(command="play", updateFrame=true) {
     }
   }
   else if (command === "play") {
-    console.log("play");
-    console.log(time);
+    ;
+    ;
     if (time >= maxTime || almostEquals(time, maxTime) === true ||
         time <= minTime || almostEquals(time, minTime) === true) {
       updatePlayback("timeReset");
-      console.log("At or past time limit, reset");
+      ;
     }
     running = true;
     run();
   }
   else if (command === "pause") {
-    console.log("pause");
+    ;
     running = false;
   }
   else if (command === "stepForward") {
-    console.log("step forward");
+    ;
     updateTime(time + playbackControlStep);
     if (updateFrame === true)
       animateFrame();
   }
   else if (command === "timeReset") {
-    console.log("reset time");
+    ;
     running = false;
 
     // if playing forwards (positive step), reset to minimum time
@@ -79272,7 +79266,7 @@ module.exports = {
   * @module psbl-microlensing-event-lens-plane
   */
 
-console.log("Executing psbl-microlensing-event-lens-plane.js");
+;
 
 var _ = require("lodash");
 
@@ -79390,6 +79384,10 @@ var tickLabelAlign = "center";
 var tickLabelBaseline = "middle";
 // spacing between tick label and end of trailing gridline
 var tickLabelSpacing = 7;
+
+// how many ticks there are between each tick label
+var xTickLabelStep = 2;
+var yTickLabelStep = 2;
 
 // base variables (axis labels)
 var xDayLabel = "time (days)";
@@ -79561,8 +79559,8 @@ function initCheckboxes() {
 /** initSliders */
 function initSliders(updateOnSliderMovement=updateOnSliderMovementFlag,
                        updateOnSliderRelease=updateOnSliderReleaseFlag) {
-  console.log("(binary_lens_plane) updateOnSliderMovement: " + updateOnSliderMovement);
-  console.log("(binary_lens_plane) updateOnSliderRelease: " + updateOnSliderRelease);
+  ;
+  ;
 
   // update plot when slider is moved
   if (sourceRadiusSlider !== null) {
@@ -79776,7 +79774,7 @@ function updateGridRange(xStep, yStep, centerXgridOnZero=centerXgridOnZeroFlag,
    xGridInitial = xAxisInitialThetaX - (xAxisInitialThetaX % xGridStep);
   else
     xGridInitial = xAxisInitialThetaX;
-  console.log(`xGridInitial: ${xGridInitial}`);
+  ;
 
   xGridFinal = xAxisFinalThetaX;
 
@@ -79785,10 +79783,10 @@ function updateGridRange(xStep, yStep, centerXgridOnZero=centerXgridOnZeroFlag,
   else
     yGridInitial = yAxisInitialThetaY;
 
-  console.log(`y axis grid offset: ${yAxisInitialThetaY % yGridStep}`)
-  console.log(`yGridStep - Math.abs(yAxisInitialThetaY % yGridStep): ${yGridStep - Math.abs(yAxisInitialThetaY % yGridStep) < 0.01}`);
-  console.log(`yAxisInitialThetaY: ${yAxisInitialThetaY}`);
-  console.log(`yGridInitial: ${yGridInitial}`);
+  
+  ;
+  ;
+  ;
 
   // same rounding for final y grid line placement
   yGridFinal = yAxisFinalThetaY;
@@ -80006,7 +80004,8 @@ var drawing = (function(context=mainContext, canvas=mainCanvas) {
   function drawGridlinesAndTicks(drawGrid=drawGridFlag, noTicks) {
     // draw vertical lines and x axis tick labels
     context.beginPath();
-    console.log(`yGridStep: ${yGridStep}`);
+
+    var xTickLabelCounter = 0;
     for (var thetaX = xGridInitial; thetaX <= xGridFinal; thetaX+=xGridStep) {
       var xPixel = thetaXtoPixel(thetaX);
       // line starts from bottom trail
@@ -80022,24 +80021,32 @@ var drawing = (function(context=mainContext, canvas=mainCanvas) {
 
       context.lineTo(xPixel, yLineEnd);
 
-      // tick text label
-      var xTickLabel = Number(thetaX).toFixed(2);
+      if (xTickLabelCounter === 0) {
+        // tick text label
+        var xTickLabel = Number(thetaX).toFixed(2);
 
-      // catches if yTickLabel is set to "-0.00" due to rounding error and
-      // converts to "0.00";
+        // catches if yTickLabel is set to "-0.00" due to rounding error and
+        // converts to "0.00";
 
-      // (NOTE: 0 === -0 in javascript)
-      if (Number(xTickLabel) === -0) {
-        xTickLabel = Number(0).toFixed(2);
+        // (NOTE: 0 === -0 in javascript)
+        if (Number(xTickLabel) === -0) {
+          xTickLabel = Number(0).toFixed(2);
+        }
+        context.font = tickLabelFont;
+        context.fillStyle = tickLabelColor;
+        context.textAlign = tickLabelAlign;
+        context.textBaseline = tickLabelBaseline;
+        context.fillText(xTickLabel, xPixel, picBottomTrailingBorder + tickLabelSpacing);
       }
-      context.font = tickLabelFont;
-      context.fillStyle = tickLabelColor;
-      context.textAlign = tickLabelAlign;
-      context.textBaseline = tickLabelBaseline;
-      context.fillText(xTickLabel, xPixel, picBottomTrailingBorder + tickLabelSpacing);
+
+      if (xTickLabelCounter >= xTickLabelStep - 1)
+        xTickLabelCounter = 0;
+      else
+        xTickLabelCounter++;
     }
 
     //draw horizontal lines and y axis tick label
+    var yTickLabelCounter = 0;
     for (var thetaY = yGridInitial; thetaY <= yGridFinal; thetaY+=yGridStep) {
       var yPixel = thetaYtoPixel(thetaY);
       context.moveTo(picLeftTrailingBorder, yPixel);
@@ -80051,20 +80058,27 @@ var drawing = (function(context=mainContext, canvas=mainCanvas) {
         xLineEnd = picLeftBorder + picLeftTrail;
       context.lineTo(xLineEnd, yPixel);
 
-      var yTickLabel = Number(thetaY).toFixed(2);
+      if (yTickLabelCounter === 0) {
+        var yTickLabel = Number(thetaY).toFixed(2);
 
-      // catches if yTickLabel is set to "-0.00" due to rounding error and
-      // converts to "0.00"
+        // catches if yTickLabel is set to "-0.00" due to rounding error and
+        // converts to "0.00"
 
-      // (note 0 === -0 in javascript)
-      if (Number(yTickLabel) === -0) {
-        yTickLabel = Number(0).toFixed(2);
+        // (note 0 === -0 in javascript)
+        if (Number(yTickLabel) === -0) {
+          yTickLabel = Number(0).toFixed(2);
+        }
+        context.font = tickLabelFont;
+        context.fillStyle = tickLabelColor;
+        context.textAlign = "right";
+        context.textBaseline = tickLabelBaseline;
+        context.fillText(yTickLabel,picLeftTrailingBorder - tickLabelSpacing,  yPixel);
       }
-      context.font = tickLabelFont;
-      context.fillStyle = tickLabelColor;
-      context.textAlign = "right";
-      context.textBaseline = tickLabelBaseline;
-      context.fillText(yTickLabel,picLeftTrailingBorder - tickLabelSpacing,  yPixel);
+
+      if (yTickLabelCounter >= yTickLabelStep - 1)
+        yTickLabelCounter = 0;
+      else
+        yTickLabelCounter++;
     }
     context.lineWidth = gridWidth;
     context.strokeStyle = gridColor;
@@ -80568,7 +80582,7 @@ module.exports = {
   * @module psbl-microlensing-event
   */
 
-console.log("Executing psbl-microlensing-event.js");
+;
 
 var bin_len_faster = require("./bin-len-faster.js");
 
@@ -80704,10 +80718,10 @@ var xGridStepDefault = 20;
 var yGridStepDefault = 1;
 
 // Step increments used by debug buttons to alter range/scale
-var xGraphShiftStep = 0.25;
-var yGraphShiftStep = xGraphShiftStep;
-var xGraphZoomStep = 0.25;
-var yGraphZoomStep = xGraphZoomStep;
+var xGraphShiftStep = 10;
+var yGraphShiftStep = 0.25;
+var xGraphZoomStep = 10;
+var yGraphZoomStep = 1;
 
 // plot aesthetics
 var canvasBackgroundColor = "#ffffe6"
@@ -80816,11 +80830,11 @@ function init() {
   updateCurveData();
 
   plotLightcurve();
-  console.log(`tE: ${tE}`);
-  console.log(`thetaE: ${thetaE}`);
-  console.log(`Drel: ${Drel}`);
-  console.log(`mu: ${mu}`);
-  console.log(`lensSep: ${lensSep}`);
+  ;
+  ;
+  ;
+  ;
+  ;
 
   initialized = true;
 }
@@ -80881,7 +80895,7 @@ function initListeners(updateOnSliderMovement=updateOnSliderMovementFlag,
 
   // checkbox to hold u0 value fixed while varying other quantities besides thetaY
   fixU0checkbox.addEventListener("change", function() { fixU0 = fixU0checkbox.checked;
-                                                        console.log(`fixU0: ${fixU0}`); }, false);
+                                                        ; }, false);
   // debug plot range/scale and reset buttons
   xLeftButton.addEventListener("click", function() { updateGraph("xLeft"); }, false);
   xRightButton.addEventListener("click", function() {updateGraph("xRight"); }, false);
@@ -81158,7 +81172,7 @@ function updateSliders() {
   // update thetaE readout (no slider)
   if (thetaEreadout !== null) {
     var thetaE_mas = thetaE / masToRad;
-    console.log(`thetaE (mas): ${thetaE_mas}`);
+    ;
     thetaEreadout.innerHTML = Number(thetaE_mas).toFixed(4);
   }
 }
@@ -81226,7 +81240,7 @@ function updateParam(param) {
     // tE depends on mu
   }
   else if (param === "tE") {
-    console.log("Can't change tE yet (since it's a derived quantity)");
+    ;
     var oldTE = tE;
     tE = Number(tEslider.value);
 
@@ -81294,7 +81308,7 @@ function redrawCanvases() {
 
 /** updateGraph */
 function updateGraph(shift) {
-  console.log(shift);
+  ;
   var xInit, yInit, xWidth, yHeight;
   if (shift === undefined)
     return;
@@ -81690,18 +81704,18 @@ function updateCurveData() {
     NPN = 4000;
   }
 
-  console.log(`(binary) GM1: ${GM1}`);
-  console.log(`(binary) GM2: ${GM2}`);
-  console.log(`(binary) D: ${D}`);
+  ;
+  ;
+  ;
 
-  console.log(`(binary) cof1: ${cof1}`);
-  console.log(`(binary) cof2: ${cof2}`);
-  console.log(`(binary) NPN: ${NPN}`);
-  console.log(`(binary) minXLM: ${minXLM}`);
-  console.log(`(binary) maxXLM: ${maxXLM}`);
-  console.log(`(binary) xAxisInitialDay: ${xAxisInitialDay}`);
-  console.log(`(binary) xAxisFinalDay: ${xAxisFinalDay}`);
-  console.log(`(binary) thetaE_mas: ${thetaE_mas}`);
+  ;
+  ;
+  ;
+  ;
+  ;
+  ;
+  ;
+  ;
 
   var binaryCaclulationResults = bin_len_faster.plot_binary(GM1, GM2, D, cof1, cof2,
                                                             minXLM, maxXLM, NPN, NR, DR);
@@ -81712,11 +81726,11 @@ function updateCurveData() {
   var normalizedImagePositions = binaryCaclulationResults.normalizedImagePositions;
   var causticAndCritNormalized = binaryCaclulationResults.causticAndCrit; // units of thetaE
 
-  console.log(`(binary) times.length: ${times.length}`);
-  console.log(`(binary) magnifs.length: ${magnifs.length}`);
-  console.log(`(binary) crit.x1.length: ${causticAndCritNormalized.crit.x1.length}`);
-  console.log(`(binary) imageParities.length: ${imageParities.length}`);
-  console.log(`(binary) caustic.x1.length: ${causticAndCritNormalized.caustic.x1.length}`);
+  ;
+  ;
+  ;
+  ;
+  ;
 
   var curveData = {
     times:times,
