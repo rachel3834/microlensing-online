@@ -1,7 +1,7 @@
-TITLE Point source, point lens
-SHORTTITLE Point source, point lens
-COURSEINDEX 1
-AUTHOR rstreet
+HEADER::TITLE=Point source, point lens
+HEADER::SHORT_TITLE=pspl
+HEADER::COURSE_INDEX=1
+HEADER::AUTHOR=Rachel Street
 <h3>Introduction</h3>
 <p>The distances between stars are so vast that even our nearest stellar neighbors appear as unresolved points of light.
 This hasn't stopped astronomers figuring out an array of inventive techniques to find out more about them, but it remains a
@@ -34,8 +34,7 @@ M<sub>L</sub> = mass of the lens<br>
 </p>
 
 <center>
-    <img src="/static/tutorial/lensing_geometry_side_view.png" width="75%"><br>
-    <i>Figure 1: The geometry of a microlensing event. The red lines indicate the paths taken by light rays from the source.</i>
+    PICTURE::FILENAME=lensing_geometry_side_view.png::CAPTION=Figure 1: The geometry of a microlensing event. The red lines indicate the paths taken by light rays from the source.::CREDIT=R.A.Street::NAME=Geometry of a microlensing event
 </center>
 
 <p>The closer the light rays get to the lens, the more they are deflected, according to Einstein's equation:</p>
@@ -56,10 +55,10 @@ Therefore: $$\beta + \beta^{\prime} + 180 - \epsilon_{1} = 180^{\circ},$$
 So:<br>
 <table width="75%"><tr><td>$$\epsilon_{1} = \beta + \beta^{\prime}$$</td><td>[4]</td></tr></table></li>
 <li>Angles &beta; and &beta;' scale with the ratio of the distances observer-lens and lens-source:<br>
-<table width="75%"><tr><td>$$\beta^{\prime} = \beta \left( \frac{D_{L}}{D_{S}} \right)$$</td><td>[5]</td></tr></table></li>
+<table width="75%"><tr><td>$$\beta^{\prime} = \beta \left( \frac{D_{L}}{D_{LS}} \right)$$</td><td>[5]</td></tr></table></li>
 <p>Combining these observations, we can derive an expression for the angular displacement of the image in terms of the G.R. deflection of light:</p>
-$$\epsilon_{1} = \beta + \beta \left( \frac{D_{L}}{D_{S}} \right) = \beta \left( 1 + \frac{D_{L}}{D_{S}} \right)$$
-<p>For convenience, we define $$\mu = 1 + D_{L}/D_{S},$$
+$$\epsilon_{1} = \beta + \beta \left( \frac{D_{L}}{D_{LS}} \right) = \beta \left( 1 + \frac{D_{L}}{D_{LS}} \right)$$
+<p>For convenience, we define $$\mu = 1 + D_{L}/D_{LS},$$
 giving:</p>
 <table width="75%"><tr><td>$$\theta_{1} = \alpha + \frac{\epsilon_{1}}{\mu}$$</td><td>[6]</td></tr></table>
 Now, from G.R., $$\epsilon_{1} = \frac{4GM_{L}}{rc^{2}}.$$
@@ -101,10 +100,7 @@ r<sub>1,2</sub> = separation of the images of the source from the lens<br>
 R<sub>E</sub> = Einstein radius.<br>
 
 <center>
-    <img src="/static/tutorial/lensed_image_geometry.png" width="50%"><br>
-    <i>Figure 2: The geometry of a microlensing event, seen from the observer's perspective. Here we look down the line of sight,
-    with a coordinate system centered on the lens for convenience. Notice that the images of the source always form with one
-    inside and one outside the Einstein radius of the lens.</i>
+    PICTURE::FILENAME=lensed_image_geometry.png::CAPTION=The geometry of a microlensing event, seen from the observer's perspective. Here we look down the line of sight, with a coordinate system centered on the lens for convenience. Notice that the images of the source always form with one inside and one outside the Einstein radius of the lens.::CREDIT=R.A.Street::NAME=Geometry of a microlensing event from observers perspective
 </center>
 
 <p>We can re-write the lens equation and its solutions in terms of radial distances from the lens projected on sky:</p>
@@ -113,8 +109,7 @@ R<sub>E</sub> = Einstein radius.<br>
 <table width="75%"><tr><td>$$R_{E}^{2} = \frac{4GM_{L}D}{c^{2}},$$</td><td>$$D = \frac{D_{L}D_{LS}}{D_{S}}.$$</td><td>[13]</td></tr></table>
 <p>The solutions of this, i.e. the projected locations of the images, are then:</p>
 <table width="75%"><tr><td>$$r_{1,2} = \frac{r_{0}\pm(r_{0}^{2}+4R_{E}^{2})^{\frac{1}{2}}}{2}.$$</td><td>[14]</td></tr></table>
-<p>For more discussion, refer to:<br>
-Liebes, S. (1964) Physical Review, 133, B835.<br>
-Paczy&nacute;ski, B. (1986), ApJ, 301, 503.<br>
-Wambsganss, J. (1998), Living Reviews in Relativity, 1, 12.<br>
-</p>
+
+REF::AUTHORS=Liebes, S.::YEAR=1964::JOURNAL=Physical Review::VOLUME=133::PAGE=B835::URL=http://adsabs.harvard.edu/abs/1964PhRv..133..835L
+REF::AUTHORS=Paczy&nacute;ski, B.::YEAR=1986::JOURNAL=ApJ::VOLUME=301::PAGE=503::URL=http://adsabs.harvard.edu/abs/1986ApJ...301..503P
+REF::AUTHORS=Wambsganss, J.::YEAR=1998::JOURNAL=Living Reviews in Relativity::VOLUME=1::PAGE=12::URL=http://adsabs.harvard.edu/abs/1998LRR.....1...12W
