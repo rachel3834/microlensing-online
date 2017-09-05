@@ -127,16 +127,17 @@ def opportunities(request,selected='none'):
     meetings = []
     jobs = []
     grants = []
+
     if selected == 'meetings':
-        meetings = Meeting.objects.filter(date_end__gte=datetime.utcnow())
+        meetings = Meeting.objects.filter(date_end__gte=datetime.utcnow()).order_by('date_end')
     elif selected == 'jobs':
-        jobs = Job.objects.filter(deadline__gte=datetime.utcnow())
+        jobs = Job.objects.filter(deadline__gte=datetime.utcnow()).order_by('deadline')
     elif selected == 'grants':
-        grants = Grant.objects.filter(deadline__gte=datetime.utcnow())
-        
+        grants = Grant.objects.filter(deadline__gte=datetime.utcnow()).order_by('deadline')
+ 
     return render(request,'tutorial/opportunities.html',{'meetings_list':meetings,
                                                          'jobs_list':jobs,
-                                                         'grant_list':grants, 
+                                                         'grants_list':grants, 
                                                          'selected':selected})
     
 def interactive(request,pk=None):
