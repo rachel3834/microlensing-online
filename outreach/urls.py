@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^learning/$',learning,name="learning"),
     url(r'^references/$',references,name="references"),
     url(r'^links/$',links,name="links"),
+    url(r'^software/$',page,name="software"),
     url(r'^pictures/$',list_resources,{'resource_type':'pictures'},name='pictures'),
     url(r'^pictures/(?P<pk>[0-9]+)/$',list_resources,{'resource_type':'pictures'},name='pictures'),
     url(r'^pictures/key/$',list_resources,{'resource_type':'pictures'},name='pictures_key'),
