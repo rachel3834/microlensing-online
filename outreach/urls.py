@@ -60,4 +60,5 @@ urlpatterns = [
     url(r'^about/$',page,name="about"),
     url(r'^license/$',page,name="license"),
     url(r'^contact/$',page,name="contact"),
+    url(r'^data-challenge/$',page,name="data-challenge"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
