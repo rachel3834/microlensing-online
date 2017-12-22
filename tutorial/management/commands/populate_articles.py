@@ -32,7 +32,8 @@ class Command(BaseCommand):
                 concepts = glob.glob('tutorial/static/tutorial/'+filename)
             else:
                 tutorials = glob.glob('tutorial/static/tutorial/'+filename)
-                
+        
+        print tutorials
         for f in concepts:
             file_lines = open(f,'r').readlines()
             params = ingest_functions.parse_article(file_lines)
