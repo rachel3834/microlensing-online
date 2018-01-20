@@ -69,9 +69,14 @@ def parse_db_entry(line,entry_type):
         try:
             (key, value) = item.split('=')
         except ValueError:
-            print 'Error parsing '+entry_type+' file entry: ',line
-            print 'Problem with item: ',item
-            exit()
+            if entry_type == 'URL':
+                entries = item.split('=')
+                key = entries[0]
+                value = ''.join(entries[1:])
+            else:
+                print 'Error parsing '+entry_type+' file entry: ',line
+                print 'Problem with item: ',item
+                exit()
         params[str(key).lower().lstrip()] = value
     
     return params
