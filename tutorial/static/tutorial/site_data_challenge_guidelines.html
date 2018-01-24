@@ -1,0 +1,106 @@
+HEADER::NAME=data-challenge-guidelines
+<h3 class="page-header">Data Challenge Entry Guidelines</h3>
+<p>
+
+<h4>Who can participate?</h4>
+<p>Everyone is welcome, including team/collaborative entrants.  Newcomers to the field are particularly encouraged.  Although contact details will be required for all participants during the submission process, all entries will be presented anonymously to the evaluation panel.  </p>
+
+<h4>What is the task?</h4>
+<p>Your challenge is to identify the nature of the phenomenon causing the variability in each lightcurve, whether single or binary microlensing event or variable star.  For microlensing events, fit an appropriate model to the data.  Analyze as much data as possible before the deadline.</p>
+
+
+<h4>Evaluation of Entries</h4>
+<p>All entries will be evaluated by a panel comprised of experts in microlensing theory and analysis, software and algorithms.  No panel member may participate in any of the teams and all panel members will be required to declare any conflicts of interest. </p>
+
+<p>It is important to note that the philosophy driving this challenge aims to maximize innovation and problem-solving as well as participation in the field.  Accurately modeling large numbers of events in good time is of course highly important, but tackling outstanding challenges in the analysis is also valuable.  For example, entries which complete a limited analysis (e.g. a subset of lightcurves or parameters) but which explore/develop innovative approaches are welcome.  </p>
+
+
+<h4>Definitions used by the simulation</h4>
+<p>Note that in the simulated data, the inertial frame of reference is defined with the x-axis increasing from the binary center of mass towards the less massive lens at t<sub>0</sub>, the time of closest approach to the center of mass. If viewed from the solar system barycenter, the inertial frame moves at the relative velocity v<sub>lens_CoM</sub> – v<sub>observer</sub>(t<sub>0</sub>). The inclination of the orbit is a counter-clockwise rotation about the x-axis. &alpha; is the angle that the source trajectory makes with the x-axis (if parallax was 0).  Where finite source effects are significant, a linear limb darkening law has been applied.  </p>
+
+
+<h4>Contents of the Simulated Data Release</h4>
+<b>Lightcurves</b><br>
+<p>There will be two lightcurve files for each event or star, representing the data from WFIRST's W149 and Z087 filters.  The files are in ASCII format with the columns:<br>
+BJD Aperture_Magnitude Error<br>
+and will follow the file-naming convention: ulwdc1_nnn_[W149/Z087].txt</p>
+
+<b>Supplementary files</b><br>
+<p>wfirst_ephemeris.txt contains the BJD and 3-d spacecraft location within the solar system. 
+The release will also include the surface-brightness color relation for Z087-W149 to enable lens masses to be determined where applicable. 
+
+Data releases will be made through the data challenges Github organization.
+
+<h4>Github Organization</h4>
+<p>A public 
+URL::URL=https://github.com/microlensing-data-challenge::NAME=data challenge github organization::GROUP=data-challenge 
+    has been set-up for all entrants to use, and will be where the challenge datasets can be downloaded from.  Teams are encouraged to set up their own repos within this organizations, and to use its wiki and issue-tracking capabilities for discussions and questions.  </p>
+
+
+<h4>Mailing list: microlensing-data-challenge@lco.global</h4>
+<p>Everyone interested in the progress of the data challenge is encouraged to sign up to our mailing list.  In particular, this list will be used to announce data releases and any necessary changes.  </p>
+
+
+<h4>Contents of Entries</h4>
+    <p>In an ideal world, all entries would be compared by an identical set of independent and purely numerical metrics.  This is difficult in practice because of a range of factors – for instance, it is impractical to expect teams to run their analysis on the same hardware and we don't wish to limit collaboration by proscribing a fixed number of team members.  We therefore ask all teams to provide a common set of numerical metrics together with a broader description of their approach.  </p>
+
+<p>
+    <b>Team Contact Details</b><br>
+Teams should provide a simple ASCII file called “team.dat” in which they provide <br>
+a) The name of the team<br>
+b) Full names, affiliations and email addresses for all team members.   <br>
+    </p>
+
+<p>
+<b>Table of parameters for all lightcurves</b><br>
+Complete a table of parameters for all lightcurves, following the format indicated in Table1_example.dat (machine-readable and space-separated ASCII columns). 
+SITELINK::TABLE=SitePage::NAME=table1-example-ascii::LINKTEXT=Table1_example.dat<br>
+The lines starting with a '#' character are provided for explanation and need not be included but the table header column names are fixed and must be present.  Alternatively, the data may be provided in JSON format as shown in Table1_example.json.  
+SITELINK::TABLE=SitePage::NAME=table1-example-json::LINKTEXT=Table1_example.json<br>
+No parameters need to be provided for variables, but None entries should be given rather than missing entries.  </p>
+
+<p>For lightcurves classified as microlensing, the appropriate parameters should be provided with uncertainties.  Binary lens and second-order effect parameters should be provided only where applicable.  Some are indicated as 'priority' in Table 1.  This reflects the fact that second-order effects are not always measurable, so more weight will be given in the evaluation to constraining the priority parameters well.  </p>
+
+<p>We recognize that there may be multiple possible solutions for each target and entrants are free to submit multiple models for any given object.  These should be distinguished in the table using the model ID following the naming convention [target ID]_[model number] e.g. ulwdc1_001.  </p>
+
+<p>Different analysts may prefer to model the data using alternative parameter sets, for example &pi;<sub>E,&perp;</sub>, &pi;<sub>E,||</sub> or using the blend parameter <i>g</i> rather than <i>f<sub>s</sub></i> and <i>f<sub>b</sub></i>.  We ask that where these parameters are used, they convert to the standard set of parameters given in Table 1 wherever possible, so that our panel can directly compare entries.  </p>
+
+<p>If entrants wish to explore novel parameterizations, they should provide (in simiar ASCII or JSON format) the complete parameter set and uncertainties for all models, and include a full description of their parameterization in their documentation.  These entrants should still provide as many of the priority parameters as possible, especially  1.) Classification, 2.) <i>q=M1/M2</i>, <i>M1</i> and <i>M2</i> 3.) &theta;<sub>E</sub> or &pi;<sub>E</sub> (magnitude) 4.) Lens distance</p>
+
+<p>The Time to Fit parameter should record how long the analysis of a given lightcurve took, from initial data ingest to final parameter output.  </p>
+
+<p>
+    <b>Documentation</b><br>
+    All entries should provide written answers to the following questions to provide context which will aid in the evaluation of their results. </p>
+
+    <p>
+1) Describe all software that you used to conduct your analysis, including version numbers where available and all major dependencies (compilers, libraries, external services).  This should include:<br>
+a) the algorithm/approach used to classify the lightcurves<br>
+b) the algorithm(s) used to find the best-fitting model <br>
+c) the algorithm used to evaluate the parameter uncertainties<br>
+d) how competing solutions were evaluated and the best fit selected<br>
+2) Describe any data filtering or outlier rejection techniques used and any changes made to the photometric errors.  <br>
+3) If your analysis included limb darkening of the source star, please describe what relation or parameterization was used and the origin of the coefficients.  <br>
+4) Describe the computer hardware on which the analysis was conducted including number and type of processors (whether GPU or CPU), processor speed, memory, system architecture (e.g. a single multi-processor machine, cluster (Beowulf, condor pool, etc)...) and operating system.<br>
+    </p>
+
+    <p><b>Graphical output</b><br>
+Plots of all fitted lightcurves should be provided with the model lightcurve overlaid, together with a plot of the lightcurve residuals as a function of time.  Zoomed-in plots of any anomalous features are advantageous but not required. <br>
+Plots of the lens plane geometry, caustic structures and source trajectory.  <br>
+Entrants may provide additional graphical output where relevant. <br>
+    </p>
+
+<p><b>Submitting your entry</b><br>
+The deadline for entries is <b>Oct 31, 2018 at 23:59 UTC</b>.  A link to the submission portal will be provided from this data challenge website, to which you will be able to upload a tarball of all associated files.  The tarball should be prefixed with the lead investigator's or team name in order to distinguish it.  </p>
+
+
+<h4>Evaluation of entries</h4>
+    <p>All submissions will be judged by a panel selected for their experience in microlensing theory, statistics and software, and who did not actively participate in a submitting team.  </p>
+    <p>All submissions will be anonymized (the “team.dat” file will be removed) during the evaluation to minimize unconscious bias. </p>
+
+<p>Entries will be judged quantitatively against the input parameters of the simulations, but there will be no ranking of entries.  Entries determined to be serious at the discretion of the judging panel will<br>
+a) entitle all team members to co-authorship on a paper summarizing the results of the data challenge to be submitted to a peer reviewed journal,<br>
+b) imply consent for the entry's methods to be summarized and its results discussed quantitatively and qualitatively in the summary paper.<br>
+Teams will be identified with their submissions in this paper. Note, however, that we are just as interested in varying degrees of failure as well as success, and these will be discussed in a fair and constructive manner in the paper.<br>
+    Teams are also encouraged to publish independent papers describing their methods in detail.  </p>
+
