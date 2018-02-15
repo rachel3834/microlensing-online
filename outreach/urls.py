@@ -62,6 +62,7 @@ urlpatterns = [
     url(r'^contact/$',page,name="contact"),
     url(r'^data-challenge/$',page,name="data-challenge"),
     url(r'^data-challenge-guidelines/$',page,name="data-challenge-guidelines"),
+    url(r'^data-challenge-entry-contents/$',page,name="data-challenge-entry-contents"),
     url(r'^table1-example-ascii/$',page,name="table1-example-ascii"),
     url(r'^table1-example-json/$',page,name="table1-example-json"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

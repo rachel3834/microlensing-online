@@ -85,21 +85,28 @@ def resolve_site_link(params,entry_type):
     """Function to provide a handle to link to other pages within the same
     site"""
     
-    if str(params['table']).lower() == 'sitepage':
-        entry = SitePage.objects.get(name=params['name'])
-    elif str(params['table']).lower() == 'concept' or str(params['table']).lower() == 'conceptpage':
-        entry = ConceptPage.objects.get(short_title=params['shorttitle'])
-    elif str(params['table']).lower() == 'tutorial':
-        entry = TutorialPage.objects.get(short_title=params['shorttitle'])
-    elif str(params['table']).lower() == 'interactivetool':
-        entry = TutorialPage.objects.get(name=params['name'])
-           
-    else:
+    try:
+        if str(params['table']).lower() == 'sitepage':
+            entry = SitePage.objects.get(name=params['name'])
+        elif str(params['table']).lower() == 'concept' or str(params['table']).lower() == 'conceptpage':
+            entry = ConceptPage.objects.get(short_title=params['shorttitle'])
+        elif str(params['table']).lower() == 'tutorial':
+            entry = TutorialPage.objects.get(short_title=params['shorttitle'])
+        elif str(params['table']).lower() == 'interactivetool':
+            entry = TutorialPage.objects.get(name=params['name'])
+               
+        else:
+            print params
+            print 'Unrecognised sitelink table '+params['table']
+            print 'Halting until formatting issues resolved'
+            exit()
+    
+    except KeyError:
         print params
-        print 'Unrecognised sitelink table '+params['table']
+        print 'Cannot parse sitelink'
         print 'Halting until formatting issues resolved'
         exit()
-    
+            
     return entry
     
 def parse_article(page_text):
