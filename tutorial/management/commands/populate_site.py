@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
         for f in file_list:
 
-            print('Parsing '+f)
+            print( 'Parsing '+f )
             file_lines = open(f,'r').readlines()
             params = ingest_functions.parse_article(file_lines)
             page, created = SitePage.objects.get_or_create(**params)
