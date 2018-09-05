@@ -191,6 +191,19 @@ class Picture(models.Model):
     def __str__(self):
         return self.name
 
+class File(models.Model):
+    name = models.CharField(max_length=200,null=True)
+    filename = models.CharField(max_length=100,null=True)
+    last_modified_date = models.DateTimeField(
+            blank=True, null=True)
+            
+    def publish(self):
+        self.last_modified_date = timezone.now()
+        self.save()
+        
+    def __str__(self):
+        return self.name
+        
 class Meeting(models.Model):
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)

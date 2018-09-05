@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import TutorialPage, SitePage, InteractiveTool, ConceptPage
 from .models import GroundSurvey, Author, OnlineResource, Reference
-from .models import Movie, Picture, Meeting, Job, Grant
+from .models import Movie, Picture, Meeting, Job, Grant, File
 
 admin.site.register(TutorialPage)
 admin.site.register(ConceptPage)
@@ -16,3 +16,4 @@ admin.site.register(Picture)
 admin.site.register(Meeting)
 admin.site.register(Job)
 admin.site.register(Grant)
+admin.site.register(File)

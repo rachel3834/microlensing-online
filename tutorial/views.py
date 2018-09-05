@@ -67,7 +67,8 @@ def get_article_db_entries(page):
     tables = {'REF': Reference, 'URL': OnlineResource, \
                 'MOVIE': Movie, 'PICTURE': Picture, \
                 'SITEPAGE': SitePage, 'CONCEPTPAGE': ConceptPage, \
-                'TUTORIALPAGE': TutorialPage, 'INTERACTIVETOOL': InteractiveTool}
+                'TUTORIALPAGE': TutorialPage, 'INTERACTIVETOOL': InteractiveTool,\
+                'FILE': File}
     text = []
     dbentries = []
     references = []
@@ -93,6 +94,10 @@ def get_article_db_entries(page):
             elif table == 'PICTURE':
                 entry['type'] = 'PICTURE'
                 entry['object'] = Picture.objects.get(pk=pk)
+            elif table == 'FILE':
+                entry['type'] = 'FILE'
+                entry['object'] = File.objects.get(pk=pk)
+                line = line.split('::')[-2].split('=')[-1]
             elif table == 'SITELINK':
                 dbtable = l[3].replace('::','').split('=')[1]
                 linktext = line.split('::')[-2].split('=')[-1]
@@ -172,7 +177,6 @@ def page(request):
     except SitePage.DoesNotExist:
         page = SitePage.objects.get(name='missingpage')
     page,content,references = get_article_db_entries(page)
-
     return render(request,'site/site_page.html',{'page':page,\
                     'content':content,'references':references})
 
