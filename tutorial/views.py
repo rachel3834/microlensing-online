@@ -197,28 +197,17 @@ def links(request):
     ground_surveys = OnlineResource.objects.filter(group__contains='ground-based survey')
     ground_followup = OnlineResource.objects.filter(group__contains='ground-based follow-up')
     sagan_workshop = OnlineResource.objects.filter(group__contains='sagan workshop 2017')
-    meetings = OnlineResource.objects.filter(group__contains='meeting')
-    
-    return render(request,'tutorial/links.html',{'space_surveys':space_surveys, \
-                                                'ground_surveys':ground_surveys, \
-                                                'ground_followup':ground_followup,\
-                                                'sagan_workshop':sagan_workshop,
-                                                })
-
-def links(request):
-    space_surveys = OnlineResource.objects.filter(group__contains='space-based mission')
-    ground_surveys = OnlineResource.objects.filter(group__contains='ground-based survey')
-    ground_followup = OnlineResource.objects.filter(group__contains='ground-based follow-up')
-    sagan_workshop = OnlineResource.objects.filter(group__contains='sagan workshop 2017')
     meetings = OnlineResource.objects.filter(group__contains='meetings').order_by('name')
     youtube = OnlineResource.objects.filter(group__contains='youtube').order_by('name')
+    simulations = OnlineResource.objects.filter(group__contains='simulations')
     
     return render(request,'tutorial/links.html',{'space_surveys':space_surveys, \
                                                 'ground_surveys':ground_surveys, \
                                                 'ground_followup':ground_followup,\
                                                 'sagan_workshop':sagan_workshop,\
                                                 'meetings': meetings,\
-                                                'youtube': youtube,
+                                                'youtube': youtube,\
+                                                'simulations': simulations,
                                                 })
             
 def list_resources(request,resource_type,pk=None,key=None):

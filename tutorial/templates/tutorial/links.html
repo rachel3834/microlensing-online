@@ -38,9 +38,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <h4>YouTube Resources</h4>
             {% for u in youtube %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+        <div class="col-lg-6">
+            <h4>Simulations and Modeling Resources</h4>
+            {% for u in simulations %}
             <a href="{{u.url}}">{{u.name}}</a></br>
             {% endfor %}
         </div>
