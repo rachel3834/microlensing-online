@@ -14,8 +14,9 @@ COPY docker/ /
 
 # install python requirements
 COPY pip-requirements.txt /var/www/microlensingonline/
-RUN pip install -r /var/www/microlensingonline/pip-requirements.txt \
-        && rm -rf ~/.cache ~/.pip
+RUN pip install --upgrade pip \
+    && pip install -r /var/www/microlensingonline/pip-requirements.txt \
+    && rm -rf ~/.cache ~/.pip
 
 # copy application
 COPY . /var/www/microlensingonline/
