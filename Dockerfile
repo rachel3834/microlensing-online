@@ -4,9 +4,9 @@ EXPOSE 80
 ENTRYPOINT [ "/init" ]
 
 # install packages
-RUN yum -y install epel-release \
-        && yum -y install nginx python-pip supervisor uwsgi-plugin-python2 \
-        && yum -y update \
+RUN yum -y install epel-release\
+        && yum -y install nginx python-pip supervisor uwsgi-plugin-python2\
+        && yum -y update\
         && yum -y clean all
 
 # system configuration
