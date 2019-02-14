@@ -20,10 +20,10 @@ class Command(BaseCommand):
         file_list = glob.glob('tutorial/static/tutorial/tutorial_*html')
         for f in file_list:
             file_lines = open(f,'r').readlines()
-            page_title = file_lines[0].replace('TITLE','').lstrip().replace('\n','')
-            page_short_title = file_lines[1].replace('SHORTTITLE','').lstrip().replace('\n','')
-            page_course_index = int(file_lines[2].replace('COURSEINDEX','').lstrip().replace('\n',''))
-            page_author = file_lines[3].replace('AUTHOR','').lstrip().replace('\n','')
+            page_title = file_lines[0].replace('HEADER::TITLE=','').lstrip().replace('\n','')
+            page_short_title = file_lines[1].replace('HEADER::SHORT_TITLE=','').lstrip().replace('\n','')
+            page_course_index = int(file_lines[2].replace('HEADER::COURSE_INDEX=','').lstrip().replace('\n',''))
+            page_author = file_lines[3].replace('HEADER::AUTHOR=','').lstrip().replace('\n','')
             page_text = ''
             references = []
             for line in file_lines[4:]:

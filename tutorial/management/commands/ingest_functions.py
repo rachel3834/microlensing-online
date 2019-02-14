@@ -181,4 +181,3 @@ def parse_article(page_text):
     params['text'] = ''.join(content)
     
     return params
-    
