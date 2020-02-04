@@ -13,7 +13,7 @@ def columns(resources,ncol):
     """Function to break a single list of resource objects into a list of lists
     where each list entry represents a set of resource objects forming a row in
     a table of ncol columns."""
-    
+
     columns = []
     row = []
     for r in resources:
@@ -28,11 +28,11 @@ def columns(resources,ncol):
 register.filter(columns)
 
 def _test():
-    
+
     test_list = range(1,14,1)
     cols = columns(test_list,3)
-    print test_list
-    print cols
+    print(test_list)
+    print(cols)
 
 if __name__ == '__main__':
     _test()

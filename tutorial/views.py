@@ -15,16 +15,16 @@ def tutorial(request,pk=None):
         if page.course_index != 0:
             indices.append(page.course_index)
             tutorials.append(page)
-    course_index = zip(indices,tutorials)
+    course_index = list(zip(indices,tutorials))
     course_index.sort()
     (indices, tutorials) = zip(*course_index)
     if pk == None:
         page = TutorialPage.objects.get(course_index=0)
     else:
         page = TutorialPage.objects.get(pk=pk)
-        
+
     page,content = get_article_db_entries(page)
-    
+
     return render(request,'tutorial/article_base.html',\
                 {'article_list':tutorials, 'page':page,\
                     'content':content})
@@ -40,7 +40,7 @@ def article(request,resource_type,short_title=None):
         if 'worksheet' not in page.short_title:
             indices.append(page.course_index)
             articles.append(page)
-    course_index = zip(indices,articles)
+    course_index = list(zip(indices,articles))
     course_index.sort()
     (indices, articles) = zip(*course_index)
     if short_title == None:
@@ -56,14 +56,14 @@ def article(request,resource_type,short_title=None):
         if len(qs) > 0:
             page = qs[0]
     page,content,references = get_article_db_entries(page)
-    
+
     return render(request,'tutorial/article_base.html',\
                     {'article_list':articles, 'page':page,\
                     'content':content,'resource_type':resource_type,\
                     'references':references})
 
 def get_article_db_entries(page):
-            
+
     tables = {'REF': Reference, 'URL': OnlineResource, \
                 'MOVIE': Movie, 'PICTURE': Picture, \
                 'SITEPAGE': SitePage, 'CONCEPTPAGE': ConceptPage, \
@@ -116,15 +116,15 @@ def get_article_db_entries(page):
             dbentries.append( 'no_db_entry' )
         text.append( line )
     content = zip(text,dbentries)
-    
+
     return page, content, references
 
 def learning(request):
     return render(request,'tutorial/learning.html',{})
-    
+
 def overview(request):
     return render(request,'tutorial/overview.html',{})
-    
+
 def resources(request):
     return render(request,'tutorial/resources.html',{})
 
@@ -139,12 +139,12 @@ def opportunities(request,selected='none'):
         jobs = Job.objects.filter(deadline__gte=datetime.utcnow()).order_by('deadline')
     elif selected == 'grants':
         grants = Grant.objects.filter(deadline__gte=datetime.utcnow()).order_by('deadline')
- 
+
     return render(request,'tutorial/opportunities.html',{'meetings_list':meetings,
                                                          'jobs_list':jobs,
-                                                         'grants_list':grants, 
+                                                         'grants_list':grants,
                                                          'selected':selected})
-    
+
 def interactive(request,pk=None):
     tool_list = InteractiveTool.objects.all()
     indices = []
@@ -154,7 +154,7 @@ def interactive(request,pk=None):
             indices.append(page.tools_index)
             tools.append(page)
     if len(indices) > 0:
-        index = zip(indices,tools)
+        index = list(zip(indices,tools))
         index.sort()
         (indices, tools) = zip(*index)
     if pk == None:
@@ -187,7 +187,7 @@ def references(request):
     for r in refs:
         ref_list.append(r.__str__())
         indices.append(r.authors)
-    index = zip(indices,ref_list)
+    index = list(zip(indices,ref_list))
     index.sort()
     (indices, ref_list) = zip(*index)
     return render(request,'tutorial/references.html',{'reference_list':ref_list})
@@ -200,7 +200,7 @@ def links(request):
     meetings = OnlineResource.objects.filter(group__contains='meetings').order_by('name')
     youtube = OnlineResource.objects.filter(group__contains='youtube').order_by('name')
     simulations = OnlineResource.objects.filter(group__contains='simulations')
-    
+
     return render(request,'tutorial/links.html',{'space_surveys':space_surveys, \
                                                 'ground_surveys':ground_surveys, \
                                                 'ground_followup':ground_followup,\
@@ -209,18 +209,18 @@ def links(request):
                                                 'youtube': youtube,\
                                                 'simulations': simulations,
                                                 })
-            
+
 def list_resources(request,resource_type,pk=None,key=None):
-        
+
     if resource_type == 'movies':
         resources = Movie.objects.all()
     elif resource_type == 'pictures':
         resources = Picture.objects.all()
     else:
         resources = []
-    
+
     keywords = extract_keywords(resources)
-    
+
     if key != None:
         if resource_type == 'movies':
             resources = Movie.objects.filter(keywords__contains=key)
@@ -228,7 +228,7 @@ def list_resources(request,resource_type,pk=None,key=None):
             resources = Picture.objects.filter(keywords__contains=key)
         else:
             resources = []
-            
+
     if pk != None:
         if resource_type == 'movies':
             item = Movie.objects.get(pk=pk)
@@ -236,19 +236,19 @@ def list_resources(request,resource_type,pk=None,key=None):
             item = Picture.objects.get(pk=pk)
     else:
         item = None
-        
+
 
     title = capitalize_first_letter(resource_type)
-    
-    return render(request,'tutorial/resource_files.html',{'index':resources, 
+
+    return render(request,'tutorial/resource_files.html',{'index':resources,
                                                           'resource_type':resource_type,
-                                                          'resource':item, 
+                                                          'resource':item,
                                                           'title': title,
                                                           'keywords': keywords})
 def extract_keywords(resources):
     if len(resources) == 0:
         return []
-    
+
     keywords = []
     for r in resources:
         keys = str(r.keywords).split('::')
@@ -256,12 +256,12 @@ def extract_keywords(resources):
             if k not in keywords and str(k).lower() != 'none':
                 keywords.append(k)
     return keywords
- 
+
 def capitalize_first_letter(s):
     s = s.lstrip()
     s = s[0:1].upper()+s[1:]
     return s
-    
+
 class TutorialDetails(DetailView):
     model = TutorialPage
     template_name = 'tutorial/tutorial_page.html'

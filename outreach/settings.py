@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [ 'einstein.lco.gtn', 'www.microlensing-source.org', 'microlensing-source.org', '127.0.0.1' ]
 
@@ -40,13 +40,12 @@ INSTALLED_APPS = [
     'tutorial',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -69,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'outreach.wsgi.application'
+#WSGI_APPLICATION = 'outreach.wsgi.application'
 
 
 # Database
@@ -79,8 +78,8 @@ WSGI_APPLICATION = 'outreach.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join('/var/www/microlensingonline/', 'sqlite.db'),
-      #  'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+      #  'NAME': os.path.join('/var/www/microlensingonline/', 'sqlite.db'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

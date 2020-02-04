@@ -7,11 +7,11 @@ class Author(models.Model):
     affiliation = models.CharField(max_length=100,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
 
@@ -25,15 +25,15 @@ class Reference(models.Model):
     search_key = models.CharField(max_length=200)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def set_params(self,params):
         for key, value in params.items():
             setattr(self,key,value)
-        
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         ref_string = ''
         if self.url != None:
@@ -56,16 +56,16 @@ class TextBlock(models.Model):
     text = models.TextField()
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.text
-        
+
 class TutorialPage(models.Model):
-    author = models.ForeignKey(Author,null=True)
+    author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=200)
     short_title = models.CharField(max_length=20,null=True)
     course_index = models.IntegerField(null=True)
@@ -73,27 +73,27 @@ class TutorialPage(models.Model):
     references = models.ManyToManyField(Reference)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.title
 
 class ConceptPage(models.Model):
-    author = models.ForeignKey(Author,null=True)
+    author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=200)
     short_title = models.CharField(max_length=20,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.title
 
@@ -102,42 +102,42 @@ class SitePage(models.Model):
     text = models.TextField()
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
-        
+
 
 class InteractiveTool(models.Model):
-    author = models.ForeignKey(Author,null=True)
+    author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True)
     name = models.CharField(max_length=20)
     title = models.CharField(max_length=200)
     text = models.TextField()
     tools_index = models.IntegerField(null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
-    
+
 class GroundSurvey(models.Model):
     name = models.CharField(max_length=20)
     pi = models.CharField(max_length=40)
     tel_diameter = models.DecimalField(decimal_places=1, max_digits=5)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
 
@@ -147,11 +147,11 @@ class OnlineResource(models.Model):
     group = models.CharField(max_length=100)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.url
 
@@ -165,11 +165,11 @@ class Movie(models.Model):
     keywords = models.CharField(max_length=200,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-    
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
 
@@ -183,11 +183,11 @@ class Picture(models.Model):
     keywords = models.CharField(max_length=200,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-            
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
 
@@ -196,14 +196,14 @@ class File(models.Model):
     filename = models.CharField(max_length=100,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-            
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
-        
+
 class Meeting(models.Model):
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
@@ -215,11 +215,11 @@ class Meeting(models.Model):
     topic = models.CharField(max_length=500,null=True,blank=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-            
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.name
 
@@ -231,11 +231,11 @@ class Job(models.Model):
     url = models.URLField(null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-            
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.title
 
@@ -247,10 +247,10 @@ class Grant(models.Model):
     url = models.URLField(null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
-            
+
     def publish(self):
         self.last_modified_date = timezone.now()
         self.save()
-        
+
     def __str__(self):
         return self.title
