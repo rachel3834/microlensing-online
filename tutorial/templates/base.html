@@ -20,8 +20,17 @@
 		    color: transparent;
 		    }
 		</style>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-160132069-1"></script>
+			<script>
+			  window.dataLayer = window.dataLayer || [];
+			  function gtag(){dataLayer.push(arguments);}
+			  gtag('js', new Date());
+
+			  gtag('config', 'UA-160132069-1');
+			</script>
 	</head>
-	
+
 <body>
 	<div class="row"  style="padding: 5px 25px;">
         <a href="/"><img src="/static/tutorial/pictures/microlensing-source-logo_with_lettering.png" width=450></a>
@@ -37,7 +46,7 @@
 				</button>
 			</div>
 		</div>
-		
+
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 			  <li><a href="/overview/">Overview</a></li>
@@ -53,14 +62,14 @@
 		  </div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
-	
+
 	<div class="container">
-		
+
 		<div class="row">
 			{% block mainregion %}
 			{% endblock %}
 		</div>
-		
+
 	</div>
 	<footer class="footer">
       <div class="container">
