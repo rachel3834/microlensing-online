@@ -1,0 +1,231 @@
+HEADER::TITLE=Lentille simple
+HEADER::SHORT_TITLE=Lentille simple
+HEADER::COURSE_INDEX=1
+HEADER::AUTHOR=Jennifer Yee, traduit et adapté par Anne Kasperski
+
+<h3> Paramétrisation dela courbe de lumière d’une lentille simple </h3>
+
+<style>
+    td.upper_line { border-top:solid 1px black; }
+    table.fraction { text-align: center; vertical-align: middle;
+        margin-top:0.5em; margin-bottom:0.5em; line-height: 2em; }
+</style>
+
+PICTURE::FILENAME=geom_Aofu.png::CAPTION=Geométrie d'une source ponctuelle, évènement de microlentille simple::CREDIT= Figure réalisée par J. Yee::NAME=Geométrie d'une source ponctuelle, évènement de microlentille simple
+
+<p>Un évènement de microlentille simple peut être décrit par trois variables : </p>
+
+<ul style="list-style-type:none">
+  <li><i>u</i><sub>0</sub> = e paramètre d’impact qui représente la distance minimum entre la source et la lentille </li>
+  <li><i>t</i><sub>0</sub> = le temps pour lequel la distance entre la lentille et la source est minimale ( c.-à-d. quand <i>u</i> = <i>u</i><sub>0</sub>, alors  <i>t</i> = <i>t</i><sub>0</sub> ) 
+  <li><i>t</i><sub>E</sub> = le temps de traversée d’Einstein, cela correspond au temps pris par la source pour se déplacer d’une distance d’un rayon d’Einstein (vu de la Terre) </li>
+</ul>
+
+<p>L’amplification <i>A(u)</i> de la lumière émise par la source est donnée par l’équation :</p>
+
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td rowspan="2" nowrap="nowrap">
+	  Magnification = &nbsp;
+        </td>
+        <td rowspan="2" nowrap="nowrap">
+            <i> A(u)</i> =  &nbsp;
+        </td>
+        <td nowrap="nowrap">
+            <i>u</i><sup>2</sup> + 2
+        </td>
+    </tr>
+    <tr>
+        <td class="upper_line">
+            <i>u</i> (<i>u</i><sup>2</sup> + 4 )<sup>1/2</sup>
+        </td>
+    </tr>
+</table>
+
+<p>où</p>
+
+<center><i>u</i> = ( <i>u</i><sub>0</sub><sup>2</sup> + <i>&tau;</i><sup>2</sup>)<sup>1/2</sup></center>
+
+<p> et </p>
+
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td rowspan="2" nowrap="nowrap">
+            <i>&tau;</i> = &nbsp;
+        </td>
+        <td nowrap="nowrap">
+             (<i>t - t</i><sub>0</sub>)
+        </td>
+    </tr>
+    <tr>
+        <td class="upper_line">
+            <i>t<sub>E</sub></i>
+        </td>
+    </tr>
+</table>
+
+<h2> Exercice </h2>
+
+Dans le cas limite où <i>u</i><sub>0</sub> << 1, que vaut <i>A(u)</i>  ?
+<br>
+<button id="afnBtn">Réponse</button>
+<p id="afnAns"> </p>
+
+<script>
+document.getElementById("afnBtn").addEventListener("click", show_mag_limit)
+
+function show_mag_limit() {
+  document.getElementById("afnAns").innerHTML = "A(u) ~ 1/u<sub>0</sub>"
+}
+</script>
+
+<h1> Exemples </h1>
+
+<p>Les courbes de lumières des premiers évènements découverts de micro-lentilles gravitationnelles sont présentées ci-dessous. Pour chacune de ces courbes, estimer les paramètres de la lentille simple, c.-à-d. <i>t</i><sub>0</sub>, <i>u</i><sub>0</sub> et t<sub>E</sub>. Ces paramètres basiques peuvent être directement déduits des courbes de lumière en mesurant la hauteur du pic, le temps au maximum du pic et la durée à mi-hauteur du pic <i>t</i><sub>FWHM</sub> (FWHM = Full Width Half Maximum, <i>t</i><sub>FWHM</sub> est donc la largeur de la courbe de lumière pour la moitié de l’amplification maximale).  Enfin, <i>t</i><sub>E</sub> peut être calculé en utilisant la mesure de <i>t</i><sub>FWHM</sub> et les équations présentées ci-dessus. Dans le cas limite où  u0 << 1, <i>t</i><sub>E</sub> vaut <i>t</i><sub>FWHM</sub>/(2<i>u</i><sub>0</sub>).</p>
+
+<table><tr>
+    <td>
+PICTURE::FILENAME=geom_u0t0.png::CAPTION=Estimation de <i>t</i><sub>0</sub> et <i>u</i><sub>0</sub> pour une source ponctuelle dans le cas d’un évènement avec une lentille simple.::CREDIT=Graphique réalisé par J. Yee::NAME=Estimation de <i>t</i><sub>0</sub> et <i>u</i><sub>0</sub> pour une source ponctuelle dans le cas d’un évènement avec une lentille simple.
+    </td><td>
+PICTURE::FILENAME=geom_FWHM.png::CAPTION=Estimation de <i>t</i><sub>E</sub> pour une source ponctuelle dans le cas d’un évènement avec une lentille simple.::CREDIT=Graphique réalisé par J. Yee::NAME=Estimation de <i>t</i><sub>E</sub> pour une source ponctuelle dans le cas d’un évènement avec une lentille simple.
+    </td></tr>
+</table>
+
+<h2> Exemple 1: le premier évènement MACHO</h2>
+REF::AUTHORS=Alcock, Akerlof, Allsman, et al.::YEAR=1993::JOURNAL=Nature::VOLUME=365::PAGE=621::URL=http://www.nature.com/nature/journal/v365/n6447/abs/365621a0.html
+From Alcock, Akerlof, Allsman, et al. 1993 <i>Nature</i>, 365, 621.
+<br>
+
+PICTURE::FILENAME=Alcock_etal_1993_Fig2.png::CAPTION=Courbe de lumière de MACHO-1, Alcock et al. Figure 2::CREDIT=Figure 2 de la publication de Alcock et al.(1993)::NAME=Courbe de lumière de MACHO-1
+<br>
+
+<table>
+<tr>
+  <th></th>
+  <th>Vos réponses</th>
+  <th id="ex1head"></th>
+</tr>
+<tr>
+  <td>t<sub>0</sub>:</td><td> <input type="text"></td><td id="ex1t0"></td>
+</tr>
+<tr>
+  <td>u<sub>0</sub>:</td><td> <input type="text"></td><td id="ex1u0"></td>
+</tr>
+<tr>
+  <td>t<sub>E</sub>:</td><td> <input type="text"></td><td id="ex1tE"></td>
+</tr>
+</table>
+
+<button id="ex1Btn">Vérification</button>
+
+<script>
+document.getElementById("ex1Btn").addEventListener("click", show_ex1_answers)
+
+function show_ex1_answers() {
+  document.getElementById("ex1head").innerHTML = "True answers"
+  document.getElementById("ex1t0").innerHTML = "433.55 &plusmn; 0.04 d"
+  document.getElementById("ex1u0").innerHTML = "0.147"
+  document.getElementById("ex1tE").innerHTML = "33.9 &plusmn; 0.26 d"
+}
+</script>
+
+
+<h2> Exemple 2: les premiers évènements EROS </h2>
+REF::AUTHORS=Aubourg, Bareyre, Br&eacute;hin, et al.::YEAR=1993::JOURNAL=Nature::VOLUME=365::PAGE=623::URL=http://www.nature.com/nature/journal/v365/n6447/abs/365623a0.html
+From Aubourg, Bareyre, Br&eacute;hin, et al. 1993 <i>Nature</i>, 365, 623.
+<br>
+
+<h3> Évènement 1 </h3>
+PICTURE::FILENAME=Aubourg_etal_1993_Fig1b.png::CAPTION=Courbe de lumière du premier évènement EROS::CREDIT=Figure 1b de Aubourg et al. (1993)::NAME=Courbe de lumière du premier évènement EROS
+<br>
+
+<button id="hintBtn"> Indice 1 </button>
+<p id="hint"> </p>
+
+<script>
+document.getElementById("hintBtn").addEventListener("click", show_magnitude_hint)
+
+function show_magnitude_hint() {
+  document.getElementById("hint").innerHTML ="magnitude<sub>1</sub> - magnitude<sub>2</sub> = - 2.5 log(flux<sub>1</sub>/flux<sub>2</sub>)"
+}
+</script>
+
+
+<button id="hint2Btn"> Indice 2 </button>
+<p id="hint2"> </p>
+
+<script>
+document.getElementById("hint2Btn").addEventListener("click", show_magnitude_hint)
+
+function show_magnitude_hint() {
+  document.getElementById("hint2").innerHTML ="flux<sub>2</sub> = A*flux<sub>1</sub>"
+}
+</script>
+
+<table>
+<tr>
+  <th></th>
+  <th>Your answers</th>
+  <th id="ex2ahead"></th>
+</tr>
+<tr>
+  <td>t<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2at0"></td>
+</tr>
+<tr>
+  <td>u<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2au0"></td>
+</tr>
+<tr>
+  <td>t<sub>E</sub>:</td><td> <input type="text"></td><td id="ex2atE"></td>
+</tr>
+</table>
+
+<button id="ex2aBtn">Check</button>
+
+<script>
+document.getElementById("ex2aBtn").addEventListener("click", show_ex2a_answers)
+
+function show_ex2a_answers() {
+  document.getElementById("ex2ahead").innerHTML = "True answers"
+  document.getElementById("ex2at0").innerHTML = "761 d"
+  document.getElementById("ex2au0").innerHTML = "0.425"
+  document.getElementById("ex2atE").innerHTML = "27 &plusmn; 2 d"
+}
+</script>
+
+<h3> Évènement 2 </h3>
+PICTURE::FILENAME=Aubourg_etal_1993_Fig2b.png::CAPTION=Courbe de lumière du second évènement EROS::CREDIT=Figure 2b de Aubourg et al. (1993)::NAME=Courbe de lumière du second évènement EROS,
+<br>
+
+<table>
+<tr>
+  <th></th>
+  <th>Vos réponses</th>
+  <th id="ex2bhead"></th>
+</tr>
+<tr>
+  <td>t<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2bt0"></td>
+</tr>
+<tr>
+  <td>u<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2bu0"></td>
+</tr>
+<tr>
+  <td>t<sub>E</sub>:</td><td> <input type="text"></td><td id="ex2btE"></td>
+</tr>
+</table>
+
+<button id="ex2bBtn">Vérification</button>
+
+<script>
+document.getElementById("ex2bBtn").addEventListener("click", show_ex2b_answers)
+
+function show_ex2b_answers() {
+  document.getElementById("ex2bhead").innerHTML = "True answers"
+  document.getElementById("ex2bt0").innerHTML = "362 d"
+  document.getElementById("ex2bu0").innerHTML = "0.346"
+  document.getElementById("ex2btE").innerHTML = "30 &plusmn; 3 d"
+}
+</script>
+
+<h3> Note </h3>
+Pour chaque exemple présenté ci-dessus, deux courbes sont présentées : une annotée bleue (Blue) et l’autre annotée rouge (Red). Pourquoi ? Le phénomène de lentille gravitationnel est achromatique. Cela signifie que la lumière est amplifiée de la même manière au cours du phénomène, quelque soit la longueur d’onde analysée. Ainsi, le fait que l’amplification induite par une lentille soit identique dans deux bandes différentes est une preuve que les courbes de lumières observées sont dues à un effet de microlentille plutôt qu’à d’autres effets astrophysiques . Par exemple, une éruption stellaire serait caractérisée par des courbes de lumières différentes dans les longueurs d’ondes rouges et bleues. Le graphique inférieur de la première figure, A<sub>red</sub>/A<sub>blue</sub>, prouve ainsi que le signal est achromatique car le ratio d’amplification dans les deux couleurs est constant. 
+
