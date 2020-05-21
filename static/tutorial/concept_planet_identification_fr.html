@@ -1,0 +1,206 @@
+HEADER::TITLE=Est-ce qu’il y a une planète dans cet évènement de microlentille ?
+HEADER::SHORT_TITLE=planet-identification
+HEADER::COURSE_INDEX=2
+HEADER::AUTHOR=Jennifer Yee, traduit et adapté par Anne Kasperski
+
+<p> L’échelle utilisée dans le domaine des microlentilles est le rayon d’Einstein. En effet, la pupart des paramètres de distance utilisés dans les modèles sont normalisés par ce rayon. Il est important de noter qu’il est proportionnel à la racine carrée de la masse de la lentille. Ainsi plus la masse totale de la lentille est grande, plus le rayon d’Einstein de l’évènement sera grand.<p>
+<p>Sachant que les planètes sont 10<sup>-3 à 10<sup>-5 fois moins massives que leur étoile hôte, la courbe de lumière d’un évènement de microlentille résultera majoritairement des caractéristiques de l’étoile de la lentille. Néanmoins, la présence d’une planète orbitant autour de l’étoile de la lentille induira également une déviation de l’amplification sur la courbe de lumière. Une planète étant tellement plus petite que son étoile hôte, cette déviation sera nettement plus faible que celle induite par son étoile. De façon simple, on peut envisager que ces deux déviations se superposent et la courbe de lumière de l’évènement sera l’amplification résultante des deux déviations. On parlera de signal de planète lorqu’une déviation de la courbe de lumière sera due à la présence d’une planète dans le sytstème composant la lentille. </p>
+<!-- This paragraph could link to a more mathematical description of a
+point lens light curve. That description could include A(u) and also
+typical values of tE.-->
+
+<h3> Exercice </h3>
+
+Certaines des courbes de lumière ci-après ont des signaux planétaires, et d’autres non. Pouvez-vous déterminer lesquelles ?
+
+
+<!--
+These light curves come from 
+<ul style="list-style-type:none">
+  <li> <a href="http://adsabs.harvard.edu/abs/2002ApJ...566..463G">
+  Gaudi, Albrow, An, et al. 2002 ApJ 566, 463 </a></li>
+  <li> <a href=" http://adsabs.harvard.edu/abs/2004ApJ...606L.155B">
+  Bond, Udalski, Jaroszy&nacute;ski, et al. 2004 ApJL 606, 155</a></li>
+  <li> <a href="http://adsabs.harvard.edu/abs/2006Natur.439..437B">
+  Beaulieu, Bennett, Fouqu&eacute;, et al. 2006 Nature 439,
+  437 </a></li>
+</ul>
+But don't peek!
+--> 
+
+<h3> MOA-1998-BLG-033 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=MB98033_lc.jpg::CAPTION=Courbe de lumière de MOA-1998-BLG-033::CREDIT=Gaudi et al. 2002.::NAME=Courbe de lumière de MOA-1998-BLG-033
+        REF::AUTHORS=Gaudi et al.::YEAR=2002::JOURNAL=ApJ::VOLUME=566::PAGE=463::URL=http://adsabs.harvard.edu/abs/2002ApJ...566..463G
+    </td>
+    <td id="mb98033Answer"></td>
+  </tr>
+  <tr>
+    <td id="mb98033Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="mb98033Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Est-ce qu’il y a une planète </p>
+<button id="mb98033yesBtn">Oui</button>
+<button id="mb98033noBtn">Non</button>
+
+<script>
+document.getElementById("mb98033yesBtn").addEventListener("click", show_mb98033_yes)
+document.getElementById("mb98033noBtn").addEventListener("click", show_mb98033_no)
+
+function show_mb98033_yes() {
+  document.getElementById("mb98033Answer").innerHTML = "Les auteurs antérieurs n'ont pas trouvé de planète."
+  show_mb98033_info()
+}
+
+function show_mb98033_no() {
+  document.getElementById("mb98033Answer").innerHTML = "Vrai, il n'y a pas de planète."
+  show_mb98033_info()
+}
+
+function show_mb98033_info(){
+  document.getElementById("mb98033Explanation").innerHTML = "Cet évènement a été originellement publié en tant que lentille simple." 
+  document.getElementById("mb98033Reference").innerHTML = "Gaudi, Albrow, An, et al. 2002 ApJ 566, 463"
+  document.getElementById("mb98033Reference").href = "http://adsabs.harvard.edu/abs/2002ApJ...566..463G"
+}
+</script>
+
+<h3> OGLE-1998-BLG-014 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=OB98014_lc.jpg::CAPTION=Courbe de lumière de OGLE-1999-BLG-036::CREDIT=Gaudi et al.2002.::NAME=Courbe de lumière de OGLE-1999-BLG-036
+        REF::AUTHORS=Gaudi et al.::YEAR=2002::JOURNAL=ApJ::VOLUME=566::PAGE=463::URL=http://adsabs.harvard.edu/abs/2002ApJ...566..463G
+    </td>
+    <td id="OB98014Answer"></td>
+  </tr>
+  <tr>
+    <td id="OB98014Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="OB98014Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Est-ce qu’il y a une planète ?</p>
+<button id="OB98014yesBtn">Oui</button>
+<button id="OB98014noBtn">Non</button>
+
+<script>
+document.getElementById("OB98014yesBtn").addEventListener("click", show_OB98014_yes)
+document.getElementById("OB98014noBtn").addEventListener("click", show_OB98014_no)
+
+function show_OB98014_yes() {
+  document.getElementById("OB98014Answer").innerHTML = "Les auteurs antérieurs n'ont pas trouvé de planète."
+  show_OB98014_info()
+}
+
+function show_OB98014_no() {
+  document.getElementById("OB98014Answer").innerHTML = "Vrai, il n'y a pas de planète."
+ show_OB98014_info()
+}
+
+function show_OB98014_info(){
+  document.getElementById("OB98014Explanation").innerHTML = "Cet évènement a été originellement publié en tant que lentille simple." 
+  document.getElementById("OB98014Reference").innerHTML = "Gaudi, Albrow, An, et al. 2002 ApJ 566, 463"
+  document.getElementById("OB98014Reference").href = "http://adsabs.harvard.edu/abs/2002ApJ...566..463G"
+}
+</script>
+
+<h3> OGLE-1999-BLG-036 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=OB99036_lc.jpg::CAPTION=Courbe de lumière de OGLE-2005-BLG-390::CREDIT=Bond et al.2004::NAME=Courbe de lumière de OGLE-2005-BLG-390
+        REF::AUTHORS=Bond, Udalski, Jaroszy&nacute;ski, et al.::YEAR=2004::JOURNAL=ApJL::VOLUME=606::PAGE=155::URL=http://adsabs.harvard.edu/abs/2004ApJ...606L.155B
+    </td>
+    <td id="OB99036Answer"></td>
+  </tr>
+  <tr>
+    <td id="OB99036Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="OB99036Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Est-ce qu’il y a une planète ? </p>
+<button id="OB99036yesBtn">Oui</button>
+<button id="OB99036noBtn">Non</button>
+
+<script>
+document.getElementById("OB99036yesBtn").addEventListener("click", show_OB99036_yes)
+document.getElementById("OB99036noBtn").addEventListener("click", show_OB99036_no)
+
+function show_OB99036_yes() {
+  document.getElementById("OB99036Answer").innerHTML = "Les auteurs antérieurs n'ont pas trouvé de planète."
+  show_OB99036_info()
+}
+
+function show_OB99036_no() {
+  document.getElementById("OB99036Answer").innerHTML = "Vrai, il n'y a pas de planète."
+ show_OB99036_info()
+}
+
+function show_OB99036_info(){
+  document.getElementById("OB99036Explanation").innerHTML = "Cet évènement a été originellement publié en tant que lentille simple." 
+  document.getElementById("OB99036Reference").innerHTML = "Gaudi, Albrow, An, et al. 2002 ApJ 566, 463"
+  document.getElementById("OB99036Reference").href = "http://adsabs.harvard.edu/abs/2002ApJ...566..463G"
+}
+</script>
+
+<h3> OGLE-2005-BLG-390 </h3>
+<br>
+
+<table>
+  <tr>
+    <td rowspan="3"> 
+        PICTURE::FILENAME=OB05390_lc.jpg::CAPTION=Courbe de lumière de OGLE-2005-BLG-390::CREDIT=Beaulieu et al.2006::NAME=Courbe de lumière de OGLE-2005-BLG-390
+        REF::AUTHORS=Beaulieu, Bennett, Fouqu&eacute;, et al.::YEAR=2006::JOURNAL=Nature::VOLUME=439::PAGE=437::URL=http://adsabs.harvard.edu/abs/2006Natur.439..437B
+    </td>
+    <td id="ob05390Answer"></td>
+  </tr>
+  <tr>
+    <td id="ob05390Explanation"></td>
+  </tr>
+  <tr>
+    <td><a id="ob05390Reference" href=" "> </a></td>
+  </tr>
+</table>
+
+<p> Est-ce qu’il y a une planète ? </p>
+<button id="ob05390yesBtn">Oui</button>
+<button id="ob05390noBtn">Non</button>
+
+<script>
+document.getElementById("ob05390yesBtn").addEventListener("click", show_ob05390_yes)
+document.getElementById("ob05390noBtn").addEventListener("click", show_ob05390_no)
+
+function show_ob05390_yes() {
+  document.getElementById("ob05390Answer").innerHTML = "Oui, il y a une planète !"
+  show_ob05390_info()
+}
+
+function show_ob05390_no() {
+  document.getElementById("ob05390Answer").innerHTML = "Regarde aux alentours de t = 3592. La vois-tu maintenant ?"
+ show_ob05390_info()
+}
+
+function show_ob05390_info(){
+  document.getElementById("ob05390Explanation").innerHTML = "OGLE-2005-BLG-390 est un système planétaire classique : le signal de la planète forme un petit pic qui est superposé au signal induit par l'étoile hôte de la lentille." 
+  document.getElementById("ob05390Reference").innerHTML = "Beaulieu, Bennett, Fouqu&eacute;, et al. 2006 Nature 439,437"
+  document.getElementById("ob05390Reference").href = "http://adsabs.harvard.edu/abs/2006Natur.439..437B"
+}
+</script>
+
