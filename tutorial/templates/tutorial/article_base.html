@@ -1,3 +1,4 @@
+{% load i18n %}
 {% extends 'base.html' %}
 {% block mainregion %}
 	<!-- Tutorial navigation sidebar -->
@@ -23,7 +24,7 @@
                             {{line|safe}}
                         {% else %}
                             {% if dbentry.type == "PICTURE" %}
-                                <p><img src="/static/tutorial/pictures/{{dbentry.object.filename}}" alt="{{dbentry.object.name}}" 
+                                <p><img src="/static/tutorial/pictures/{{dbentry.object.filename}}" alt="{{dbentry.object.name}}"
                                         width=500/></br>
                                 <center><h4>{{dbentry.object.caption}}</h4> </br><i>{{dbentry.object.credit}}</i></center></p>
                             {% elif dbentry.type == "MOVIE" %}
@@ -44,7 +45,7 @@
                             {% endif %}
                         {% endif %}
 					{% endfor %}
-                    
+
                     {% if references|length > 0 %}
                         <h3>References:</h3>
                         {% for r in references %}

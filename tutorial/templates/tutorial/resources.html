@@ -1,3 +1,4 @@
+{% load i18n %}
 {% extends 'base.html' %}
 {% block mainregion %}
 	<!-- Learning menu panels -->
@@ -7,7 +8,7 @@
 				<a href="/pictures/">
 				    <div class="panel panel-default">
 					   <div class="panel-heading">
-						  <h4 class="panel-title">Pictures</h4>
+						  <h4 class="panel-title">{% trans 'Pictures'%}</h4>
                         </div>
 					   <div class="panel-body">
 				            <img src="/static/tutorial/galactic_centre_camera.png" width="100%"><br>
@@ -16,12 +17,12 @@
 				    </div>
                 </a>
 			</div>
-			
+
 			<div class="col-lg-6">
 				<a href="/movies/">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4 class="panel-title">Movies</h4>
+							<h4 class="panel-title">{% trans 'Movies'%}</h4>
 						</div>
 						<div class="panel-body">
 							<img src="/static/tutorial/galactic_bulge_on_film.png" width="100%"><br>
@@ -31,13 +32,13 @@
 				</a>
 			</div>
 		</div>
-		
-		<div class="row">			
+
+		<div class="row">
 			<div class="col-lg-6">
 				<a href="/links/">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4 class="panel-title">Links</h4>
+							<h4 class="panel-title">{% trans 'Links'%}</h4>
 						</div>
 						<div class="panel-body">
 							<img src="/static/tutorial/galactic_centre_on_links.png" width="100%"><br>
@@ -46,13 +47,13 @@
 					</div>
 				</a>
 			</div>
-			
-				
+
+
 			<div class="col-lg-6">
 				<a href="/references/">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4 class="panel-title">References</h4>
+							<h4 class="panel-title">{% trans 'References'%}</h4>
 						</div>
 						<div class="panel-body">
 							<img src="/static/tutorial/galactic_centre_on_book.png" width="100%"><br>
@@ -61,7 +62,7 @@
 					</div>
 				</a>
 			</div>
-			
+
 		</div>
 	</div>
 {% endblock %}
