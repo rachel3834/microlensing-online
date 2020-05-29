@@ -32,11 +32,11 @@ msgstr "Espagnol"
 
 #: tutorial/templates/tutorial/index.html:4
 msgid "Microlensing Source"
-msgstr ""
+msgstr "A l'origine des microlentilles"
 
 #: tutorial/templates/tutorial/index.html:5
 msgid "Welcome to Microlensing Source!"
-msgstr ""
+msgstr "Bienvenue sur le site "A l'origine des microlentilles""
 
 #: tutorial/templates/tutorial/index.html:15
 msgid "Introduction to microlensing"
