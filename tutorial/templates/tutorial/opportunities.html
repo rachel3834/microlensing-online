@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
 {% block mainregion %}
 
 	<!-- Learning menu panels -->
@@ -11,69 +13,69 @@
         <div class="row">
             <div class="col-lg-8" style="padding: 15px 10px;">
             {% if selected == 'none' %}
-                <p><center><h4>Interested in getting involved?  Try the tabs above for current opportunities!</h4></center></p>
+                <p><center><h4>{% trans 'Interested in getting involved?  Try the tabs above for current opportunities!' %}'</h4></center></p>
             {% endif %}
-                
+
             {% if meetings_list|length > 0 and selected == 'meetings' %}
-                <h3>Upcoming Meetings</h3>
+                <h3>{% trans 'Upcoming Meetings' %}</h3>
                 <p>
                     {% for meeting in meetings_list %}
                         <p style="padding: 10px 10px;">
                         <h4>{{meeting.name}}</h4>
-                        <b>Date:</b> {{meeting.date_start}} - {{meeting.date_end}}<br>
-                        <b>Location:</b> {{meeting.location}}<br>
-                        <b>Registration deadline:</b> {{meeting.registration_deadline}}<br>
-                        <b>Abstract deadline:</b> {{meeting.abstract_deadline}}<br>
+                        <b>{% trans 'Date:' %}</b> {{meeting.date_start}} - {{meeting.date_end}}<br>
+                        <b>{% trans 'Location:' %}'</b> {{meeting.location}}<br>
+                        <b>{% trans 'Registration deadline:' %}'</b> {{meeting.registration_deadline}}<br>
+                        <b>{% trans 'Abstract deadline:' %}'</b> {{meeting.abstract_deadline}}<br>
                         {% if meeting.url|length > 0 %}
-                            <b>Website:</b> <a href="{{meeting.url}}">{{meeting.url}}</a><br>
+                            <b>{% trans 'Website:' %}</b> <a href="{{meeting.url}}">{{meeting.url}}</a><br>
                         {% endif %}
                         </p>
                     {% endfor %}
                 </p>
             {% elif meetings_list|length == 0 and selected == 'meetings' %}
-                <h3>Upcoming Meetings</h3>
-                <p style="padding: 10px 10px;">No meetings of particular relevance to microlensing that we no of right now.  Watch this space!</p>
+                <h3>{% trans 'Upcoming Meetings' %}</h3>
+                <p style="padding: 10px 10px;">{% trans 'No meetings of particular relevance to microlensing that we no of right now.  Watch this space!' %}</p>
             {% endif %}
-        
+
             {% if jobs_list|length > 0  and selected == 'jobs' %}
-                <h3>Employment Opportunities</h3>
+                <h3>{% trans 'Employment Opportunities' %}</h3>
                 <p>
                     {% for job in jobs_list %}
                         <p style="padding: 10px 10px;">
                         <h4>{{job.title}}</h4>
-                        <b>Application deadline:</b> {{job.deadline}}<br>
-                        <b>Location:</b> {{job.location}}<br>
+                        <b>{% trans 'Application deadline:' %}</b> {{job.deadline}}<br>
+                        <b>{% trans 'Location:' %}</b> {{job.location}}<br>
                         {% if job.url|length > 0 %}
-                            <b>Website:</b> <a href="{{job.url}}">{{job.url}}</a><br>
+                            <b>{% trans 'Website:' %}</b> <a href="{{job.url}}">{{job.url}}</a><br>
                         {% endif %}
-                        <b>Description:</b> {{job.description}}<br>
+                        <b>{% trans 'Description:' %}</b> {{job.description}}<br>
                         </p>
                     {% endfor %}
                 </p>
             {% elif jobs_list|length == 0 and selected == 'jobs' %}
-                <h3>Employment Opportunities</h3>
-                <p style="padding: 10px 10px;">We know of no current opportunities specific to microlensing at the present time, but alternative avenues are available.  Try the 
-                    <a href="https://jobregister.aas.org/">AAS Jobs Register</a> in the meantime.
+                <h3>{% trans 'Employment Opportunities' %}</h3>
+                <p style="padding: 10px 10px;">{% trans 'We know of no current opportunities specific to microlensing at the present time, but alternative avenues are available.  Try the
+                    <a href="https://jobregister.aas.org/">AAS Jobs Register</a> in the meantime.' %}
                 </p>
             {% endif %}
 
             {% if grants_list|length > 0 and selected == 'grants' %}
-                <h3>Grants and Funding Opportunities</h3>
+                <h3>{% trans 'Grants and Funding Opportunities' %}</h3>
                 <p>
                     {% for grant in grants_list %}
                         <p style="padding: 10px 10px;">
                         <h4>{{grant.name}}</h4>
-                        <b>Agency:</b> {{grant.agency}}<br>
-                        <b>Application deadline:</b> {{grant.deadline}}<br>
+                        <b>{% trans 'Agency:'%}</b> {{grant.agency}}<br>
+                        <b>{% trans 'Application deadline:' %}</b> {{grant.deadline}}<br>
                         {% if grant.url|length > 0 %}
-                            <b>Website:</b> <a href="{{grant.url}}">{{grant.url}}</a><br>
+                            <b>{% trans 'Website:' %}</b> <a href="{{grant.url}}">{{grant.url}}</a><br>
                         {% endif %}
                         </p>
                     {% endfor %}
                 </p>
             {% elif grants_list|length == 0 and selected == 'grants' %}
-                <h3>Grants and Funding Opportunities</h3>
-                <p style="padding: 10px 10px;">We know of no current opportunities specific to microlensing at the present time.  Watch this space!
+                <h3>{% trans 'Grants and Funding Opportunities' %}</h3>
+                <p style="padding: 10px 10px;">{% trans 'We know of no current opportunities specific to microlensing at the present time.  Watch this space!' %}
                 </p>
             {% endif %}
 

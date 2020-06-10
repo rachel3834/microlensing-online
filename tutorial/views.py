@@ -31,9 +31,9 @@ def tutorial(request,pk=None):
 
 def article(request,resource_type,short_title=None):
     if resource_type == 'concept':
-        article_list = ConceptPage.objects.all()
+        article_list = ConceptPage.objects.filter(language=request.LANGUAGE_CODE)
     else:
-        article_list = TutorialPage.objects.all()
+        article_list = TutorialPage.objects.filter(language=request.LANGUAGE_CODE)
     indices = []
     articles = []
     for page in article_list:
@@ -42,17 +42,28 @@ def article(request,resource_type,short_title=None):
             articles.append(page)
     course_index = list(zip(indices,articles))
     course_index.sort()
-    (indices, articles) = zip(*course_index)
+    if len(course_index) > 0:
+        (indices, articles) = zip(*course_index)
+    else:
+        indices = []
+        articles = []
     if short_title == None:
         if resource_type == 'concept':
-            page = ConceptPage.objects.get(course_index=0)
+            page = ConceptPage.objects.get(course_index=0,
+                                            language=request.LANGUAGE_CODE)
         else:
-            page = TutorialPage.objects.get(course_index=0)
+            try:
+                page = TutorialPage.objects.get(course_index=0,
+                                            language=request.LANGUAGE_CODE)
+            except TutorialPage.DoesNotExist:
+                page = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
     else:
         if resource_type == 'concept':
-            qs = ConceptPage.objects.filter(short_title__contains=short_title)
+            qs = ConceptPage.objects.filter(short_title__contains=short_title,
+                                            language=request.LANGUAGE_CODE)
         else:
-            qs = TutorialPage.objects.filter(short_title__contains=short_title)
+            qs = TutorialPage.objects.filter(short_title__contains=short_title,
+                                            language=request.LANGUAGE_CODE)
         if len(qs) > 0:
             page = qs[0]
     page,content,references = get_article_db_entries(page)
@@ -173,9 +184,9 @@ def interactive(request,pk=None):
 def page(request):
     page_name = str(request.path_info).replace('/','')
     try:
-        page = SitePage.objects.get(name=page_name)
+        page = SitePage.objects.get(name=page_name, language=request.LANGUAGE_CODE)
     except SitePage.DoesNotExist:
-        page = SitePage.objects.get(name='missingpage')
+        page = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
     page,content,references = get_article_db_entries(page)
     return render(request,'site/site_page.html',{'page':page,\
                     'content':content,'references':references})

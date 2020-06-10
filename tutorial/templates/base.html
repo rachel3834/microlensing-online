@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -32,6 +33,22 @@
 	</head>
 
 <body>
+	<div class="pull-right">
+		<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}" />
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                {{ language.code|language_name_translated }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go" />
+</form>
+	</div>
 	<div class="row"  style="padding: 5px 25px;">
         <a href="/"><img src="/static/tutorial/pictures/microlensing-source-logo_with_lettering.png" width=450></a>
 	</div>
@@ -49,15 +66,15 @@
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-			  <li><a href="/overview/">Overview</a></li>
-			  <li><a href="/learning/">Learning</a></li>
-			  <li><a href="/glossary/">Glossary</a></li>
-			  <li><a href="/resources/">Resources</a></li>
-			  <li><a href="/interactive/">Interactive</a></li>
-			  <li><a href="/opportunities/">Opportunities</a></li>
-			  <li><a href="/software/">Software</a></li>
-			  <li><a href="/public-data/">Public Data</a></li>
-			  <li><a href="/data-challenge/">Data Challenge</a></li>
+			  <li><a href="/overview/">{% trans 'Overview' %}</a></li>
+			  <li><a href="/learning/">{% trans 'Learning' %}</a></li>
+			  <li><a href="/glossary/">{% trans 'Glossary' %}</a></li>
+			  <li><a href="/resources/">{% trans 'Resources' %}</a></li>
+			  <li><a href="/interactive/">{% trans 'Interactive' %}</a></li>
+			  <li><a href="/opportunities/">{% trans 'Opportunities' %}</a></li>
+			  <li><a href="/software/">{% trans 'Software' %}</a></li>
+			  <li><a href="/public-data/">{% trans 'Public Data' %}</a></li>
+			  <li><a href="/data-challenge/">{% trans 'Data Challenge' %}</a></li>
 			</ul>
 		  </div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
@@ -75,8 +92,8 @@
       <div class="container">
         <p class="text-muted">
 			<ul class="nav navbar-nav">
-			  <li><a href="/about/">About</a></li>
-			  <li><a href="/contact/">Contact</a></li>
+			  <li><a href="/about/">{% trans 'About' %}</a></li>
+			  <li><a href="/contact/">{% trans 'Contact' %}</a></li>
 			</ul>
 		</p>
         <p align="right""><img src="/static/site/powered_by_LCO_logo.png" width="100"/></p>

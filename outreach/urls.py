@@ -20,10 +20,13 @@ from django.contrib import admin
 from tutorial.views import home, page, learning, overview, resources
 from tutorial.views import interactive, opportunities, article, references
 from tutorial.views import links, list_resources
+from django.conf.urls.i18n import i18n_patterns
+from django.urls import include
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^$',home,name="home"),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^tutorial/(?P<pk>[0-9]+)/$',article,{'resource_type':'tutorial'},name="tutorial"),
     url(r'^concept/(?P<pk>[0-9]+)/$',article,{'resource_type':'concept'},name="concept"),
     url(r'^interactive/(?P<pk>[0-9]+)/$',interactive,name="interactive"),
@@ -66,4 +69,4 @@ urlpatterns = [
     url(r'^data-challenge-entry-contents/$',page,name="data-challenge-entry-contents"),
     url(r'^table1-example-ascii/$',page,name="table1-example-ascii"),
     url(r'^table1-example-json/$',page,name="table1-example-json"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

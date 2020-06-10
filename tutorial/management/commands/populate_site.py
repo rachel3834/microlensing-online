@@ -10,18 +10,18 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from tutorial.models import SitePage, TutorialPage
 import glob
-import ingest_functions 
+from . import ingest_functions
 
 class Command(BaseCommand):
     args = ''
     help = ''
-    
+
     def add_arguments(self, parser):
-        
+
         parser.add_argument('filename', nargs='+', type=str)
-        
+
     def _create_site_page(self,*args, **options):
-        
+
         filename = options['filename'][0]
 
         if filename == 'ALL':
@@ -31,24 +31,26 @@ class Command(BaseCommand):
 
         else:
 
-            file_list = glob.glob('tutorial/static/tutorial/'+filename)
-            
+            file_list = [filename]
+
         for f in file_list:
 
             print( 'Parsing '+f )
             file_lines = open(f,'r').readlines()
             params = ingest_functions.parse_article(file_lines)
-            
+            print(params)
+
             if 'site_' in path.basename(f):
 
                 page, created = SitePage.objects.get_or_create(**params)
+                print(page, created)
 
             elif 'tutorial_' in path.basename(f):
 
                 try:
 
                     tutorial = TutorialPage.objects.get(title=params['title'])
-                    
+
                 except TutorialPage.DoesNotExist:
 
                     page = TutorialPage(title=params['title'], \
@@ -57,8 +59,7 @@ class Command(BaseCommand):
                                         author=params['author'], \
                                         text=params['text'])
                     page.save()
-                
-    def handle(self,*args, **options):
-        
-        self._create_site_page(*args, **options)
 
+    def handle(self,*args, **options):
+
+        self._create_site_page(*args, **options)

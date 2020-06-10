@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.conf import settings
 
 class Author(models.Model):
     name = models.CharField(max_length=50)
@@ -71,6 +72,8 @@ class TutorialPage(models.Model):
     course_index = models.IntegerField(null=True)
     text = models.TextField()
     references = models.ManyToManyField(Reference)
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES,
+                                default='en')
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
 
@@ -87,6 +90,8 @@ class ConceptPage(models.Model):
     short_title = models.CharField(max_length=20,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES,
+                                default='en')
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
 
@@ -100,6 +105,8 @@ class ConceptPage(models.Model):
 class SitePage(models.Model):
     name = models.CharField(max_length=20)
     text = models.TextField()
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES,
+                                default='en')
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
 

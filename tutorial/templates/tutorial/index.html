@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title_text %}Microlensing Source{% endblock %}
-{% block header_text %}Welcome to Microlensing Source!{% endblock %}
+{% block title_text %}{% trans 'Microlensing Source' %}{% endblock %}
+{% block header_text %}{% trans 'Welcome to Microlensing Source!'%}{% endblock %}
 
 {% block mainregion %}
 	<!-- Menu panels -->
@@ -11,44 +12,44 @@
 				<a href="/learning/">
         			<div class="panel panel-default">
         				<div class="panel-heading">
-        					<h3 class="panel-title">Introduction to microlensing</h3>
+        					<h3 class="panel-title">{% trans 'Introduction to microlensing' %}</h3>
         				</div>
         				<div class="panel-body">
                             <img src="/static/tutorial/GalacticBulge.png" width="100%" height="110%"><br>
-							<center><h4>Learn how this fascinating phenomenon works</h4></center>
+							<center><h4>{% trans 'Learn how this fascinating phenomenon works' %}</h4></center>
         				</div>
         			</div>
                 </a>
 			</div>
-			
+
 			<div class="col-lg-4">
 				<a href="/overview/">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Overview of the field</h3>
+							<h3 class="panel-title">{% trans 'Overview of the field'%}</h3>
 						</div>
 						<div class="panel-body">
 							<img src="/static/tutorial/nasa-wfirst-telescope.jpg" width="100%"><br>
-							<center><h4>The people and projects behind the discoveries</h4></center>
+							<center><h4>{% trans 'The people and projects behind the discoveries'%}</h4></center>
 						</div>
 					</div>
 				</a>
 			</div>
-            
+
 			<div class="col-lg-4">
 				<a href="/resources/">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Resources</h3>
+							<h3 class="panel-title">{% trans 'Resources'%}</h3>
 						</div>
 						<div class="panel-body">
 							<img src="/static/tutorial/hires-kepler-421b_0-500x410.png" width="100%"><br><br>
-							<center><h4>Images, movies, references and more</h4></center>
+							<center><h4>{% trans 'Images, movies, references and more' %}</h4></center>
 						</div>
 					</div>
 				</a>
 			</div>
-            
+
 		</div>
 	</div>
 {% endblock %}
