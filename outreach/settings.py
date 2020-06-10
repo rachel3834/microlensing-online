@@ -113,7 +113,7 @@ LANGUAGES = (
             ('es',_('Spanish')),
 )
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'America/Los_Angeles'
 

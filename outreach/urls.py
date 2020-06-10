@@ -21,10 +21,12 @@ from tutorial.views import home, page, learning, overview, resources
 from tutorial.views import interactive, opportunities, article, references
 from tutorial.views import links, list_resources
 from django.conf.urls.i18n import i18n_patterns
+from django.urls import include
 
 urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^$',home,name="home"),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^tutorial/(?P<pk>[0-9]+)/$',article,{'resource_type':'tutorial'},name="tutorial"),
     url(r'^concept/(?P<pk>[0-9]+)/$',article,{'resource_type':'concept'},name="concept"),
     url(r'^interactive/(?P<pk>[0-9]+)/$',interactive,name="interactive"),
