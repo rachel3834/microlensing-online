@@ -22,6 +22,7 @@ class Command(BaseCommand):
 
     def _create_article_entries(self,*args, **options):
         filename = options['filename'][0]
+        print(filename)
         concepts = []
         tutorials = []
         if filename == 'ALL':
@@ -33,17 +34,18 @@ class Command(BaseCommand):
             else:
                 tutorials = glob.glob('tutorial/static/tutorial/'+filename)
 
-        print(tutorials)
+        print(tutorials, concepts)
         for f in concepts:
             file_lines = open(f,'r').readlines()
             params = ingest_functions.parse_article(file_lines)
             page, created = ConceptPage.objects.get_or_create(**params)
+            print(page, created)
 
         for f in tutorials:
             file_lines = open(f,'r').readlines()
             params = ingest_functions.parse_article(file_lines)
             page, created = TutorialPage.objects.get_or_create(**params)
-
+            print(page, created)
 
     def handle(self,*args, **options):
         self._create_article_entries(*args, **options)

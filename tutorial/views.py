@@ -49,8 +49,11 @@ def article(request,resource_type,short_title=None):
         articles = []
     if short_title == None:
         if resource_type == 'concept':
-            page = ConceptPage.objects.get(course_index=0,
+            try:
+                page = ConceptPage.objects.get(course_index=0,
                                             language=request.LANGUAGE_CODE)
+            except ConceptPage.DoesNotExist:
+                page = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
         else:
             try:
                 page = TutorialPage.objects.get(course_index=0,
@@ -59,11 +62,18 @@ def article(request,resource_type,short_title=None):
                 page = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
     else:
         if resource_type == 'concept':
-            qs = ConceptPage.objects.filter(short_title__contains=short_title,
+            try:
+                qs = ConceptPage.objects.filter(short_title__contains=short_title,
                                             language=request.LANGUAGE_CODE)
+            except ConceptPage.DoesNotExist:
+                qs = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
         else:
-            qs = TutorialPage.objects.filter(short_title__contains=short_title,
+            try:
+                qs = TutorialPage.objects.filter(short_title__contains=short_title,
                                             language=request.LANGUAGE_CODE)
+            except TutorialPage.DoesNotExist:
+                qs = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
+
         if len(qs) > 0:
             page = qs[0]
     page,content,references = get_article_db_entries(page)
