@@ -192,11 +192,16 @@ def interactive(request,pk=None):
                 {'tool_list':tools, 'page':page})
 
 def page(request):
-    page_name = str(request.path_info).replace('/','')
+    print(request.path_info)
+    page_name = str(request.path_info).replace('/'+request.LANGUAGE_CODE+'/','').replace('/','')
+    print(page_name)
     try:
-        page = SitePage.objects.get(name=page_name, language=request.LANGUAGE_CODE)
+        page = SitePage.objects.filter(name=page_name, language=request.LANGUAGE_CODE)[0]
     except SitePage.DoesNotExist:
         page = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
+    except IndexError:
+        page = SitePage.objects.get(name='missingpage', language=request.LANGUAGE_CODE)
+    print(page_name, page)
     page,content,references = get_article_db_entries(page)
     return render(request,'site/site_page.html',{'page':page,\
                     'content':content,'references':references})
