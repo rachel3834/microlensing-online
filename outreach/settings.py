@@ -112,6 +112,7 @@ LANGUAGES = (
             ('fr',_('French')),
             ('es',_('Spanish')),
             ('de',_('German')),
+            ('gr',_('Greek')),
 )
 
 LANGUAGE_CODE = 'en'

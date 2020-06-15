@@ -1,0 +1,269 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-15 09:11-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: outreach/settings.py:111
+msgid "English"
+msgstr ""
+
+#: outreach/settings.py:112
+msgid "French"
+msgstr ""
+
+#: outreach/settings.py:113
+msgid "Spanish"
+msgstr ""
+
+#: outreach/settings.py:114
+msgid "German"
+msgstr ""
+
+#: outreach/settings.py:115
+msgid "Greek"
+msgstr ""
+
+#: tutorial/templates/base.html:69
+msgid "Overview"
+msgstr ""
+
+#: tutorial/templates/base.html:70
+msgid "Learning"
+msgstr ""
+
+#: tutorial/templates/base.html:71
+msgid "Glossary"
+msgstr ""
+
+#: tutorial/templates/base.html:72 tutorial/templates/tutorial/index.html:43
+msgid "Resources"
+msgstr ""
+
+#: tutorial/templates/base.html:73
+msgid "Interactive"
+msgstr ""
+
+#: tutorial/templates/base.html:74
+msgid "Opportunities"
+msgstr ""
+
+#: tutorial/templates/base.html:75
+msgid "Software"
+msgstr ""
+
+#: tutorial/templates/base.html:76
+msgid "Public Data"
+msgstr ""
+
+#: tutorial/templates/base.html:77
+msgid "Data Challenge"
+msgstr ""
+
+#: tutorial/templates/base.html:95
+msgid "About"
+msgstr ""
+
+#: tutorial/templates/base.html:96
+msgid "Contact"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:4
+msgid "Microlensing Source"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:5
+msgid "Welcome to Microlensing Source!"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:15
+msgid "Introduction to microlensing"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:19
+msgid "Learn how this fascinating phenomenon works"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:29
+msgid "Overview of the field"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:33
+msgid "The people and projects behind the discoveries"
+msgstr ""
+
+#: tutorial/templates/tutorial/index.html:47
+msgid "Images, movies, references and more"
+msgstr ""
+
+#: tutorial/templates/tutorial/learning.html:12
+msgid "The concepts"
+msgstr ""
+
+#: tutorial/templates/tutorial/learning.html:16
+msgid "Introduction to lensing and its application to planet hunting"
+msgstr ""
+
+#: tutorial/templates/tutorial/learning.html:26
+msgid "In depth"
+msgstr ""
+
+#: tutorial/templates/tutorial/learning.html:30
+msgid "Coursework & exercises for advanced students"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:6
+msgid "Online Resources"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:10
+#: tutorial/templates/tutorial/overview.html:12
+msgid "Ground-based Surveys"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:16
+msgid "Space-based Surveys"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:22
+msgid "Ground-based Follow-up Teams"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:30
+msgid "Microlensing Conferences"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:44
+msgid "YouTube Resources"
+msgstr ""
+
+#: tutorial/templates/tutorial/links.html:50
+msgid "Simulations and Modeling Resources"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:16
+msgid ""
+"Interested in getting involved?  Try the tabs above for current "
+"opportunities!"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:20
+#: tutorial/templates/tutorial/opportunities.html:36
+msgid "Upcoming Meetings"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:25
+msgid "Date:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:26
+#: tutorial/templates/tutorial/opportunities.html:47
+msgid "Location:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:27
+msgid "Registration deadline:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:28
+msgid "Abstract deadline:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:30
+#: tutorial/templates/tutorial/opportunities.html:49
+#: tutorial/templates/tutorial/opportunities.html:71
+msgid "Website:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:37
+msgid ""
+"No meetings of particular relevance to microlensing that we no of right "
+"now.  Watch this space!"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:41
+#: tutorial/templates/tutorial/opportunities.html:56
+msgid "Employment Opportunities"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:46
+#: tutorial/templates/tutorial/opportunities.html:69
+msgid "Application deadline:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:51
+msgid "Description:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:63
+#: tutorial/templates/tutorial/opportunities.html:77
+msgid "Grants and Funding Opportunities"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:68
+msgid "Agency:"
+msgstr ""
+
+#: tutorial/templates/tutorial/opportunities.html:78
+msgid ""
+"We know of no current opportunities specific to microlensing at the present "
+"time.  Watch this space!"
+msgstr ""
+
+#: tutorial/templates/tutorial/overview.html:16
+msgid "Ground-based programs which search for microlensing events"
+msgstr ""
+
+#: tutorial/templates/tutorial/overview.html:26
+msgid "Space Missions"
+msgstr ""
+
+#: tutorial/templates/tutorial/overview.html:30
+msgid "Current and future missions with a microlensing component"
+msgstr ""
+
+#: tutorial/templates/tutorial/overview.html:41
+msgid "Ground-based Follow-up"
+msgstr ""
+
+#: tutorial/templates/tutorial/overview.html:45
+msgid "Projects and facilities studying microlensing phenomena"
+msgstr ""
+
+#: tutorial/templates/tutorial/references.html:6
+#: tutorial/templates/tutorial/resources.html:57
+msgid "References"
+msgstr ""
+
+#: tutorial/templates/tutorial/resource_files.html:14
+msgid "Using these media"
+msgstr ""
+
+#: tutorial/templates/tutorial/resource_files.html:85
+msgid "Sorry, no resources under this category yet."
+msgstr ""
+
+#: tutorial/templates/tutorial/resources.html:12
+msgid "Pictures"
+msgstr ""
+
+#: tutorial/templates/tutorial/resources.html:26
+msgid "Movies"
+msgstr ""
+
+#: tutorial/templates/tutorial/resources.html:42
+msgid "Links"
+msgstr ""
