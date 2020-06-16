@@ -154,8 +154,7 @@ msgstr "Πόροι για προσομοιώσεις και μοντέλα"
 msgid ""
 "Interested in getting involved?  Try the tabs above for current "
 "opportunities!"
-msgstr "Ενδιαφέρεστε να συμμετάσχετε; Συμβουλευτείτε τη σχετική επιλογή 
-παραπάνω για να ενημερωθείτε για τις τρέχουσες ευκαιρίες. "
+msgstr "Ενδιαφέρεστε να συμμετάσχετε; Συμβουλευτείτε τη σχετική επιλογή παραπάνω για να ενημερωθείτε για τις τρέχουσες ευκαιρίες. "
 
 #: tutorial/templates/tutorial/opportunities.html:20
 #: tutorial/templates/tutorial/opportunities.html:36
@@ -264,4 +263,3 @@ msgstr "Ταινίες"
 #: tutorial/templates/tutorial/resources.html:42
 msgid "Links"
 msgstr "Σύνδεσμοι"
-
