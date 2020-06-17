@@ -188,7 +188,7 @@ msgstr "Ιστοσελίδα:"
 msgid ""
 "No meetings of particular relevance to microlensing that we no of right "
 "now.  Watch this space!"
-msgstr "Δέν υπάρχουν προγραμματισμένες συνανστήσεις ή συνέδρια προς το παρόν."
+msgstr "Δέν υπάρχουν προγραμματισμένες συναντήσεις ή συνέδρια προς το παρόν."
 
 #: tutorial/templates/tutorial/opportunities.html:41
 #: tutorial/templates/tutorial/opportunities.html:56
