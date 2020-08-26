@@ -32,27 +32,27 @@ msgstr ""
 
 #: tutorial/templates/tutorial/index.html:4
 msgid "Microlensing Source"
-msgstr ""
+msgstr "Fuente del Microlente"
 
 #: tutorial/templates/tutorial/index.html:5
 msgid "Welcome to Microlensing Source!"
-msgstr ""
+msgstr "Bienvenido a la Fuente del microlente"
 
 #: tutorial/templates/tutorial/index.html:15
 msgid "Introduction to microlensing"
-msgstr ""
+msgstr "Introducción a los microlentes"
 
 #: tutorial/templates/tutorial/index.html:19
 msgid "Learn how this fascinating phenomenon works"
-msgstr ""
+msgstr "Aprende como este fenómeno tan fascinante ocurre"
 
 #: tutorial/templates/tutorial/index.html:29
 msgid "Overview of the field"
-msgstr ""
+msgstr "Resumen de la teoría"
 
 #: tutorial/templates/tutorial/index.html:33
 msgid "The people and projects behind the discoveries"
-msgstr ""
+msgstr "Personas y proyectos detrás de los descubrimientos"
 
 #: tutorial/templates/tutorial/index.html:43
 msgid "Resources"
