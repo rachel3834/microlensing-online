@@ -20,27 +20,27 @@ msgstr ""
 
 #: outreach/settings.py:111
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: outreach/settings.py:112
 msgid "French"
-msgstr ""
+msgstr "Francés"
 
 #: outreach/settings.py:113
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
 #: tutorial/templates/tutorial/index.html:4
 msgid "Microlensing Source"
-msgstr "Fuente del Microlente"
+msgstr "Origen del Microlente gravitacional"
 
 #: tutorial/templates/tutorial/index.html:5
 msgid "Welcome to Microlensing Source!"
-msgstr "Bienvenido a la Fuente del microlente"
+msgstr "Bienvenidos al origen del microlente gravitacional"
 
 #: tutorial/templates/tutorial/index.html:15
 msgid "Introduction to microlensing"
-msgstr "Introducción a los microlentes"
+msgstr "Introducción a los microlentes gravitacionales"
 
 #: tutorial/templates/tutorial/index.html:19
 msgid "Learn how this fascinating phenomenon works"
@@ -56,19 +56,19 @@ msgstr "Personas y proyectos detrás de los descubrimientos"
 
 #: tutorial/templates/tutorial/index.html:43
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
 #: tutorial/templates/tutorial/index.html:47
 msgid "Images, movies, references and more"
-msgstr ""
+msgstr "Imágenes, películas, referencias y más"
 
 #: tutorial/templates/tutorial/learning.html:11
 msgid "The concepts"
-msgstr ""
+msgstr "Conceptos básicos"
 
 #: tutorial/templates/tutorial/learning.html:15
 msgid "Introduction to lensing and its application to planet hunting"
-msgstr ""
+msgstr "Introducción a los lentes gravitacionales y sus aplicaciones en la cacería de planetas"
 
 #: tutorial/templates/tutorial/learning.html:25
 msgid "In depth"
