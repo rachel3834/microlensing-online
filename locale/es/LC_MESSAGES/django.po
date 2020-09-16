@@ -72,74 +72,74 @@ msgstr "Introducción a los lentes gravitacionales y sus aplicaciones en la cace
 
 #: tutorial/templates/tutorial/learning.html:25
 msgid "In depth"
-msgstr ""
+msgstr "Profundizando"
 
 #: tutorial/templates/tutorial/learning.html:29
 msgid "Coursework & exercises for advanced students"
-msgstr ""
+msgstr "Cursos y ejercicios para estudiantes avanzados"
 
 #: tutorial/templates/tutorial/links.html:5
 msgid "Online Resources"
-msgstr ""
+msgstr "Recursos en línea"
 
 #: tutorial/templates/tutorial/links.html:9
 #: tutorial/templates/tutorial/overview.html:11
 msgid "Ground-based Surveys"
-msgstr ""
+msgstr "Observaciones desde La Tierra "
 
 #: tutorial/templates/tutorial/links.html:15
 msgid "Space-based Surveys"
-msgstr ""
+msgstr "Observaciones desde el espacio"
 
 #: tutorial/templates/tutorial/links.html:21
 msgid "Ground-based Follow-up Teams"
-msgstr ""
+msgstr "Equipos de seguimiento desde La Tierra"
 
 #: tutorial/templates/tutorial/links.html:29
 msgid "Microlensing Conferences"
-msgstr ""
+msgstr "Conferencias sobre microlentes"
 
 #: tutorial/templates/tutorial/links.html:43
 msgid "YouTube Resources"
-msgstr ""
+msgstr "Recursos en Youtube"
 
 #: tutorial/templates/tutorial/links.html:49
 msgid "Simulations and Modeling Resources"
-msgstr ""
+msgstr "Recursos para simulación y modelado"
 
 #: tutorial/templates/tutorial/opportunities.html:15
 msgid ""
 "Interested in getting involved?  Try the tabs above for current "
 "opportunities!"
-msgstr ""
+msgstr "Interesado en participar?. Click en las pestañas de arriba para ver oportunidades disponibles"
 
 #: tutorial/templates/tutorial/opportunities.html:19
 #: tutorial/templates/tutorial/opportunities.html:35
 msgid "Upcoming Meetings"
-msgstr ""
+msgstr "Próximas reuniones"
 
 #: tutorial/templates/tutorial/opportunities.html:24
 msgid "Date:"
-msgstr ""
+msgstr "Fecha"
 
 #: tutorial/templates/tutorial/opportunities.html:25
 #: tutorial/templates/tutorial/opportunities.html:46
 msgid "Location:"
-msgstr ""
+msgstr "Lugar"
 
 #: tutorial/templates/tutorial/opportunities.html:26
 msgid "Registration deadline:"
-msgstr ""
+msgstr "Fecha límite de registro"
 
 #: tutorial/templates/tutorial/opportunities.html:27
 msgid "Abstract deadline:"
-msgstr ""
+msgstr "Fecha límite para resúmenes"
 
 #: tutorial/templates/tutorial/opportunities.html:29
 #: tutorial/templates/tutorial/opportunities.html:48
 #: tutorial/templates/tutorial/opportunities.html:70
 msgid "Website:"
-msgstr ""
+msgstr "Sitio web"
 
 #: tutorial/templates/tutorial/opportunities.html:36
 msgid ""
@@ -150,73 +150,73 @@ msgstr ""
 #: tutorial/templates/tutorial/opportunities.html:40
 #: tutorial/templates/tutorial/opportunities.html:55
 msgid "Employment Opportunities"
-msgstr ""
+msgstr "Oportunidades de trabajo"
 
 #: tutorial/templates/tutorial/opportunities.html:45
 #: tutorial/templates/tutorial/opportunities.html:68
 msgid "Application deadline:"
-msgstr ""
+msgstr "Fecha límite de aplicación"
 
 #: tutorial/templates/tutorial/opportunities.html:50
 msgid "Description:"
-msgstr ""
+msgstr "Descripción"
 
 #: tutorial/templates/tutorial/opportunities.html:62
 #: tutorial/templates/tutorial/opportunities.html:76
 msgid "Grants and Funding Opportunities"
-msgstr ""
+msgstr "Becas y financiamiento"
 
 #: tutorial/templates/tutorial/opportunities.html:67
 msgid "Agency:"
-msgstr ""
+msgstr "Agencia"
 
 #: tutorial/templates/tutorial/opportunities.html:77
 msgid ""
 "We know of no current opportunities specific to microlensing at the present "
 "time.  Watch this space!"
-msgstr ""
+msgstr "De momento, no sabemos de oportunidades de trabajo en microlentes. Revisa con frecuencia este espacio."
 
 #: tutorial/templates/tutorial/overview.html:15
 msgid "Ground-based programs which search for microlensing events"
-msgstr ""
+msgstr "Programas terrestres en la búsqueda de microlentes"
 
 #: tutorial/templates/tutorial/overview.html:25
 msgid "Space Missions"
-msgstr ""
+msgstr "Misiones espaciales"
 
 #: tutorial/templates/tutorial/overview.html:29
 msgid "Current and future missions with a microlensing component"
-msgstr ""
+msgstr "Misiones presentes y futuras que incluyen microlentes"
 
 #: tutorial/templates/tutorial/overview.html:40
 msgid "Ground-based Follow-up"
-msgstr ""
+msgstr "Seguimiento desde La Tierra"
 
 #: tutorial/templates/tutorial/overview.html:44
 msgid "Projects and facilities studying microlensing phenomena"
-msgstr ""
+msgstr "Proyectos e infraestructura para estudiar el fenómeno de microlentes"
 
 #: tutorial/templates/tutorial/references.html:5
 #: tutorial/templates/tutorial/resources.html:56
 msgid "References"
-msgstr ""
+msgstr "Referencias"
 
 #: tutorial/templates/tutorial/resource_files.html:13
 msgid "Using these media"
-msgstr ""
+msgstr "Usando este medio"
 
 #: tutorial/templates/tutorial/resource_files.html:84
 msgid "Sorry, no resources under this category yet."
-msgstr ""
+msgstr "Lo sentimos, por el momento no hay información en esta caegoría"
 
 #: tutorial/templates/tutorial/resources.html:11
 msgid "Pictures"
-msgstr ""
+msgstr "Imágenes"
 
 #: tutorial/templates/tutorial/resources.html:25
 msgid "Movies"
-msgstr ""
+msgstr "Películas"
 
 #: tutorial/templates/tutorial/resources.html:41
 msgid "Links"
-msgstr ""
+msgstr "Enlaces"
