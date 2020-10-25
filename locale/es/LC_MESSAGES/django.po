@@ -207,7 +207,7 @@ msgstr "Usando este medio"
 
 #: tutorial/templates/tutorial/resource_files.html:84
 msgid "Sorry, no resources under this category yet."
-msgstr "Lo sentimos, por el momento no hay información en esta caegoría"
+msgstr "Lo sentimos, por el momento no hay información en esta categoría"
 
 #: tutorial/templates/tutorial/resources.html:11
 msgid "Pictures"
