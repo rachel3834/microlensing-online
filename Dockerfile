@@ -1,11 +1,11 @@
-FROM centos:7
+FROM centos:8
 
 EXPOSE 80
 ENTRYPOINT [ "/init" ]
 
 # install packages
 RUN yum -y install epel-release\
-        && yum -y install nginx python-pip supervisor uwsgi-plugin-python2\
+        && yum -y install nginx python36 supervisor\
         && yum -y update\
         && yum -y clean all
 
@@ -14,8 +14,8 @@ COPY docker/ /
 
 # install python requirements
 COPY pip-requirements.txt /var/www/microlensingonline/
-RUN pip install --upgrade pip \
-    && pip install -r /var/www/microlensingonline/pip-requirements.txt \
+RUN pip3 install --upgrade pip \
+    && pip3 install -r /var/www/microlensingonline/pip-requirements.txt \
     && rm -rf ~/.cache ~/.pip
 
 # copy application
