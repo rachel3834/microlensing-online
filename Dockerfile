@@ -5,7 +5,7 @@ ENTRYPOINT [ "/init" ]
 
 # install packages
 RUN yum -y install epel-release\
-        && yum -y install nginx python36 supervisor python3-devel \
+        && yum -y install nginx python34 python34-pip supervisor python3-devel \
         && yum -y update\
         && yum -y clean all
 RUN yum -y install uwsgi uwsgi-plugin-python3
