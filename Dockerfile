@@ -1,13 +1,14 @@
-FROM centos:8
+FROM centos:7
 
 EXPOSE 80
 ENTRYPOINT [ "/init" ]
 
 # install packages
 RUN yum -y install epel-release\
-        && yum -y install nginx python36 supervisor python3-devel\
+        && yum -y install nginx python36 supervisor python3-devel \
         && yum -y update\
         && yum -y clean all
+RUN yum -y install uwsgi uwsgi-plugin-python3
 
 # system configuration
 COPY docker/ /
