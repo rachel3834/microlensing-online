@@ -2,3 +2,4 @@
 *.pyo
 .DS_Store
 db.sqlite3
+docker-compose.yml
