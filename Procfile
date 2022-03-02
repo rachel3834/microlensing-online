@@ -1,2 +1,2 @@
 release: python manage.py migrate --noinput
-web: gunicorn microlensing-online.wsgi
+web: gunicorn secure-hollows-23219.wsgi
