@@ -1,6 +1,9 @@
-HEADER::NAME=about
-HEADER::MODEL=SitePage
+{% extends 'base.html' %}
 
+{% block title_text %}Microlensing Source{% endblock %}
+{% block header_text %}Welcome to Microlensing Source!{% endblock %}
+
+{% block mainregion %}
 <h3 class="page-header">About this site</h3>
 <p>
     Microlensing Source is a resource center for all aspects of gravitational microlensing.  It aims to make microlensing more
@@ -8,7 +11,7 @@ HEADER::MODEL=SitePage
     citizen scientists and those looking for a ready reference. </br>
 </p>
 <p>
-    SITELINK::TABLE=SitePage::NAME=license::LINKTEXT=More information about using the media from this site
+    <a href="/license/">More information about using the media from this site</a>
 </br>
 </p>
 <p>
@@ -24,3 +27,4 @@ HEADER::MODEL=SitePage
         <tr><td>Scott Gaudi</td><td>Ohio State University</td></tr>
     </table>
 </p>
+{% endblock %}
