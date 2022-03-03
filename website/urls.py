@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from . import views
 
 urlpatterns = [
@@ -13,20 +13,21 @@ urlpatterns = [
     path('references/',views.references,name="references"),
     path('links/',views.links,name="links"),
     path('software/',views.page,name="software"),
-    path('about/',views.page,name="about"),
+    path('about/',views.about,name="about"),
     path('license/',views.license,name="license"),
     path('contact/',views.contact,name="contact"),
     path('glossary/',views.page,name="glossary"),
     path('pictures/',views.list_resources,{'resource_type':'pictures'},name='pictures'),
-    path('pictures/(?P<pk>[0-9]+)/',views.list_resources,{'resource_type':'pictures'},name='pictures'),
+    re_path('pictures/(?P<pk>[0-9]+)/',views.list_resources,{'resource_type':'pictures'},name='pictures'),
     path('pictures/key/',views.list_resources,{'resource_type':'pictures'},name='pictures_key'),
-    path('pictures/key/(?P<key>[a-zA-Z]+)/',views.list_resources,{'resource_type':'pictures'},name='pictures_key'),
-    path('pictures/key/(?P<key>[a-zA-Z]+\+[a-z]+)/',views.list_resources,{'resource_type':'pictures'},name='pictures_key'),
+    re_path('pictures/key/(?P<key>[a-zA-Z]+)/',views.list_resources,{'resource_type':'pictures'},name='pictures_key'),
+    re_path('pictures/key/(?P<key>[a-zA-Z]+\+[a-z]+)/',views.list_resources,{'resource_type':'pictures'},name='pictures_key'),
     path('movies/',views.list_resources,{'resource_type':'movies'},name='movies'),
-    path('movies/(?P<pk>[0-9]+)/',views.list_resources,{'resource_type':'movies'},name='movies'),
-    path('movies/key/(?P<key>[a-zA-Z]+)/',views.list_resources,{'resource_type':'movies'},name='movies_key'),
-    path('movies/key/(?P<key>[a-zA-Z]+\+[a-z]+)/',views.list_resources,{'resource_type':'movies'},name='movies_key'),
+    re_path('movies/(?P<pk>[0-9]+)/',views.list_resources,{'resource_type':'movies'},name='movies'),
+    re_path('movies/key/(?P<key>[a-zA-Z]+)/',views.list_resources,{'resource_type':'movies'},name='movies_key'),
+    re_path('movies/key/(?P<key>[a-zA-Z]+\+[a-z]+)/',views.list_resources,{'resource_type':'movies'},name='movies_key'),
     path('interactive/',views.interactive,name="interactive"),
+    re_path('interactive/(?P<pk>[0-9]+)/',views.interactive,name="interactive"),
     path('public-data/',views.page,name="public-data"),
     path('data-challenge/',views.page,name="data-challenge"),
     path('ground-based-surveys/',views.page,name="Ground-based Surveys"),

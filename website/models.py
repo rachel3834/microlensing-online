@@ -113,7 +113,7 @@ class SitePage(models.Model):
 
 class InteractiveTool(models.Model):
     author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     title = models.CharField(max_length=200)
     text = models.TextField()
     tools_index = models.IntegerField(null=True)

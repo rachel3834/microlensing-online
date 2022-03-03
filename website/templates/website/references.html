@@ -2,7 +2,7 @@
 {% block mainregion %}
 <p>
 <h3 class="page-header">References</h3>
-{% if index|length > 0 %}
+{% if reference_list|length > 0 %}
   {% for ref in reference_list %}
   {{ref|safe}}</br>
   {% endfor %}

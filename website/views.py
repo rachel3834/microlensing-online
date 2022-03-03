@@ -14,6 +14,9 @@ def contact(request):
 def license(request):
     return render(request,'website/site_license.html',{})
 
+def about(request):
+    return render(request,'website/site_about.html',{})
+
 def overview(request):
     return render(request,'website/overview.html',{})
 
