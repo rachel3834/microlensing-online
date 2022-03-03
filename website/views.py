@@ -42,14 +42,17 @@ def opportunities(request,selected='none'):
 
 def references(request):
     refs = Reference.objects.all()
-    ref_list = []
-    indices = []
-    for r in refs:
-        ref_list.append(r.__str__())
-        indices.append(r.authors)
-    index = list(zip(indices,ref_list))
-    index.sort()
-    (indices, ref_list) = zip(*index)
+    if len(refs) > 0:
+        ref_list = []
+        indices = []
+        for r in refs:
+            ref_list.append(r.__str__())
+            indices.append(r.authors)
+        index = list(zip(indices,ref_list))
+        index.sort()
+        (indices, ref_list) = zip(*index)
+    else:
+        ref_list = []
     return render(request,'website/references.html',{'reference_list':ref_list})
 
 def links(request):
@@ -207,13 +210,13 @@ def interactive(request,pk=None):
     if pk == None:
         try:
             page = InteractiveTool.objects.get(tools_index=0)
-        except ObjectDoesNotExist:
-            page = SitePage.objects.get(name='missingpage')
+        except InteractiveTool.DoesNotExist:
+            return render(request,'website/site_404.html',{})
     else:
         try:
             page = InteractiveTool.objects.get(pk=pk)
-        except ObjectDoesNotExist:
-            page = SitePage.objects.get(name='missingpage')
+        except InteractiveTool.DoesNotExist:
+            return render(request,'website/site_404.html',{})
     return render(request,'website/interactive_base.html',\
                 {'tool_list':tools, 'page':page})
 
