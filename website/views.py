@@ -136,3 +136,135 @@ def page(request):
                     'content':content,'references':references})
     except SitePage.DoesNotExist:
         return render(request,'website/site_404.html',{})
+
+def tutorial(request,pk=None):
+    tutorial_list = TutorialPage.objects.all()
+    indices = []
+    tutorials = []
+    for page in tutorial_list:
+        if page.course_index != 0:
+            indices.append(page.course_index)
+            tutorials.append(page)
+    course_index = list(zip(indices,tutorials))
+    course_index.sort()
+    (indices, tutorials) = zip(*course_index)
+    if pk == None:
+        page = TutorialPage.objects.get(course_index=0)
+    else:
+        page = TutorialPage.objects.get(pk=pk)
+
+    page,content = get_article_db_entries(page)
+
+    return render(request,'website/article_base.html',\
+                {'article_list':tutorials, 'page':page,\
+                    'content':content})
+
+def article(request,resource_type,short_title=None):
+    if resource_type == 'concept':
+        article_list = ConceptPage.objects.all()
+    else:
+        article_list = TutorialPage.objects.all()
+    indices = []
+    articles = []
+    for page in article_list:
+        if 'worksheet' not in page.short_title:
+            indices.append(page.course_index)
+            articles.append(page)
+    course_index = list(zip(indices,articles))
+    course_index.sort()
+    (indices, articles) = zip(*course_index)
+    if short_title == None:
+        if resource_type == 'concept':
+            page = ConceptPage.objects.get(course_index=0)
+        else:
+            page = TutorialPage.objects.get(course_index=0)
+    else:
+        if resource_type == 'concept':
+            qs = ConceptPage.objects.filter(short_title__contains=short_title)
+        else:
+            qs = TutorialPage.objects.filter(short_title__contains=short_title)
+        if len(qs) > 0:
+            page = qs[0]
+    page,content,references = get_article_db_entries(page)
+
+    return render(request,'website/article_base.html',\
+                    {'article_list':articles, 'page':page,\
+                    'content':content,'resource_type':resource_type,\
+                    'references':references})
+
+def interactive(request,pk=None):
+    tool_list = InteractiveTool.objects.all()
+    indices = []
+    tools = []
+    for page in tool_list:
+        if page.tools_index != 0:
+            indices.append(page.tools_index)
+            tools.append(page)
+    if len(indices) > 0:
+        index = list(zip(indices,tools))
+        index.sort()
+        (indices, tools) = zip(*index)
+    if pk == None:
+        try:
+            page = InteractiveTool.objects.get(tools_index=0)
+        except ObjectDoesNotExist:
+            page = SitePage.objects.get(name='missingpage')
+    else:
+        try:
+            page = InteractiveTool.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            page = SitePage.objects.get(name='missingpage')
+    return render(request,'website/interactive_base.html',\
+                {'tool_list':tools, 'page':page})
+
+def list_resources(request,resource_type,pk=None,key=None):
+
+    if resource_type == 'movies':
+        resources = Movie.objects.all()
+    elif resource_type == 'pictures':
+        resources = Picture.objects.all()
+    else:
+        resources = []
+
+    keywords = extract_keywords(resources)
+
+    if key != None:
+        if resource_type == 'movies':
+            resources = Movie.objects.filter(keywords__contains=key)
+        elif resource_type == 'pictures':
+            resources = Picture.objects.filter(keywords__contains=key)
+        else:
+            resources = []
+
+    if pk != None:
+        if resource_type == 'movies':
+            item = Movie.objects.get(pk=pk)
+        elif resource_type == 'pictures':
+            item = Picture.objects.get(pk=pk)
+    else:
+        item = None
+
+
+    title = capitalize_first_letter(resource_type)
+
+    return render(request,'website/resource_files.html',{'index':resources,
+                                                          'resource_type':resource_type,
+                                                          'resource':item,
+                                                          'title': title,
+                                                          'keywords': keywords})
+def extract_keywords(resources):
+    if len(resources) == 0:
+        return []
+
+    keywords = []
+    for r in resources:
+        keys = str(r.keywords).split('::')
+        for k in keys:
+            if k not in keywords and str(k).lower() != 'none':
+                keywords.append(k)
+    return keywords
+
+def capitalize_first_letter(s):
+    s = s.lstrip()
+    s = s[0:1].upper()+s[1:]
+    return s
