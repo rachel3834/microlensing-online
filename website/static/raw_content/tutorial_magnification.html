@@ -1,0 +1,89 @@
+HEADER::TITLE=Magnification of a Microlensing Event
+HEADER::SHORT_TITLE=magnification
+HEADER::COURSE_INDEX=2
+HEADER::AUTHOR=Rachel Street
+<h3>Introduction</h3>
+<p>Previously, we have concluded that current telescopes cannot resolve the two images formed during a PSPL event.
+Notice how there is no wavelength dependence in the lensing equation - microlensing affects all frequencies of light equally,
+unlike most forms of intrinsic stellar variability. So what can we observe? Here we examine the effect on the intensity of the
+light reaching the observer.</p>
+
+<h3>Derivation of the Magnification Equation</h3>
+<p>Look at Figure 3 and imagine a bundle of light rays leaving the source, only to be deflected from their paths by the lensing
+mass into two images. We can describe the appearance of these images as if projected onto two planes - one at the level of the
+observer, P' and one at the distance of the lens, P.
+    
+<center>
+    PICTURE::FILENAME=magnification_fig.png::CAPTION=Figure 3: Magnification during a microlensing event. (Left) The flux received by the observer without lensing (right) The flux received during lensing. Only one of the two lensed images is shown for clarity.::CREDIT=Based on Fig 2 from Refsdal (1964) (R.A.Street)::NAME=Lensing magnification
+</center>
+    
+The lens changes the course of the light rays but also cross-section of the bundle. However, the specific intensity, I, remains
+constant; the surface brightness of the image is identical to that of the source, unlensed.  So, flux of an image = surface
+brightness x solid angle subtended on sky.  Therefore, the magnification, A, during an event is the ratio of the flux of the image
+to the flux of the unlensed source, which is equivalent to the ratio of the solid angles subtended on the sky by the lensed image,
+&Delta;&Omega; relative to the unlensed source, (&Delta;&Omega;)<sub>0</sub>:</p>
+
+<table width="75%"><tr><td>$$A = \frac{\Delta\Omega}{(\Delta\Omega)_{0}}$$</td><td>[15]</td></tr></table>
+
+<p>The relationship between &Delta;&Omega; and (&Delta;&Omega;)<sub>0</sub>, the distortion of the image area, is described by the
+lens equation:</p>
+
+<table width="75%"><tr><td>$$A^{-1} = \frac{(\Delta\Omega)_{0}}{\Delta\Omega} = \left|det\frac{d \alpha}{d \theta} \right| = \frac{d A_{P^{\prime}}}{d A_{P}} \left( \frac{D_{L}}{D_{S}} \right)^{2}$$</td><td>[16]</td></tr></table>
+
+<p.>I.e. we need the rate of change of the lens equation with the separation of lens and source, &alpha;.
+(Note that this derivation considers only point masses and spherically symmetric lensing events. We will explore the more general
+case when we consider binary lenses.)  We consider the images as segments (see Fig. 7), from which we extract the segment areas as
+they intersect the lens plane, P and the source plane, P'.</p>
+
+<table width="75%">
+    <tr><td>$$d A_{P^{\prime}} = \frac{1}{2}r_{0}d\nu = \frac{1}{2}D_{L}\alpha d\nu$$</td><td>[17a]</td></tr>
+    <tr><td>$$d A_{P} = \frac{1}{2}r d\phi = \frac{1}{2}D_{L}\theta d \phi$$</td><td>[17b]</td></tr>
+</table>
+
+<p>since r<sub>0</sub> = D<sub>L</sub>&alpha; and r = D<sub>L</sub>&theta; and d&nu; = d&phi; by symmetry. So </p>
+
+<table width="75%"><tr><td>$$\frac{d A_{P^{\prime}}}{d A_{P}} = \frac{\theta}{\alpha}$$</td></tr></table>
+ 
+<p>Therefore, from [16]:</p>
+ 
+<table width="75%"><tr><td>$$\left|det\frac{d\alpha}{d\theta}\right| = \frac{d A_{P^{\prime}}}{d A_{P}}\left( \frac{D_{L}}{D_{S}} \right)^{2} = \frac{\theta}{\alpha}\left(\frac{D_{L}}{D_{S}}\right)^{2} = A^{-1}$$</td><td>[18]</td></tr></table>
+
+<table width="75%"><tr><td>$$A = \left|\frac{\theta_{\pm}d\theta_{\pm}}{\alpha d\alpha} \right|$$</td><td>[19]</td></tr></table>
+
+<p>&theta;<sub>&#8723;</sub> is of course given by the solutions to the lens equation, from which we can also derive d&theta;<sub>&#8723;</sub>/d&alpha;:</p>
+
+<table width="75%"><tr><td>$$A = \frac{\theta}{2 \alpha} \left( 1 + \frac{\alpha}{\sqrt{\alpha^{2} + 4\theta_{0}^{2}}} \right)$$</td><td>[20]</td></tr></table>
+
+<p>For simplicity, we define u:</p>
+
+<table width="75%"><tr><td>$$u = \frac{\alpha}{\theta_{0}} = \frac{\alpha}{\sqrt{\frac{4GM_{L}}{\mu D_{L}c^{2}}}}$$</td><td>[21]</td></tr></table>
+
+<p>Using this, we re-write the solutions to the lens equation as:</p>
+
+<table width="75%"><tr><td>$$\theta_{\pm} = \frac{u\pm\sqrt{u^{2}+4}}{2}\theta_{0}$$</td><td>[22]</td></tr></table>
+
+<p>We can now write an expression for the magnification in terms of the angular separation of lens and source:</p>
+
+<table width="75%">
+    <tr><td>$$A_{\pm} = \frac{\theta}{2\alpha}\left(1 + \frac{u}{\sqrt{u^{2} + 4}}\right)$$</td></tr>
+    <tr><td>$$A_{\pm} = \pm\frac{1}{2}+\frac{u^{2} + 2}{2u \sqrt{u^{2}+4}}$$</td><td>[23]</td></tr>
+</table>
+
+<p>The total magnification during an event is simply the sum of the magnification of both images:</p>
+
+<table width="75%"><tr><td>$$A_{\rm tot} = \frac{u^{2}+2}{u\sqrt{u^{2} + 4}}$$</td><td>[24]</td></tr></table>
+
+<p>So for a PSPL event, of given lens mass and lens and source distances, the magnification at any given time depends on the
+angular separation of source and lens.</p>
+<p>For further discussion of this, see Refsdal, S. (1964).</p>
+
+<h3>Lightcurve of a Point-Source, Point-Lens Event</h3>
+<p>Let's look again at our example microlensing event, where M<sub>L</sub> = 0.4M<sub>&#9737;</sub>, D<sub>L</sub>=4kpc and
+D<sub>S</sub>=8kpc, and let's say that the relative angular motion between the two is 0.1 milli-arcsec / day.
+Using our usual lens-centered geometry, we take the lens to be stationary and the source to be moving along a trajectory behind
+it. Consider 4 trajectories, which pass the lens at progressively smaller closest-approach separations.</p>
+
+<p>Over a 30d period, calculate the angular separations of lens-source for each day on each trajectory. Plot the lightcurve
+of the source for each trajectory in terms of the magnification.</p>
+
+REF::AUTHORS=Refsdal, S.::YEAR=1964::JOURNAL=MNRAS::VOLUME=128::PAGE=295::URL=http://adsabs.harvard.edu/abs/1964MNRAS.128..295R

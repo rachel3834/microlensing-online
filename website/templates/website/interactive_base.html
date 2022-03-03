@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+	<!-- Tutorial navigation sidebar -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-10 main">
+                <center>
+                {% if tool_list|length > 0 %}
+                    <table width="100%"><tr>
+					{% for t in tool_list %}
+                        <td align='center'>
+                            <a href="{% url 'interactive' t.pk %}"><button type="button" class="btn btn-primary">{{t.name}}</button></a>
+                        </td>
+                    {% endfor %}
+                    </tr></table>
+                {% endif %}
+                </center>
+                <center><h1 class="page-header">{{page.title}}</h1></center>
+				{% if page.tools_index > 0 %} <p style="text-align:right"><i>by {{page.author}}</i></p> {% endif %}
+				
+                <center>{{page.text|safe}}</center>
+			</div>
+		</div>
+	</div>
+{% endblock %}

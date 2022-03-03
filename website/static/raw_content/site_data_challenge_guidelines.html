@@ -1,0 +1,92 @@
+HEADER::NAME=data-challenge-guidelines
+<h3 class="page-header">Data Challenge Entry Guidelines</h3>
+<p>
+
+<h4 style='color:cadetblue'>Who can participate?</h4>
+<p>Everyone is welcome, including team/collaborative entrants.  Newcomers to the field are particularly encouraged.  Although contact details will be required for all participants during the submission process, all entries will be presented anonymously to the evaluation panel.  </p>
+
+<h4 style='color:cadetblue'>What is the task?</h4>
+<p>Your challenge is to identify the nature of the phenomenon causing the variability in each lightcurve, whether single or binary microlensing event or variable star.  For microlensing events, fit an appropriate model to the data.  Analyze as much data as possible before the deadline.</p>
+
+
+<h4 style='color:cadetblue'>Evaluation of Entries</h4>
+<p>All entries will be evaluated by a panel comprised of experts in microlensing theory and analysis, software and algorithms.  No panel member may participate in any of the teams and all panel members will be required to declare any conflicts of interest. </p>
+
+<p>It is important to note that the philosophy driving this challenge aims to maximize innovation and problem-solving as well as participation in the field.  Accurately modeling large numbers of events in good time is of course highly important, but tackling outstanding challenges in the analysis is also valuable.  For example, entries which complete a limited analysis (e.g. a subset of lightcurves or parameters) but which explore/develop innovative approaches are welcome.  </p>
+
+
+<h4 style='color:cadetblue'>Definitions used by the simulation</h4>
+<p>Note that in the simulated data, the inertial frame of reference is defined with the x-axis increasing from the binary center of mass towards the less massive lens at t<sub>0</sub>, the time of closest approach to the center of mass. If viewed from the solar system barycenter, the inertial frame moves at the relative velocity v<sub>lens_CoM</sub> – v<sub>observer</sub>(t<sub>0</sub>). The inclination of the orbit is a counter-clockwise rotation about the x-axis. &alpha; is the angle that the source trajectory makes with the x-axis (if parallax was 0).  Where finite source effects are significant, a linear limb darkening law has been applied.  </p>
+
+
+<h4 style='color:cadetblue'>Contents of the Simulated Data Release</h4>
+<b>Lightcurves</b><br>
+<p>There will be two lightcurve files for each event or star, representing the data from WFIRST's W149 and Z087 filters.  The files are in ASCII format with the columns:<br>
+BJD Aperture_Magnitude Error<br>
+and will follow the file-naming convention: ulwdc1_nnn_[W149/Z087].txt</p>
+
+<b>Supplementary files</b><br>
+<p>wfirst_ephemeris.txt contains the BJD and 3-d spacecraft location within the solar system. 
+The release will also include the surface-brightness color relation for Z087-W149 to enable lens masses to be determined where applicable. 
+
+Data releases will be made through the data challenges Github organization.
+
+<h4 style='color:cadetblue'>Github Organization</h4>
+<p>A public 
+URL::URL=https://github.com/microlensing-data-challenge::NAME=data challenge github organization::GROUP=data-challenge 
+has been set-up for all entrants to use, and will be where the challenge datasets can be downloaded from.  </p>
+
+<b>Forming/joining a team</b><br>
+<p>If you would like to join a team, or wish to recruit members for one, the Github organization has a project to help you make contact with other interested people:
+URL::URL=https://github.com/orgs/microlensing-data-challenge/projects/2::NAME=data challenge team project::GROUP=data-challenge 
+</p>
+<p>Teams are strongly encouraged to set up their own Teams within this Github organization, and to use its repository, wiki and issue-tracking capabilities:
+URL::URL=https://github.com/orgs/microlensing-data-challenge/teams::NAME=start a data challenge team::GROUP=data-challenge 
+</p>
+
+<b>Accessing the Challenge Dataset</b><br>
+<p>The 
+    URL::URL=https://github.com/microlensing-data-challenge/data-challenge-1::NAME=first data challenge dataset::GROUP=data-challenge 
+    are now available for download.</p>
+
+<p></p>
+<h5 style='color:crimson'>Important!</h5>
+<p><b>Entrants first need to email rstreet [at] lco.global and request to join the organization in order to gain access.</b></p>
+
+<p><b>In the interests of transparency, all questions regarding the data challenge should be posted as a discussion thread to the 
+    URL::URL=https://github.com/orgs/microlensing-data-challenge/teams/challenge-organizer::NAME=data challenge organizer team::GROUP=data-challenge 
+    </b>.  This then allows everyone to see the answers - after all, if its confusing you, its probably confusing someone else as well.</p>
+
+<h4 style='color:cadetblue'>Mailing list: microlensing-data-challenge@lco.global</h4>
+<p><b>Everyone interested in the progress of the data challenge is <b>strongly</b> encouraged to sign up to our mailing list.</b>  In particular, this list will be used to announce data releases and any necessary changes.  </p>
+
+
+<h4 style='color:cadetblue'>Contents of Entries</h4>
+
+<p>In an ideal world, all entries would be compared by an identical set of independent and purely numerical metrics.  This is difficult in practice because of a range of factors – for instance, it is impractical to expect teams to run their analysis on the same hardware and we don't wish to limit collaboration by proscribing a fixed number of team members.  We therefore ask all teams to provide a common set of numerical metrics together with a broader description of their approach.  </p>
+
+<h5 style='color:crimson'>Important!</h5>
+<p>The emphasis of the challenge is on developing novel approaches and techniques to modeling microlensing lightcurves, rather than the shear numbers of events analyzed.  For example, the evaluation panel will favorably consider entries which tackle certain aspects of the modeling with a new approach, even if not all of the lightcurves are analyzed, or some data products are missing.  </p>
+
+<p>A detailed description of the preferred contents of entries can be found 
+SITELINK::TABLE=SitePage::NAME=data-challenge-entry-contents::LINKTEXT=here
+</p>
+
+<h4 style='color:cadetblue'>Submitting your entry</h4>
+<p>The deadline for entries to the first data challenge is <b>Oct 31, 2018 at 23:59 UTC.</b></p>
+<p>Entries may be submitted through the data challenge Github Organization by uploading them to the entries repository:
+    URL::URL=https://github.com/microlensing-data-challenge/entries::NAME=data challenge entries::GROUP=data-challenge</p>
+<p>All files associated with your entry should be combined into a tarball and uploaded, following the naming conventions indicated.  </p>
+<p>The submitting team should email the challenge organizer to notify them that an entry has been submitted.</p>
+
+
+<h4 style='color:cadetblue'>Evaluation of entries</h4>
+    <p>All submissions will be judged by a panel selected for their experience in microlensing theory, statistics and software, and who did not actively participate in a submitting team.  </p>
+    <p>All submissions will be anonymized (the “team.dat” file will be removed) during the evaluation to minimize unconscious bias. </p>
+
+<p>Entries will be judged quantitatively against the input parameters of the simulations, but there will be no ranking of entries.  Entries determined to be serious at the discretion of the judging panel will<br>
+a) entitle all team members to co-authorship on a paper summarizing the results of the data challenge to be submitted to a peer reviewed journal,<br>
+b) imply consent for the entry's methods to be summarized and its results discussed quantitatively and qualitatively in the summary paper.<br>
+Teams will be identified with their submissions in this paper. Note, however, that we are just as interested in varying degrees of failure as well as success, and these will be discussed in a fair and constructive manner in the paper.<br>
+    Teams are also encouraged to publish independent papers describing their methods in detail.  </p>
+

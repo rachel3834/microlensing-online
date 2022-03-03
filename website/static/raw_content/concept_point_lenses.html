@@ -1,0 +1,246 @@
+HEADER::TITLE=Point Lenses
+HEADER::SHORT_TITLE=point-lenses
+HEADER::COURSE_INDEX=1
+HEADER::AUTHOR=Jennifer Yee
+
+<h3> Parameterization of a Point Lens Lightcurve </h3>
+
+<style>
+    td.upper_line { border-top:solid 1px black; }
+    table.fraction { text-align: center; vertical-align: middle;
+        margin-top:0.5em; margin-bottom:0.5em; line-height: 2em; }
+</style>
+
+PICTURE::FILENAME=geom_Aofu.png::CAPTION=Geometry::CREDIT=J. Yee::NAME=Geometry of a point source, point lens event
+
+<p>A point lens microlensing event is parameterized by three variables: </p>
+
+<ul style="list-style-type:none">
+  <li><i>u</i><sub>0</sub> = the impact parameter between the source and the lens (i.e. minimum separation) </li>
+  <li><i>t</i><sub>0</sub> = the time of closest approach between the source and lens (i.e. <i>t</i> at <i>u</i> = <i>u</i><sub>0</sub>)</li>
+  <li><i>t</i><sub>E</sub> = the Einstein crossing time = the time for the source to travel 1 Einstein radius </li>
+</ul>
+
+<p>The magnification of the source is given by the equation:</p>
+
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td rowspan="2" nowrap="nowrap">
+	  Magnification = &nbsp;
+        </td>
+        <td rowspan="2" nowrap="nowrap">
+            <i> A(u)</i> =  &nbsp;
+        </td>
+        <td nowrap="nowrap">
+            <i>u</i><sup>2</sup> + 2
+        </td>
+    </tr>
+    <tr>
+        <td class="upper_line">
+            <i>u</i> (<i>u</i><sup>2</sup> + 4 )<sup>1/2</sup>
+        </td>
+    </tr>
+</table>
+
+<p>where</p>
+
+<center><i>u</i> = ( <i>u</i><sub>0</sub><sup>2</sup> + <i>&tau;</i><sup>2</sup>)<sup>1/2</sup></center>
+
+<p> and </p>
+
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td rowspan="2" nowrap="nowrap">
+            <i>&tau;</i> = &nbsp;
+        </td>
+        <td nowrap="nowrap">
+             (<i>t - t</i><sub>0</sub>)
+        </td>
+    </tr>
+    <tr>
+        <td class="upper_line">
+            <i>t<sub>E</sub></i>
+        </td>
+    </tr>
+</table>
+
+<h2> Exercise </h2>
+
+In the limit that  <i>u</i><sub>0</sub> << 1, what is A(u)?
+<br>
+<button id="afnBtn">Answer</button>
+<p id="afnAns"> </p>
+
+<script>
+document.getElementById("afnBtn").addEventListener("click", show_mag_limit)
+
+function show_mag_limit() {
+  document.getElementById("afnAns").innerHTML = "A(u) ~ 1/u<sub>0</sub>"
+}
+</script>
+
+<h1> Examples </h1>
+
+<p>Below are discovery lightcurves of the first microlensing events. For
+each one, estimate its point lens parameters (t<sub>0</sub>, u<sub>0</sub>, t<sub>E</sub>). These basic parameters can be directly inferred from the lightcurve
+by measuring the height and time of the peak and t<sub>FWHM</sub> of
+the lightcurve (FWHM = Full Width Half Maximum). Then, t<sub>E</sub>
+can be calculated using the measured t<sub>FWHM</sub> and the above
+equations. In the limit where <i>u</i><sub>0</sub> << 1, t<sub>E</sub>
+~ (1/2)t<sub>FWHM</sub>/<i>u</i><sub>0</sub>.</p>
+
+<table><tr>
+    <td>
+PICTURE::FILENAME=geom_u0t0.png::CAPTION=Estimating t0 and u0 for a point source, point lens event::CREDIT=J. Yee::NAME=Estimating t0 and u0 for a point source, point lens event
+    </td><td>
+PICTURE::FILENAME=geom_FWHM.png::CAPTION=Estimating tE for a point source, point lens event::CREDIT=J. Yee::NAME=Estimating tE for a point source, point lens event
+    </td></tr>
+</table>
+
+<h2> Example 1: The first MACHO event</h2>
+REF::AUTHORS=Alcock, Akerlof, Allsman, et al.::YEAR=1993::JOURNAL=Nature::VOLUME=365::PAGE=621::URL=http://www.nature.com/nature/journal/v365/n6447/abs/365621a0.html
+From Alcock, Akerlof, Allsman, et al. 1993 <i>Nature</i>, 365, 621.
+<br>
+
+PICTURE::FILENAME=Alcock_etal_1993_Fig2.png::CAPTION=Lightcurve of MACHO-1, Alcock et al. Figure 2::CREDIT=Alcock et al. (1993)::NAME=Lightcurve of MACHO-1, Alcock et al. Figure 2
+<br>
+
+<table>
+<tr>
+  <th></th>
+  <th>Your answers</th>
+  <th id="ex1head"></th>
+</tr>
+<tr>
+  <td>t<sub>0</sub>:</td><td> <input type="text"></td><td id="ex1t0"></td>
+</tr>
+<tr>
+  <td>u<sub>0</sub>:</td><td> <input type="text"></td><td id="ex1u0"></td>
+</tr>
+<tr>
+  <td>t<sub>E</sub>:</td><td> <input type="text"></td><td id="ex1tE"></td>
+</tr>
+</table>
+
+<button id="ex1Btn">Check</button>
+
+<script>
+document.getElementById("ex1Btn").addEventListener("click", show_ex1_answers)
+
+function show_ex1_answers() {
+  document.getElementById("ex1head").innerHTML = "True answers"
+  document.getElementById("ex1t0").innerHTML = "433.55 &plusmn; 0.04 d"
+  document.getElementById("ex1u0").innerHTML = "0.147"
+  document.getElementById("ex1tE").innerHTML = "33.9 &plusmn; 0.26 d"
+}
+</script>
+
+
+<h2> Example 2: The first EROS events </h2>
+REF::AUTHORS=Aubourg, Bareyre, Br&eacute;hin, et al.::YEAR=1993::JOURNAL=Nature::VOLUME=365::PAGE=623::URL=http://www.nature.com/nature/journal/v365/n6447/abs/365623a0.html
+From Aubourg, Bareyre, Br&eacute;hin, et al. 1993 <i>Nature</i>, 365, 623.
+<br>
+
+<h3> Event 1 </h3>
+PICTURE::FILENAME=Aubourg_etal_1993_Fig1b.png::CAPTION=Lightcurve of the first EROS event, Aubourg et al. Figure 1b::CREDIT=Aubourg et al. (1993)::NAME=Lightcurve of the first EROS event, Aubourg et al. Figure 1b
+<br>
+
+<button id="hintBtn"> Hint 1 </button>
+<p id="hint"> </p>
+
+<script>
+document.getElementById("hintBtn").addEventListener("click", show_magnitude_hint)
+
+function show_magnitude_hint() {
+  document.getElementById("hint").innerHTML ="magnitude<sub>1</sub> - magnitude<sub>2</sub> = - 2.5 log(flux<sub>1</sub>/flux<sub>2</sub>)"
+}
+</script>
+
+
+<button id="hint2Btn"> Hint 2 </button>
+<p id="hint2"> </p>
+
+<script>
+document.getElementById("hint2Btn").addEventListener("click", show_magnitude_hint)
+
+function show_magnitude_hint() {
+  document.getElementById("hint2").innerHTML ="flux<sub>2</sub> = A*flux<sub>1</sub>"
+}
+</script>
+
+<table>
+<tr>
+  <th></th>
+  <th>Your answers</th>
+  <th id="ex2ahead"></th>
+</tr>
+<tr>
+  <td>t<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2at0"></td>
+</tr>
+<tr>
+  <td>u<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2au0"></td>
+</tr>
+<tr>
+  <td>t<sub>E</sub>:</td><td> <input type="text"></td><td id="ex2atE"></td>
+</tr>
+</table>
+
+<button id="ex2aBtn">Check</button>
+
+<script>
+document.getElementById("ex2aBtn").addEventListener("click", show_ex2a_answers)
+
+function show_ex2a_answers() {
+  document.getElementById("ex2ahead").innerHTML = "True answers"
+  document.getElementById("ex2at0").innerHTML = "761 d"
+  document.getElementById("ex2au0").innerHTML = "0.425"
+  document.getElementById("ex2atE").innerHTML = "27 &plusmn; 2 d"
+}
+</script>
+
+<h3> Event 2 </h3>
+PICTURE::FILENAME=Aubourg_etal_1993_Fig2b.png::CAPTION=Lightcurve of the second EROS event, Aubourg et al. Figure 2b::CREDIT=Aubourg et al. (1993)::NAME=Lightcurve of the second EROS event, Aubourg et al. Figure 2b
+<br>
+
+<table>
+<tr>
+  <th></th>
+  <th>Your answers</th>
+  <th id="ex2bhead"></th>
+</tr>
+<tr>
+  <td>t<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2bt0"></td>
+</tr>
+<tr>
+  <td>u<sub>0</sub>:</td><td> <input type="text"></td><td id="ex2bu0"></td>
+</tr>
+<tr>
+  <td>t<sub>E</sub>:</td><td> <input type="text"></td><td id="ex2btE"></td>
+</tr>
+</table>
+
+<button id="ex2bBtn">Check</button>
+
+<script>
+document.getElementById("ex2bBtn").addEventListener("click", show_ex2b_answers)
+
+function show_ex2b_answers() {
+  document.getElementById("ex2bhead").innerHTML = "True answers"
+  document.getElementById("ex2bt0").innerHTML = "362 d"
+  document.getElementById("ex2bu0").innerHTML = "0.346"
+  document.getElementById("ex2btE").innerHTML = "30 &plusmn; 3 d"
+}
+</script>
+
+<h3> Note </h3>
+
+In each of the examples shown above, there are two panels shown: red
+and blue. Why? Gravitational lensing is <i>achromatic</i> meaning that
+all light is magnified equally, regardless of wavelength. The fact
+that the lensing signal is the same in both bands is further proof
+that the observed light curves are caused by lensing rather than some
+other astrophysical effect. (For example, a stellar flare would look
+different in red and blue light.) The bottom panel of the first
+figure, A<sub>red</sub>/A<sub>blue</sub>, demonstrates that the signal
+is achromatic by showing that the ratio of the magnifications is flat.
+

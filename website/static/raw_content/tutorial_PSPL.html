@@ -1,0 +1,115 @@
+HEADER::TITLE=Point source, point lens
+HEADER::SHORT_TITLE=pspl
+HEADER::COURSE_INDEX=1
+HEADER::AUTHOR=Rachel Street
+<h3>Introduction</h3>
+<p>The distances between stars are so vast that even our nearest stellar neighbors appear as unresolved points of light.
+This hasn't stopped astronomers figuring out an array of inventive techniques to find out more about them, but it remains a
+challenge to study in detail all but the closest objects. Yet thanks to the curious effects of gravity on light itself, there
+exists a kind of natural telescope which can magnify distant stars. This phenomenon can teach us a lot, not just about those
+stars but about the 'telescope' as well.
+The is known as gravitational lensing. When both the lensing object and its distant source are stars or planets, it's called
+microlensing. It has the extraordinary property that it can tell us about objects that we would otherwise never know existed.
+In most cases, the lens - which could be a faint star half way to the center of the galaxy - is entirely invisible. Yet this
+technique can find and characterize planets around that object.
+These notes describe microlensing's fundamental principles, from the perspective of an observer on Earth. The movements of stars
+through the galaxy means that the stars we see are never fixed, and sooner or later the path of one star will carry it across the
+observer's line of sight to a background star. The gravity of the foreground star modifies the paths of the light rays from the
+background source star, causing them to be focused. For this reason, the foreground object is called the lens. In the simplest
+case of microlensing, both objects are treated as point masses, and so this is called a 'point source, point lens' event. Of
+course, the stars don't remain in alignment for long, so microlenses are transient events, which offer a fleeting glimpse of an
+unseen intervening system, never to be repeated.</p>
+
+<h3>Point Source, Point Lens</h3>
+<p>Figure 1 shows a lensing object passing close to the observer's line of sight to a background source star. As Einstein described
+in General Relativity (G.R.), the light rays from the source passing close to the lens are deflected by its gravity.</p>
+<p>The symbols have the following definitions: <br>
+D<sub>L</sub> = distance of the lens from the observer <br>
+D<sub>S</sub> = distance of the source from the observer <br>
+D<sub>LS</sub> = distance of the lens from the source<br>
+M<sub>L</sub> = mass of the lens<br>
+&alpha; = angular separation of the lens from the observer-source line of sight<br>
+&theta;<sub>1,2</sub> = angular separation of images of the source from the center of the lens <br>
+&epsilon;<sub>1,2</sub> = deflection of a light ray passing at radius r from the lens.<br>
+</p>
+
+<center>
+    PICTURE::FILENAME=lensing_geometry_side_view.png::CAPTION=Figure 1: The geometry of a microlensing event. The red lines indicate the paths taken by light rays from the source.::CREDIT=R.A.Street::NAME=Geometry of a microlensing event
+</center>
+
+<p>The closer the light rays get to the lens, the more they are deflected, according to Einstein's equation:</p>
+<table width="75%"><tr><td>$$\epsilon = \frac{4GM_{L}}{rc^{2}}$$</td><td>[1]</td></tr></table>
+
+<p>Like any lens, the foreground object creates images of the light source. Consider a light ray leaving the source. It's path is
+deflected and it reaches the observer, who sees a corresponding image of the source, at an angular separation from the source's
+true position on the sky.</p>
+<p>We will assume that the distances involved are sufficiently large that standard geometric small angle approximations are valid.</p>
+<p>From Fig. 1, we observe the following relationships:</p>
+<li>The angular displacement of the first image from the center of the lens, &theta;, is: <br>
+<table width="75%"><tr><td>$$\theta_{1} = \alpha + \beta$$</td><td>[2]</td></tr></table></li>
+<li>As a triangle is formed between the observer, source and point B, the angles:<br>
+<table width="75%"><tr><td>$$\beta + \beta^{\prime} + b^{\prime} = 180^{\circ}$$</td><td>[3]</td></tr></table></li>
+<li>Since the line of sight between the observer and S1 image must be straight:<br>
+$$b^{\prime} + \epsilon_{1} = 180^{\circ}$$
+Therefore: $$\beta + \beta^{\prime} + 180 - \epsilon_{1} = 180^{\circ},$$
+So:<br>
+<table width="75%"><tr><td>$$\epsilon_{1} = \beta + \beta^{\prime}$$</td><td>[4]</td></tr></table></li>
+<li>Angles &beta; and &beta;' scale with the ratio of the distances observer-lens and lens-source:<br>
+<table width="75%"><tr><td>$$\beta^{\prime} = \beta \left( \frac{D_{L}}{D_{LS}} \right)$$</td><td>[5]</td></tr></table></li>
+<p>Combining these observations, we can derive an expression for the angular displacement of the image in terms of the G.R. deflection of light:</p>
+$$\epsilon_{1} = \beta + \beta \left( \frac{D_{L}}{D_{LS}} \right) = \beta \left( 1 + \frac{D_{L}}{D_{LS}} \right)$$
+<p>For convenience, we define $$\mu = 1 + D_{L}/D_{LS},$$
+giving:</p>
+<table width="75%"><tr><td>$$\theta_{1} = \alpha + \frac{\epsilon_{1}}{\mu}$$</td><td>[6]</td></tr></table>
+Now, from G.R., $$\epsilon_{1} = \frac{4GM_{L}}{rc^{2}}.$$
+$$\sin(\theta_{1}) = \frac{r}{D_{L}},$$ but for small angles we can say that $$r \sim D_{L}\theta_{1}.$$ So:
+<table width="75%"><tr><td>$$\epsilon_{1} = \frac{4GM_{L}}{\theta_{1}D_{L}c^{2}}$$</td><td>[7]</td></tr></table>
+<p>By substituting [7] into [6], we derive the gravitational lens equation:</p>
+<table width="75%">
+    <tr><td>$$\theta_{1} = \alpha + \frac{4GM_{L}}{\mu\theta_{1}D_{L}c^{2}}$$</td><td></td></tr>
+    <tr><td>$$\mu\theta_{1}^{2}D_{L}c^{2} = \alpha\mu\theta_{1}D_{L}c^{2} + 4GM_{L}$$</td><td></td></tr>
+    <tr><td>$$\theta_{1}^{2} - \alpha\theta_{1} - \frac{4GM_{L}}{\mu D_{L}c^{2}} = 0$$</td><td>[8]</td></tr>
+</table>
+<p>Notice how all of the constants are clustered in the last term on the left of eqn. [8]. This term depends on fundamental
+constants plus the characteristics of the lensing system - M<sub>L</sub>, D<sub>L</sub>. So this term describes a
+characteristic angular radius of the system: it is the angular Einstein radius, &theta;<sub>0</sub>:</p>
+<table width="75%"><tr><td>$$\theta_{0} = \sqrt{ \frac{4GM_{L}}{\mu D_{L} c^{2}}}.$$</td><td>[9]</td></tr></table>
+<p>The lens equation can then be written as a quadratic function:</p>
+<table width="75%"><tr><td>$$\theta_{1}^{2} - \alpha\theta_{1} - \theta_{0}^{2} = 0$$</td><td>[10]</td></tr></table>
+<p>...and quadratic functions can be solved to find two roots using the standard mathematical formula:</p>
+<table width="75%"><tr><td>$$x = \frac{-B\pm\sqrt{B^{2}-4AC}}{2A}$$</td></tr></table>
+<p>where A, B, C are the coefficients of the quadratic equation, in this case A=1, B=-&alpha;, C=-&theta;<sub>0</sub><sup>2</sup>.
+So we solve the lens equation:</p>
+<table width="75%"><tr><td>$$\theta_{1} = \frac{+\alpha+\sqrt{\alpha^{2}+4\theta_{0}^{2}}}{2} = \frac{1}{2}\alpha + \left[ \left( \frac{1}{2}\alpha \right)^{2} + \theta_{0}^{2}\right]^{\frac{1}{2}}$$</td><td>[11]</td></tr></table>
+<p>and similarly:</p>
+<table width="75%"><tr><td>$$\theta_{2} = -\frac{1}{2}\alpha + \left[ \left( \frac{1}{2}\alpha \right)^{2} + \theta_{0}^{2} \right]^{\frac{1}{2}}$$</td><td>[11]</td></tr></table>
+<p>From this, we understand that the observer always see two images of the source created during a lensing event by a single,
+point lensing body and can predict their positions. The only exception to this occurs if the alignment of the lens along the
+line of sight to the source is perfect = that is, &alpha; = 0. From Eqn. 10, we see that both images then have the same angular
+separation. In this special case, the image of the source that the observer sees is a perfect ring at the Einstein radius. In all
+other cases, the images form arcs.</p>
+<p>It's important to remember that there is no change in the surface brightness of the source during a lensing event - the light is
+simply redistributed, and always conserved. As a result, the observer receives more flux from the source, which appears to brighten
+during the lensing event, even while the source itself remains at constant brightness. As the lens moves away from the observer's
+line of sight to the source, the latter appears to gradually return to its normal brightness.</p>
+
+<p>We now shift our perspective, and consider the same lensing event from the observer's point of view, shown in Fig. 2. In this
+lens-centric geometry, we define:</p>
+r<sub>0</sub> = separation of the source from the lens<br>
+r<sub>1,2</sub> = separation of the images of the source from the lens<br>
+R<sub>E</sub> = Einstein radius.<br>
+
+<center>
+    PICTURE::FILENAME=lensed_image_geometry.png::CAPTION=The geometry of a microlensing event, seen from the observer's perspective. Here we look down the line of sight, with a coordinate system centered on the lens for convenience. Notice that the images of the source always form with one inside and one outside the Einstein radius of the lens.::CREDIT=R.A.Street::NAME=Geometry of a microlensing event from observers perspective
+</center>
+
+<p>We can re-write the lens equation and its solutions in terms of radial distances from the lens projected on sky:</p>
+<table width="75%"><tr><td>$$r^{2} - r_{0}r - R_{E}^{2} = 0,$$</td><td>[12]</td></tr></table>
+<p>where, to use the commonly-used notation of Paczy&nacute;ski (1986) and others,</p>
+<table width="75%"><tr><td>$$R_{E}^{2} = \frac{4GM_{L}D}{c^{2}},$$</td><td>$$D = \frac{D_{L}D_{LS}}{D_{S}}.$$</td><td>[13]</td></tr></table>
+<p>The solutions of this, i.e. the projected locations of the images, are then:</p>
+<table width="75%"><tr><td>$$r_{1,2} = \frac{r_{0}\pm(r_{0}^{2}+4R_{E}^{2})^{\frac{1}{2}}}{2}.$$</td><td>[14]</td></tr></table>
+
+REF::AUTHORS=Liebes, S.::YEAR=1964::JOURNAL=Physical Review::VOLUME=133::PAGE=B835::URL=http://adsabs.harvard.edu/abs/1964PhRv..133..835L
+REF::AUTHORS=Paczy&nacute;ski, B.::YEAR=1986::JOURNAL=ApJ::VOLUME=301::PAGE=503::URL=http://adsabs.harvard.edu/abs/1986ApJ...301..503P
+REF::AUTHORS=Wambsganss, J.::YEAR=1998::JOURNAL=Living Reviews in Relativity::VOLUME=1::PAGE=12::URL=http://adsabs.harvard.edu/abs/1998LRR.....1...12W

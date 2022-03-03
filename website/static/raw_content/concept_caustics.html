@@ -1,0 +1,88 @@
+HEADER::TITLE=Microlensing Caustics
+HEADER::SHORT_TITLE=caustics-overview
+HEADER::COURSE_INDEX=12
+HEADER::AUTHOR=Jennifer Yee
+
+<p>In microlensing, the <b>caustic</b> corresponds to the position(s) of the
+source for which the solution of the lens equation results in infinite
+magnification. For a point lens (e.g. a single star), the magnification equation is:</p>
+
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td rowspan="2" nowrap="nowrap">
+	  Magnification = &nbsp;
+        </td>
+        <td rowspan="2" nowrap="nowrap">
+            <i> A(u)</i> =  &nbsp;
+        </td>
+        <td nowrap="nowrap">
+            <i>u</i><sup>2</sup> + 2
+        </td>
+    </tr>
+    <tr>
+        <td class="upper_line">
+            <i>u</i> (<i>u</i><sup>2</sup> + 4 )<sup>1/2</sup>
+        </td>
+    </tr>
+</table>
+
+<p>where u is the source positions. If you solve this equation for u=0,
+you will find that the magnification, A, is infinite. Thus, for a
+point lens, the caustic is a single point at u=0.</p>
+
+<p>For a 2-body lens (such as a star+planet), the magnification equation
+is more complex, but it remains true that there are solutions to this
+equation for which the magnification is infinite. In this case, the
+caustic is a closed curve, or set of closed curves, and at those
+curves the magnification diverges to infinity.</p>
+
+<p>By solving the lens equation, it is possible to calculate the
+magnification of the source at any (projected) position relative to
+the position of the lens. The <b>magnification map</b> is a
+visualization reflecting the calculated magnification at a given point
+(brighter=more highly magnified). The image below shows the
+magnification map and caustic structure for a 2-body lens.</p>
+
+<TABLE WIDTH="30%">
+<TR>
+  <td align="center">Magnification Map</td>
+  <td align="center">Caustic</td>
+  <td align="center">Magnifcation Map & Caustic </td>
+</tr>
+<tr>
+  <TD WIDTH="10%" ALIGN="left" VALIGN="bottom">
+PICTURE::FILENAME=magnification_map1.gif::CAPTION=Magnification map::CREDIT=Jennifer Yee::NAME=Magnification map
+  </TD>
+  <TD WIDTH="10%" ALIGN="left" VALIGN="bottom">
+PICTURE::FILENAME=caustic1.gif::CAPTION=Caustic::CREDIT=Jennifer Yee::NAME=Caustic
+  </TD>
+  <TD WIDTH="10%" ALIGN="left" VALIGN="bottom">
+MOVIE::FILENAME=Jennifer_Yee__map_animation.gif::CAPTION=Magnification map and caustic::CREDIT=Jennifer Yee::NAME=Magnification map and caustic animation
+  </TD>
+</TR>
+</TABLE>
+
+<p>Some general rules about caustics:
+
+<ol>
+<li> <p>They are closed curves. Therefore, they have an inside and an
+outside. (The perimeter of a square or a triangle are other examples
+of closed curves. But remember that the caustic refers to the edge of
+the shape and not the shape itself.)</p> 
+PICTURE::FILENAME=caustic_inout.jpg::CAPTION=Caustic description::CREDIT=Jennifer Yee::NAME=Caustic description
+</li>
+
+<li> The caustic has zero width. (A mathematical line also has
+zero width.)</li>
+
+<li> The magnification diverges to infinity  at the caustic.</li>
+
+<li> The magnification inside of the caustic is always greater than the
+magnification outside of the caustic.</li>
+
+<li> <p>The points of a caustic are called <b>cusps</b>. The curved segments
+connecting the cusps are called <b>folds</b>.</p>
+PICTURE::FILENAME=caustic_annotated.jpg::CAPTION=Annotated caustic::CREDIT=Jennifer Yee::NAME=Annotated caustic
+</li>
+</p>
+</ol>

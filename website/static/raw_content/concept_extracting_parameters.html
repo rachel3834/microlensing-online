@@ -1,0 +1,99 @@
+HEADER::TITLE=Analytic Planet Parameters
+HEADER::SHORT_TITLE=extracting-parameters
+HEADER::COURSE_INDEX=3
+HEADER::AUTHOR=Jennifer Yee
+
+<style>
+ td.upper_line { border-top:solid 1px black; }
+table.fraction { text-align: center; vertical-align: middle;
+margin-top:0.5em; margin-bottom:0.5em; line-height: 2em; }
+</style>
+<p> Gaudi & Gould (1997) showed that the parameters of a planet (s and q) can be approximated analytically based on light curve observables.</p>
+<br>
+REF::AUTHORS=Gaudi, B.S. and Gould, A.::YEAR=1997::JOURNAL=ApJ::VOLUME=486::PAGE=85::URL=http://adsabs.harvard.edu/abs/1997ApJ...486...85G
+
+<h2> Finding the Location of the Planet</h2>
+<p> First, determine the parameters of the underlying stellar event
+( <i>t</i><sub>0</sub>, <i>u</i><sub>0</sub>, <i>t</i><sub>E</sub>)
+following Tutorial 1. Then, measure the time of the planetary perturbation <i>t</i><sub>p</sub>:</p>
+
+PICTURE::FILENAME=planet_lc_annotated.png::CAPTION=Estimating tp, the time of planetary perturbation::CREDIT=J. Yee::NAME=Estimating tp, the time of planetary perturbation
+
+<p>Combined with the point lens parameters, you can calculate <i>&tau;</i> and therefore, <i>u</i> at that time. This gives the source position relative to the lens. Since a planet must perturb one of the images to be detected, to first order, this means the planet must be at the location of one of the images:</p>
+
+PICTURE::FILENAME=images_plus.png::CAPTION=Location of major and minor images during a lensing event::CREDIT=J. Yee::NAME=Location of major and minor images during a lensing event
+
+<p>The position of the images is given by: y<sub>&#177</sub> = &#177
+(&frac12;) (&#8730(u<sup>2</sup> + 4) &#177 u), so the planet
+location, <i>s</i> must be either <i>y</i><sub>+</sub>
+or <i>y</i><sub>-</sub>.</p>
+
+<p> If the planet perturbs the minor image, it will tend to destroy
+that image, leading to a decrease in magnification. On the other
+hand, a planet will always further magnify a major image:</p>
+
+PICTURE::FILENAME=planet_minor.png::CAPTION=Lightcurve with planet close to the minor image::CREDIT=J. Yee::NAME=Lightcurve with planet close to the minor image
+PICTURE::FILENAME=planet_major.png::CAPTION=Lightcurve with planet close to the major image::CREDIT=J. Yee::NAME=Lightcurve with planet close to the major image
+
+<p> Therefore, the form of the perturbation will show which solution
+is correct. </p>
+
+<h2> Finding the Mass Ratio of the Planet</h2>
+
+<p>The size of the Einstein ring is proportional to the square root of the mass:</p>
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td  nowrap="nowrap">
+	  Einstein Ring = &nbsp;
+        </td>
+        <td  nowrap="nowrap">
+            <i>&theta;</i><sub>E</sub> &prop;&nbsp;
+        </td>
+        <td nowrap="nowrap">
+            M<sup>1/2</sup>
+        </td>
+    </tr>
+</table>
+<p>Therefore, the ratio of the duration of the planetary perturbation to the duration of the event should be proportional to the square root of the mass ratio. Equivalently, </p>
+
+<table class="fraction" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td rowspan="2" nowrap="nowrap">
+	  Mass ratio = &nbsp;
+        </td>
+        <td rowspan="2" nowrap="nowrap">
+            <i> q </i> =  &nbsp;
+        </td>
+        <td nowrap="nowrap">
+            <i>m</i><sub>p</sub> &nbsp;
+        </td>
+        <td rowspan="2" nowrap="nowrap">
+           &nbsp; =  &nbsp;
+        </td>
+	<td nowrap="nowrap">
+            <i>t</i><sub>E,p</sub><sup>2</sup> 
+        </td>
+    </tr>
+    <tr>
+        <td class="upper_line">
+            <i>M</i><sub>star</sub> 
+        </td>
+        <td class="upper_line">
+            <i>t</i><sub>E,star</sub><sup>2</sup>
+        </td>
+    </tr>
+</table>
+<br>
+
+<h2> Examples: </h2>
+
+<p>Try calculating the planetary parameters for one (or more) of the following events:</p>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-ogle2005blg390l::LINKTEXT=OGLE-2005-BLG-390L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-moa2009blg266l::LINKTEXT=MOA-2009-BLG-266L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-moa2010blg328l::LINKTEXT=MOA-2010-BLG-328L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-moa2010blg353l::LINKTEXT=MOA-2010-BLG-353L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-moa2011blg028l::LINKTEXT=MOA-2011-BLG-028L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-ogle2012blg358l::LINKTEXT=OGLE-2012-BLG-358L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-ogle2012blg406l::LINKTEXT=OGLE-2012-BLG-406L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-moa2013blg605l::LINKTEXT=MOA-2013-BLG-605L</br>
+SITELINK::TABLE=ConceptPage::SHORTTITLE=worksheet-ogle2014blg1760::LINKTEXT=OGLE-2014-BLG-1760</br>

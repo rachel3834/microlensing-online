@@ -1,0 +1,188 @@
+HEADER::TITLE=Caustics and Lightcurves
+HEADER::SHORT_TITLE=caustics-lightcurves
+HEADER::COURSE_INDEX=13
+HEADER::AUTHOR=Jennifer Yee
+<h1>How do caustics relate to light curve features?</h1>
+
+<p>The following animation shows what happens when a source crosses
+into a caustic (aka a <b>caustic entrance</b>): </p>
+
+PICTURE::FILENAME=caustic_entrance.gif::CAPTION=Caustic entrance::CREDIT=Jennifer Yee::NAME=Caustic entrance
+
+<p>There is a sharp jump in magnification when the source crosses into
+the caustic (red). Once inside the caustic, the magnification declines but
+always stays above the level outside the caustic.</p>
+
+<p>A <b>caustic exit</b> is the inverse of a caustic entrance: the
+magnification increases as the source approaches the caustic, then
+drops abruptly when the source crosses outside the caustic.</p>
+
+PICTURE::FILENAME=caustic_exit.gif::CAPTION=Caustic exit::CREDIT=Jennifer Yee::NAME=Caustic exit
+
+<p>Because the caustic is a closed curve, there will always be two
+caustic crossings: an entrance and an exit. The figure below shows the
+magnification curve for a source crossing the caustic of a binary star
+lens. Can you identify the caustic entrance and the caustic exit in
+the light curve?</p>
+
+<p>The caustic structure is often used as a kind of short-hand for the
+full magnification map because the features of the magnification map
+can be inferred from the caustic structure. Recall that a cusp is one
+of the points of the caustic. The animation below shows how the
+magnification is increased near the cusps.</p>
+
+MOVIE::FILENAME=Jennifer_Yee__map_animation_cropped.gif::CAPTION=Magnification map and caustic::CREDIT=Jennifer Yee::NAME=Magnification map and caustic animation
+
+<p>A source passing near a cusp can produce a magnified signal without
+actually crossing the caustic directly:</p>
+
+PICTURE::FILENAME=caustic_cusp.gif::CAPTION=Caustic cusp::CREDIT=Jennifer Yee::NAME=Caustic cusp
+
+<p>Notice the single peak and rounded form of the <b>cusp
+approach</b>. A <b>cusp crossing</b> may also appear to be a single
+peak if the distance between the cusps is smaller than the diameter of
+the source. In that case, the caustic entrance and exit merge,
+producing a single peak but with sharp, rather than smooth shoulders.</p>
+
+<h1>Finite Source Effects:</h1>
+
+<p>At a caustic, the mathematical solution to the lens equation gives
+infinite magnification, but infinite magnification is never observed
+in practice. Why?</p>
+
+<p>When evaluating the lens equation, we get infinite magnification if
+we assume the source is a point source, meaning that it is a
+mathematical point with zero size. In reality, the sources are stars,
+which have a physical size and therefore a finite extent. The observed
+magnification of the source is smeared out by the face of the
+source. If you wear glasses, this is similar to how things appear
+blurry if there is a smudge on the glasses. In practice we calculate
+the magnification of a source by integrating the magnification pattern
+across the face of the source.</p>
+
+<p>The animation below compares a caustic entrance for a point source
+(dotted line) to a source with radius 0.01.</p>
+
+MOVIE::FILENAME=Jennifer_Yee__fs_effects.gif::CAPTION=The effects of a finite source on caustics::CREDIT=Jennifer Yee::NAME=Effects of a finite source on caustics
+
+<p>If you are familiar with transiting planet lightcurves, this effect
+is directly analogous to the points of first and second contact for a
+transit. The images below show a caustic entrance and the first and
+second points of contact and a caustic exit and the third and
+fourth points of contact. </p>
+
+<table>
+<tr>
+<td>
+    PICTURE::FILENAME=pts_of_contact_0.png::CAPTION=Points of contact with a caustic::CREDIT=Jennifer Yee::NAME=Points of contact with a caustic
+</td>
+<td>
+    PICTURE::FILENAME=pts_of_contact_1.png::CAPTION=Points of contact with a caustic::CREDIT=Jennifer Yee::NAME=Points of contact with a caustic
+</td>
+</tr>
+</table>
+
+
+<h1>Exercise:</h1>
+
+<p>Match the following planetary light curves to their caustics and trajectories. </p>
+<ul>
+  <li>In each light curve identify any caustic entrances and exits and
+    look for cusp approaches. </li>
+  <li>Also consider when the perturbation occurs: When is the peak of
+    the underlying stellar event? Does the planetary perturbation occur
+    before or after the peak? </li>
+  <li>Finally, consider the location of the caustic and source
+    trajectory: Where is the closest approach between the source and lens
+    (where is the source closest to 0,0)? Where is the caustic in relation
+    to this?</li>
+</ul>
+
+<table border="1">
+  <tr>
+    <td>
+      <font size="7">1</font>
+    </td>
+    <td>
+      <font size="7">2</font>
+    </td>
+    <td>
+      <font size="7">3</font>
+    </td>
+    <td>
+      <font size="7">4</font>
+    </td>
+    <td>
+      <font size="7">5</font>
+    </td>
+  </tr>
+
+  <tr>
+    <td width=300>
+        PICTURE::FILENAME=OGLE-2007-BLG-368L_Lightcurve.JPG::CAPTION=Lightcurve 1::CREDIT=Jennifer Yee::NAME=Lightcurve 1
+    </td>
+    <td width=300>
+        PICTURE::FILENAME=OGLE-2014-BLG-0676L_Lightcurve.JPG::CAPTION=Lightcurve 2::CREDIT=Jennifer Yee::NAME=Lightcurve 2
+    </td>
+    <td width=300>
+        PICTURE::FILENAME=MOA-2011-BLG-293L_Lightcurve.JPG::CAPTION=Lightcurve 3::CREDIT=Jennifer Yee::NAME=Lightcurve 3
+    </td>
+    <td width=300>
+        PICTURE::FILENAME=MOA-2010-BLG-477L_Lightcurve.JPG::CAPTION=Lightcurve 4::CREDIT=Jennifer Yee::NAME=Lightcurve 4
+    </td>
+    <td width=300>
+        PICTURE::FILENAME=MOA-2009-BLG-319L_Lightcurve.JPG::CAPTION=Lightcurve 5::CREDIT=Jennifer Yee::NAME=Lightcurve 5
+    </td>
+  </tr>
+
+</table>
+<br>
+<table border="1">
+  <tr>
+    <td>
+      <font size="7">A</font>
+    </td>
+    <td>
+      <font size="7">B</font>
+    </td>
+    <td>
+      <font size="7">C</font>
+    </td>
+    <td>
+      <font size="7">D</font>
+    </td>
+    <td>
+      <font size="7">E</font>
+    </td>
+  </tr>
+
+  <tr>
+    <td width=300>
+        PICTURE::FILENAME=MOA-2009-BLG-319L_Caustic.JPG::CAPTION=Caustic A::CREDIT=Jennifer Yee::NAME=Caustic A
+    </td>	
+    <td width=300>
+        PICTURE::FILENAME=OGLE-2014-BLG-0676L_Caustic.JPG::CAPTION=Caustic B::CREDIT=Jennifer Yee::NAME=Caustic B
+      <img src="OGLE-2014-BLG-0676L_Caustic.JPG" alt="Caustic B" width=300>
+    </td>	
+    <td width=300>
+        PICTURE::FILENAME=OGLE-2007-BLG-368L_Caustic.JPG::CAPTION=Caustic C::CREDIT=Jennifer Yee::NAME=Caustic C
+    </td>	
+    <td width=300>
+        PICTURE::FILENAME=MOA-2010-BLG-477L_Caustic.JPG::CAPTION=Caustic D::CREDIT=Jennifer Yee::NAME=Caustic D
+    </td>	
+    <td width=300>
+        PICTURE::FILENAME=MOA-2011-BLG-293L_Caustic.JPG::CAPTION=Caustic E::CREDIT=Jennifer Yee::NAME=Caustic E
+    </td>	
+  </tr>
+</table>
+
+<button id="AnswerBtn">Answers:</button>
+<p id="Answers"> </p>
+
+<script>
+document.getElementById("AnswerBtn").addEventListener("click", show_answers)
+
+function show_answers() {
+  document.getElementById("Answers").innerHTML = "1) C; <a href='http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2010ApJ...710.1641S'>OGLE-2007-BLG-368</a> <br> 2) B; <a href='http://adsabs.harvard.edu/abs/2016arXiv161203511R'>OGLE-2014-BLG-0676</a> <br> 3) E; <a href='http://adsabs.harvard.edu/abs/2012ApJ...755..102Y'>MOA-2011-BLG-293</a> <br>4) D; <a href='http://adsabs.harvard.edu/abs/2012ApJ...754...73B'>MOA-2010-BLG-477</a> <br> 5) A; <a href='http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2011ApJ...728..120M'>MOA-2009-BLG-319</a>"
+}
+</script>

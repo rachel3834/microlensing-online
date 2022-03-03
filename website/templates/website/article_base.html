@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+	<!-- Tutorial navigation sidebar -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					{% for t in article_list %}
+                        {% if resource_type == 'concept' %}
+					       <li><a href="{% url 'concept_article' t.short_title %}">{{t.title}}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'tutorial_article' t.short_title %}">{{t.title}}</a></li>
+                        {% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-sm-9 main">
+				<h1 class="page-header">{{page.title}}</h1>
+				{% if page.course_index > 0 %} <p style="text-align:right"><i>by {{page.author}}</i></p> {% endif %}
+				<div class="col-sm-9">
+                    {% for line, dbentry in content %}
+                        {% if dbentry == "no_db_entry" %}
+                            {{line|safe}}
+                        {% else %}
+                            {% if dbentry.type == "PICTURE" %}
+                                <p><img src="/static/website/{{dbentry.object.filename}}" alt="{{dbentry.object.name}}"
+                                        width=500/></br>
+                                <center><h4>{{dbentry.object.caption}}</h4> </br><i>{{dbentry.object.credit}}</i></center></p>
+                            {% elif dbentry.type == "MOVIE" %}
+                                <p><img src="/static/website/{{dbentry.object.filename}}" alt="{{dbentry.object.name}}" width=500/></br>
+                                <center><h4>{{dbentry.object.caption}}</h4> <i>{{dbentry.object.credit}}</i></center></p>
+                            {% elif dbentry.type == "FILE" %}
+                                <a href="/static/website/{{dbentry.object.filename}}">{{line|safe}}</a>
+                            {% elif dbentry.type == "URL" %}
+                                <a href="{{dbentry.object.url}}">{{dbentry.object.name}}</a>
+                            {% elif dbentry.type == "SITEPAGE" %}
+                                <a href="{% url dbentry.object.name %}">{{line|safe}}</a>
+                            {% elif dbentry.type == "CONCEPTPAGE" %}
+                                <a href="{% url 'concept_article' dbentry.object.short_title %}">{{line|safe}}</a>
+                            {% elif dbentry.type == "TUTORIALPAGE" %}
+                                <a href="{% url dbentry.object.short_title %}">{{line|safe}}</a>
+                            {% elif dbentry.type == "INTERACTIVETOOL" %}
+                                <a href="{% url dbentry.object.name %}">{{line|safe}}</a>
+                            {% endif %}
+                        {% endif %}
+					{% endfor %}
+
+                    {% if references|length > 0 %}
+                        <h3>References:</h3>
+                        {% for r in references %}
+                            {{r|safe}}</br>
+                        {% endfor %}
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

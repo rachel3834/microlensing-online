@@ -1,0 +1,55 @@
+HEADER::NAME=data-challenge-entry-contents
+<h3 class="page-header">Data Challenge Entry Contents</h3>
+<p>
+
+<h4 style='color:cadetblue'>Overview</h4>
+    <p>In an ideal world, all entries would be compared by an identical set of independent and purely numerical metrics.  This is difficult in practice because of a range of factors – for instance, it is impractical to expect teams to run their analysis on the same hardware and we don't wish to limit collaboration by proscribing a fixed number of team members.  We therefore ask all teams to provide a common set of numerical metrics together with a broader description of their approach.  </p>
+
+<p>We also stress that the emphasis of the challenge is on developing novel approaches and techniques to modeling microlensing lightcurves, rather than the shear numbers of events analyzed.  For example, the evaluation panel will favorably consider entries which tackle certain aspects of the modeling with a new approach, even if not all of the lightcurves are analyzed, or some data products are missing.  </p>
+
+<p>It follows that it is impossible to define a table containing the complete set of parameters and uncertainties that would adequately capture the information from all possible analysis techniques.  Instead, we describe below a set of typical parameters which we recommend entrants include in their submission.  We ask that entrants follow the formatting guidelines as far as practically possible, to facilitate comparison of the results.  In particular, we ask that the format used be easily machine readable.  Entrants may adapt this format if necessary to accommodate the products of their techniques but we ask that they include a justification and a clear description of all parameters and units used.  </p>
+
+<h4 style='color:cadetblue'>Team Contact Details</h4>
+<p>Teams should provide a simple ASCII file called “team.dat” in which they provide <br>
+a) The name of the team<br>
+b) Full names, affiliations and email addresses for all team members.   <br>
+    </p>
+
+<h4 style='color:cadetblue'>Table of parameters for all lightcurves</h4>
+<p>Complete a table of parameters for all lightcurves, following the format indicated in Table1_example.dat (machine-readable and space-separated ASCII columns). 
+SITELINK::TABLE=SitePage::NAME=table1-example-ascii::LINKTEXT=Table1_example.dat<br>
+The lines starting with a '#' character are provided for explanation and need not be included but the table header column names are fixed and must be present.  Alternatively, the data may be provided in JSON format as shown in Table1_example.json.  
+SITELINK::TABLE=SitePage::NAME=table1-example-json::LINKTEXT=Table1_example.json<br>
+No parameters need to be provided for variables, but None entries should be given rather than missing entries.  </p>
+
+<p>For lightcurves classified as microlensing, the appropriate parameters should be provided with uncertainties.  Binary lens and second-order effect parameters should be provided only where applicable.  Some are indicated as 'priority' in Table 1.  This reflects the fact that second-order effects are not always measurable, so more weight will be given in the evaluation to constraining the priority parameters well.  </p>
+
+<p>We recognize that there may be multiple possible solutions for each target and entrants are free to submit multiple models for any given object.  These should be distinguished in the table using the model ID following the naming convention [target ID]_[model number] e.g. ulwdc1_001.  </p>
+
+<p>Different analysts may prefer to model the data using alternative parameter sets, for example &pi;<sub>E,&perp;</sub>, &pi;<sub>E,||</sub> or using the blend parameter <i>g</i> rather than <i>f<sub>s</sub></i> and <i>f<sub>b</sub></i>.  We ask that where these parameters are used, they convert to the standard set of parameters given in Table 1 wherever possible, so that our panel can directly compare entries.  </p>
+
+<p>If entrants wish to explore novel parameterizations, they should provide (in simiar ASCII or JSON format) the complete parameter set and uncertainties for all models, and include a full description of their parameterization in their documentation.  These entrants should still provide as many of the priority parameters as possible, especially  1.) Classification, 2.) <i>q=M1/M2</i>, <i>M1</i> and <i>M2</i> 3.) &theta;<sub>E</sub> or &pi;<sub>E</sub> (magnitude) 4.) Lens distance</p>
+
+<p><b>If entrants decide to use an alternative tabular format, they are strongly encouraged to upload Python code to read that format into a Numpy array, to a team repository on the challenge Github Organization.</b></p>
+
+<p>The Time to Fit parameter should record how long the analysis of a given lightcurve took, from initial data ingest to final parameter output.  </p>
+
+<h4 style='color:cadetblue'>Documentation</h4>
+<p>All entries should provide written answers to the following questions to provide context which will aid in the evaluation of their results. </p>
+
+    <p>
+1) Describe all software that you used to conduct your analysis, including version numbers where available and all major dependencies (compilers, libraries, external services).  This should include:<br>
+a) the algorithm/approach used to classify the lightcurves<br>
+b) the algorithm(s) used to find the best-fitting model <br>
+c) the algorithm used to evaluate the parameter uncertainties<br>
+d) how competing solutions were evaluated and the best fit selected<br>
+2) Describe any data filtering or outlier rejection techniques used and any changes made to the photometric errors.  <br>
+3) If your analysis included limb darkening of the source star, please describe what relation or parameterization was used and the origin of the coefficients.  <br>
+4) Describe the computer hardware on which the analysis was conducted including number and type of processors (whether GPU or CPU), processor speed, memory, system architecture (e.g. a single multi-processor machine, cluster (Beowulf, condor pool, etc)...) and operating system.<br>
+    </p>
+
+<h4 style='color:cadetblue'>Graphical output</h4>
+<p>Plots of all fitted lightcurves should be provided with the model lightcurve overlaid, together with a plot of the lightcurve residuals as a function of time.  Zoomed-in plots of any anomalous features are advantageous but not required. <br>
+Plots of the lens plane geometry, caustic structures and source trajectory.  <br>
+Entrants may provide additional graphical output where relevant. <br>
+    </p>

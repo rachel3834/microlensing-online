@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+<p>
+<h3 class="page-header">Online Resources</h3>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-3">
+            <h4>Ground-based Surveys</h4>
+            {% for u in ground_surveys %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+		<div class="col-lg-3">
+            <h4>Space-based Surveys</h4>
+            {% for u in space_surveys %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+        <div class="col-lg-3">
+            <h4>Ground-based Follow-up Teams</h4>
+            {% for u in ground_followup %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>Microlensing Conferences</h4>
+            {% for u in meetings %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+        <div class="col-lg-6">
+            <h4>Sagan Workshop 2017</h4>
+            {% for u in sagan_workshop %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>YouTube Resources</h4>
+            {% for u in youtube %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+        <div class="col-lg-6">
+            <h4>Simulations and Modeling Resources</h4>
+            {% for u in simulations %}
+            <a href="{{u.url}}">{{u.name}}</a></br>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

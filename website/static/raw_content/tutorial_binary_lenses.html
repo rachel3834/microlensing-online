@@ -1,0 +1,173 @@
+HEADER::TITLE=Binary Lenses
+HEADER::SHORT_TITLE=binary-lenses
+HEADER::COURSE_INDEX=7
+HEADER::AUTHOR=Rachel Street
+<h3>Introduction</h3>
+So far we have considered the lens to be a single massive object, but binary lenses can result in complex and beautiful
+microlensing lightcurves. Historically, of course, binary lenses have been key to the discovery of planetary systems. The following
+discussion is intended as an overview of the mathematics and physics of binary lenses, and for greater detail you are encouraged to
+review the references given.
+
+<h3>The Binary Lens Equation</h3>
+<p>A binary lens consists of two masses, M<sub>1</sub> & M<sub>2</sub>. The lens plane coordinate system (x,y) is arranged so that the x-axis passes
+through the projection of the masses onto the lens plane, with the origin at the central point between the two lens masses
+(Fig. 11). Both are considered to be at distance D<sub>L</sub> from the observer, their separation being relatively small.</p>
+
+<p>The source plane is described by coordinate system (u,&nu;), which has its origin at the point where the optical axis intersects
+the plane.</p>
+
+<p>Each mass deflects a light ray from the source by angle &alpha; = 4GM/c<sup>2</sup>b. The total deflection is then the vector
+sum of the deflections by each of the individual masses. Taking an example ray which intersects the lens plane at &xi; = (x1, y1),
+the total deflection in the general case for a lens with i = 1 - n masses is given by:</p>
+
+<table width="75%"><tr><td>$$\bar{\alpha}(\bar{\xi}) = \sum_{i}\left( \frac{4GM_{i}}{c^{2}}\frac{\bar{\xi} - \bar{\xi_{i}}}{|\bar{\xi} - \bar{\xi_{i}}|^{2}}\right),$$</td><td>[37]</td></tr></table>
+ 
+<p>For a binary lens this becomes:</p>
+
+<table width="75%"><tr><td>$$\bar{\alpha}(\bar{\xi}) = \frac{4GM_{1}}{c^{2}}\frac{\bar{\xi} - \bar{\xi_{1}}}{|\bar{\xi} - \bar{\xi_{1}}|^{2}} + \frac{4GM_{2}}{c^{2}}\frac{\bar{\xi} - \bar{\xi_{2}}}{|\bar{\xi} - \bar{\xi_{2}}|^{2}},$$</td><td>[38]</td></tr></table>
+
+<p>where &xi;&#772;<sub>1,2</sub> are the vector positions of the projection points of masses M<sub>1,2</sub> in the lens plane
+geometry.</p>
+
+<p>We now write the lens equation in a form relating the lightray origin in the source plane (&eta;(u,&nu;)) to the total
+deflection angle:</p>
+
+<center>
+    PICTURE::FILENAME=binary_lens_geometry.png::CAPTION=The geometry of a binary lens system::CREDIT=Y. Tsapras::NAME=The geometry of a binary lens system
+</center>
+
+<table width="75%"><tr><td>$$\bar{\eta} = \bar{\xi}\frac{D_{S}}{D_{L}} - D_{LS}\bar{\alpha}(\bar{\xi}),$$</td><td>[39]</td></tr></table>
+
+<p>By substituting Eqn. 38 into 39 we get:</p>
+
+<table width="75%"><tr><td>$$\frac{\bar{\eta}}{D_{S}} = \frac{\bar{\xi}}{D_{L}} - \frac{4GM_{1}}{c^{2}}\frac{\bar{\xi} - \bar{\xi_{1}}}{|\bar{\xi} - \bar{\xi_{1}}|^{2}}\frac{D_{LS}}{D_{S}} - \frac{4GM_{2}}{c^{2}}\frac{\bar{\xi} - \bar{\xi_{2}}}{|\bar{\xi} - \bar{\xi_{2}}|^{2}}\frac{D_{LS}}{D_{S}},$$</td><td>[40]</td></tr></table>
+
+<p>This is simplified by declaring:</p>
+
+<table width="75%">
+	<tr><td>$$\bar{w}(u,\nu) = \frac{\bar{\eta}}{D_{S}},$$</td><td></td></tr>
+	<tr><td>$$\bar{z}(x,y) = \frac{\bar{\xi}}{D_{L}},$$</td><td></td></tr>
+	<tr><td>$$m_{i} = \frac{4GM_{i}D_{LS}D_{L}}{c^{2}D_{S}},$$</td><td>[40]</td></tr>
+</table>
+
+<p>and we arrive at:</p>
+
+<table width="75%"><tr><td>$$\bar{w} = \bar{z} - m_{1}\frac{\bar{z} - \bar{z_{1}}}{|\bar{z} - \bar{z_{1}}|^{2}} - m_{2}\frac{\bar{z} - \bar{z_{1}}}{|\bar{z} - \bar{z_{1}}|^{2}},$$</td><td>[41]</td></tr></table>
+
+<p>As before, this represents a mapping between the source and lens planes. A lightray from point w&#772;(u,&nu;) in the source plane
+will hit the lens plane at z&#772;(x,y). The inverse problem, extracting the locations of the source images in the lens plane
+geometry requires complex root-finding techniques explored in detail by Schneider & Weiss (1986). In complex notation, Eqn. 41
+becomes:</p>
+
+<table width="75%"><tr><td>$$w = z - m_{1}\frac{1}{\bar{z} - \bar{z_{1}}} - m_{2}\frac{1}{\bar{z} - \bar{z_{2}}},$$</td><td>[42]</td></tr></table>
+
+<p>where w, z are complex numbers:</p>
+
+<table width="75%">
+	<tr><td>$$w = u + i\nu,$$</td><td></td></tr>
+	<tr><td>$$z = x = iy,$$</td><td>[43]</td></tr>
+</table>
+
+<p>and z&#772; is the complex conjugate of z.</p>
+
+<h3>Source Images</h3>
+
+<p>To find the number and locations of the source images produced we need to produce an expression for z in terms of w - the
+inverse of the lens equation. The complex conjugate of Eqn. 42 is:</p>
+
+<table width="75%"><tr><td>$$\bar{w} = \bar{z} - m_{1}\frac{1}{z - z_{1}} - m_{2}\frac{1}{z - z_{2}}.$$</td><td>[44]</td></tr></table>
+
+<p>Solving this expression for z&#772; and substituting into Eqn. 42, we get:</p>
+
+<table width="75%"><tr><td>$$z = w + \sum_{i=1,2}m_{i}\left[\bar{w} - \bar{z_{i}} + \sum_{k=1,2}m_{k}(z - z_{k})^{-1}\right]^{-1}.$$</td><td>[45]</td></tr></table>
+
+<p>This expression generates a polynomial equation in z of order (n<sup>2</sup> + 1), where n is the number of lensing masses.
+Therefore, for a binary lens, there are up to 5 solutions, of which either 3 or 5 may be real, depending on the lens-source
+projected separation (see later discussion, and references).
+</p>
+
+<h3>Amplification for a binary lens</h3>
+
+<p>Following similar arguments used to derive the amplification of a single-mass lens, that for a binary lens is, as before, the
+inverse of the area distortion of the lens mapping (compare with Eqn. 16):
+</p>
+
+<table width="75%"><tr><td>$$A = \left| det \frac{\partial\bar{w}(u,\nu)}{\partial\bar{z}(x,y)} \right|^{-1},$$</td><td>[46]</td></tr></table>
+
+<p>To derive an expression for this we need the 'gradient' of a vector function, or the matrix of first-order partial derivatives,
+known as the Jacobian matrix, which may be written:
+</p>
+
+<table width="75%">
+	<tr><td>$$J = \begin{bmatrix} \frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\ \frac{\partial \nu}{\partial x} & \frac{\partial \nu}{\partial y} \end{bmatrix}$$</td></tr>	
+	<tr><td>$$J = \left| \frac{\partial w}{\partial z} \right|^{2} - \left|\frac{\partial w}{\partial z}\right|^{2},$$</td><td>[47]</td></tr>
+</table>
+
+<p>which for n lensing bodies is:</p>
+
+<table width="75%"><tr><td>$$J = 1 - \left[ \sum_{n} m_{n}(\bar{z} - \bar{z_{n}})^{-2}\right]^{2} = 1 - (\bar{\kappa})^{2},$$</td><td>[48]</td></tr></table>
+
+<p>and for a binary lens is:</p>
+
+<table width="75%"><tr><td>$$J = 1 - \left( \frac{m_{1}}{(\bar{z} - \bar{z_{1}})^{2}} + \frac{m_{2}}{(\bar{z} - \bar{z_{2}})^{2}}\right)^{2},$$</td><td>[48]</td></tr></table>
+
+<p>The inverse Jacobian matrix elements are:</p>
+
+<table width="75%">
+	<tr><td>$$\frac{\partial z}{\partial w} = \frac{1}{J},$$</td><td></td></tr>
+	<tr><td>$$\frac{\partial z}{\partial \bar{w}} = -\frac{\bar{\kappa}}{J},$$</td><td>[49]</td></tr>
+</table>
+
+<p>The total amplification is given by the sum of the absolute amplification of each image i:</p>
+
+<table width="75%"><tr><td>$$A = \sum_{i=1}^{n}A_{i} = \sum_{i=1}^{n}|\det J|^{-1}.$$</td><td>[50]</td></tr></table>
+
+<h3>Critical Curves and Caustics</h3>
+
+<p>Mathematically, the nature of this solution has a curious feature. As the source moves behind the binary lens, there are certain
+positions in the source plane for which the resulting Jacobian determinant drops to zero:</p>
+
+<table width="75%"><tr><td>$$\det J = 0.$$</td><td>[51]</td></tr></table>
+
+<p>These positions form graceful curves, known as 'critical curves'.</p>
+
+<p>Theoretically, as the source crosses the critical curve, the amplification becomes inifinite, according to Eqn. 50. In reality,
+finite source effects curtail the amplification to merely 'high', but these situations can still result in very dramatic
+brightenings of the source by several magnitudes.</p>
+
+<p>Applying the lens equation, the positions of the critical curve in the source plane can be mapped into the lens plane geometry -
+resulting in generally spiky curves known as 'caustics'. Both are illustrated in Fig. 12.</p>
+
+<table>
+	<tr><td>
+        PICTURE::FILENAME=binary_lens_caustic.png::CAPTION=(Top) Lens-plane geometry view of a binary lens of unequal masses (normalized so that M<sub>1</sub> + M<sub>2</sub> equals 1). The straight line indicates the source's relative motion during the event. The curved loop around both masses is the critical curve in the source plane; the spiky central region between the masses represents the caustic. (Bottom) The event lightcurve resulting from this configuration.::CREDIT=Y. Tsapras::NAME=Lens-plane geometry view of a binary lens
+        </td></tr>
+</table>
+
+<p>The number of images changes as the source moves across the caustic curve. Outside it, there are three images; one outside the
+critical curve and two inside it, usually close to one of the masses. Whereas when the source lies within the region defined by the
+caustic, two more images exist, one inside and one outside the critical curve. Its interesting to bear in mind that the caustic
+curve represents the maximum amplification, and the amplification within the caustic actually drops. For wide binary lenses, the
+amplification mid-caustic can drop back almost to baseline.</p>
+
+<p>The expressions derived here depend on the ratio, q, of the masses of the lensing bodies and their positions in the lens plane.
+These factors dictate the shape and extent of the caustics and a wide variety of shapes are possible. The source can also take any
+trajectory, relative to the lens geometry. A wide range of lightcurves can result, but one common feature is a 'double-peak'
+structure - the first peak caused by the source crossing into the caustic region, the second caused by it exiting the caustic.
+Depending on the size of the caustic, the trajectory and relative velocity, the peaks can be hours or days apart.</p>
+
+<p>Notice though, that a binary lens of any q will produce caustics. Therefore, if the source has a favourable relative trajectory,
+even an extreme mass ratio binary like a planetary system will produce a detectable amplification. This makes microlensing uniquely
+sensitive to even low mass planetary companions. However, the caustic region for low mass ratio lenses is generally smaller, so the
+crossing time (the duration of the anomaly) is usually shorter (depending on the velocities of source and lens) and requires
+better lightcurve cadence to detect. The probability of the source trajectory crossing the caustic is also smaller, but this is
+factor compensated for by surveys covering large numbers of stars.
+</p>
+
+REF::AUTHORS=Paczy&nacute;ski, B.::YEAR=1996::JOURNAL=Ann. Rev. A&A::VOLUME=34::PAGE=419::URL=http://adsabs.harvard.edu/abs/1996ARA%26A..34..419P
+REF::AUTHORS=Bourassa, R.::YEAR=1973::JOURNAL=ApJ::VOLUME=185::PAGE=747::URL=http://adsabs.harvard.edu/abs/1973ApJ...185..747B
+REF::AUTHORS=Schneider, P. Ehlers, J. & Falco, E.::YEAR=1992::JOURNAL=Gravtitational Lenses, Springer-Verlag::URL=http://adsabs.harvard.edu/abs/1992grle.book.....S
+REF::AUTHORS=Schneider, P. & Weiss, A.::YEAR=1986::JOURNAL=A&A::VOLUME=164::PAGE=237::URL=http://adsabs.harvard.edu/abs/1986A%26A...164..237S
+REF::AUTHORS=Sun Hong Rhie::YEAR=1997::JOURNAL=ApJ::VOLUME=484::PAGE=63::URL=http://adsabs.harvard.edu/abs/1997ApJ...484...63R
+REF::AUTHORS=Witt, H. & Mao, S.::YEAR=1995::JOURNAL=ApJ::VOLUME=447::PAGE=105::URL=http://adsabs.harvard.edu/abs/1995ApJ...447L.105W
+REF::AUTHORS=Witt, H.J.::YEAR=1990::JOURNAL=A&A::VOLUME=236::PAGE=311::URL=http://adsabs.harvard.edu/abs/1990A%26A...236..311W
