@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Author(models.Model):
-    name = models.CharField(max_length=50)
-    affiliation = models.CharField(max_length=100,null=True)
+    name = models.CharField(max_length=200)
+    affiliation = models.CharField(max_length=200,null=True)
     last_modified_date = models.DateTimeField(
             blank=True, null=True)
 
@@ -67,7 +67,7 @@ class TextBlock(models.Model):
 class TutorialPage(models.Model):
     author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=200)
-    short_title = models.CharField(max_length=20,null=True)
+    short_title = models.CharField(max_length=100,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
     references = models.ManyToManyField(Reference)
@@ -84,7 +84,7 @@ class TutorialPage(models.Model):
 class ConceptPage(models.Model):
     author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=200)
-    short_title = models.CharField(max_length=20,null=True)
+    short_title = models.CharField(max_length=100,null=True)
     course_index = models.IntegerField(null=True)
     text = models.TextField()
     last_modified_date = models.DateTimeField(

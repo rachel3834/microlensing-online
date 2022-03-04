@@ -14,7 +14,7 @@ def ingest_object(params,entry_type):
     def get_thumb_name(params):
         if 'thumbnail' not in params.keys():
             components = str(params['filename']).split('.')
-            params['thumbnail'] = components[0]+'_tb.'+components[1]
+            params['thumbnail'] = components[0]+'_tb.png'
         return params
 
     params_ok = verify_db_entry(entry_type,params)

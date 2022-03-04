@@ -33,4 +33,11 @@ urlpatterns = [
     path('ground-based-surveys/',views.page,name="Ground-based Surveys"),
     path('space-based-programs/',views.page,name="Space-based Programs"),
     path('follow-up-programs/',views.page,name="Follow-up Programs"),
+    path('tutorial/',views.article,{'resource_type':'tutorial'},name="tutorial"),
+    re_path('tutorial/(?P<short_title>[a-zA-Z]+)/',views.article,{'resource_type':'tutorial'},name="tutorial_article"),
+    re_path('tutorial/(?P<short_title>[a-zA-Z]+-[a-zA-Z]+)/',views.article,{'resource_type':'tutorial'},name="tutorial_article"),
+    path('concept/',views.article,{'resource_type':'concept'},name="concept"),
+    re_path('concept/(?P<short_title>[a-zA-Z]+)/',views.article,{'resource_type':'concept'},name="concept_article"),
+    re_path('concept/(?P<short_title>[a-zA-Z0-9]+-[a-zA-Z0-9]+)/',views.article,{'resource_type':'concept'},name="concept_article"),
+
 ]

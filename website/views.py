@@ -252,7 +252,8 @@ def list_resources(request,resource_type,pk=None,key=None):
 
 
     title = capitalize_first_letter(resource_type)
-
+    print({'index':resources,'resource_type':resource_type,
+            'resource':item,'title': title,'keywords': keywords})
     return render(request,'website/resource_files.html',{'index':resources,
                                                           'resource_type':resource_type,
                                                           'resource':item,

@@ -35,19 +35,19 @@
 
                 {% if resource != None %}
                     {% if resource_type == "pictures" %}
-                        <p><center><h4>{{resource.caption}}</h4> </br><i>{{resource.credit}}</i></br>
-                            <a href="/static/website/{{resource.filename}}">Right-click here to download</br>
+                        <p><center><h4>{{resource.caption}}</h4> <br><i>{{resource.credit}}</i><br>
+                            <a href="/static/website/{{resource.filename}}">Right-click here to download<br>
                             <img src="/static/website/{{resource.filename}}" alt="{{resource.name}}" width=500/>
                             </a>
-                            </centre></p>
+                            </center></p>
                     {% elif resource_type == "movies" %}
                         <p>
-                            <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i></br>
-                                <a href="/static/website/{{resource.filename}}">Right-click here to download</br>
+                            <center><h4>{{resource.caption}}</h4> <i>{{resource.credit}}</i><br>
+                                <a href="/static/website/{{resource.filename}}">Right-click here to download<br>
                                 {% if "gif" in resource.filename %}
-                                    <img src="/static/website/{{resource.filename}}" alt="{{resource.name}}"/></br>
+                                    <img src="/static/website/{{resource.filename}}" alt="{{resource.name}}"/><br>
                                 {% else %}
-                                    <img src="/static/website/{{resource.thumbnail}}" alt="{{resource.name}}"/></br>
+                                    <img src="/static/website/{{resource.thumbnail}}" alt="{{resource.name}}"/><br>
                                 {% endif %}
                                 </a>
                         </center></p>
@@ -63,11 +63,11 @@
                                     {% for r in row %}
                                         {% if resource_type == "pictures" %}
                                             <td><a href="{% url 'pictures' r.pk %}">
-                                            <img src="/static/website/{{resource_type}}/{{r.thumbnail}}" alt="{{r.name}}"/>
+                                            <img src="/static/website/{{r.thumbnail}}" alt="{{r.name}}"/>
                                             </a></td>
                                         {% elif resource_type == "movies" %}
                                             <td><a href="{% url 'movies' r.pk %}">
-                                            <img src="/static/website/{{resource_type}}/{{r.thumbnail}}" alt="{{r.name}}"/>
+                                            <img src="/static/website/{{r.thumbnail}}" alt="{{r.name}}"/>
                                             </a></td>
                                         {% endif %}
                                     {% endfor %}

@@ -32,7 +32,7 @@ class Command(BaseCommand):
         params['credit = filename.split('__')[0].replace('_',' ')
         params['name = filename.split('__')[1].split('.')[0].replace('_',' ')
         extn = filename.split('.')[-1]
-        thumbnail = filename.replace('.'+extn, '_tb'+extn)
+        thumbnail = filename.replace('.'+extn, '_tb.png')
         if not path.isfile(path.join('website/static/website',thumbnail)):
             thumbnail = ''
         if len(thumbnail) > 0:
