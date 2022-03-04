@@ -39,5 +39,4 @@ urlpatterns = [
     path('concept/',views.article,{'resource_type':'concept'},name="concept"),
     re_path('concept/(?P<short_title>[a-zA-Z]+)/',views.article,{'resource_type':'concept'},name="concept_article"),
     re_path('concept/(?P<short_title>[a-zA-Z0-9]+-[a-zA-Z0-9]+)/',views.article,{'resource_type':'concept'},name="concept_article"),
-
 ]
