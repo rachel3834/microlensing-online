@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block mainregion %}
+<p>
+<h3 class="page-header">References</h3>
+{% if reference_list|length > 0 %}
+  {% for ref in reference_list %}
+  {{ref|safe}}</br>
+  {% endfor %}
+{% else %}
+  <B>Sorry, no references are available yet.</B>
+{% endif %}
+</p>
+{% endblock %}
