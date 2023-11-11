@@ -7,7 +7,7 @@ Created on Tue Jan 10 14:59:26 2017
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from .models import Movie, Picture
+from website.models import Movie, Picture
 import glob
 from os import path
 
@@ -19,18 +19,19 @@ class Command(BaseCommand):
         parser.add_argument('filename', nargs='+', type=str)
         parser.add_argument('type', nargs='+', type=str)
 
-    def _create_resource_entry(self):
+    def _create_resource_entry(self, **options):
         filename = options['filename'][0]
         filetype = options['type'][0]
 
-        filepath = glob.glob(path.join('website/static/website',filename))
+        file_path = path.join('website/static/website',filename)
+        print(file_path)
         if not path.isfile(file_path):
             raise IOError('Cannot find input file '+filename)
 
         params = {}
-        params['filename'] = path.basename(f)
-        params['credit = filename.split('__')[0].replace('_',' ')
-        params['name = filename.split('__')[1].split('.')[0].replace('_',' ')
+        params['filename'] = filename
+        params['credit'] = filename.split('__')[0].replace('_',' ')
+        params['name'] = filename.split('__')[1].split('.')[0].replace('_',' ')
         extn = filename.split('.')[-1]
         thumbnail = filename.replace('.'+extn, '_tb.png')
         if not path.isfile(path.join('website/static/website',thumbnail)):
@@ -51,4 +52,4 @@ class Command(BaseCommand):
             obj.save()
 
     def handle(self,*args, **options):
-        self._create_resource_entry()
+        self._create_resource_entry(**options)
