@@ -1,0 +1,92 @@
+HEADER::NAME=data-challenge
+HEADER::MODEL=SitePage
+
+<h3 class="page-header">Microlensing Data Challenge</h3>
+<p>The microlensing community held a data challenge in 2018 with the aim of stimulating research into microlensing modeling in preparation for the Roman Mission.</p>
+<p>Historically, the analysis and modeling of microlensing events has always been a computationally-intensive and time-consuming task, requiring a powerful computer cluster as well as well sampled lightcurves.
+  While the number of interesting events with adequate data remained fairly low, it was practical to perform a careful interactive analysis of each one, often with the aid of a powerful computer cluster,
+  but modern surveys are expected to produce terabyte and larger scale data products and thousands of
+  microlensing detections (Penny et al., Johnson et al. 2020) and this approach will not scale.  In addition, there are a number of
+  outstanding challenges in microlensing modeling, particularly concerning the analysis of triple lenses.
+</p>
+  REF::AUTHORS=Penny, M. et al..::YEAR=2019::JOURNAL=ApJ::VOLUME=241::PAGE=34::URL=https://ui.adsabs.harvard.edu/abs/2019ApJS..241....3P/abstract
+  REF::AUTHORS=Johnson, S. et al.::YEAR=2020::JOURNAL=AJ::VOLUME=160::PAGE=123::URL=https://ui.adsabs.harvard.edu/abs/2020AJ....160..123J/abstract
+<p>The specific goals of the 2018 data challenge were:</p>
+<p>
+<li>To stimulate research effort into outstanding modeling issues</li>
+<li>To stimulate development of algorithms to detect and classify microlensing events in Roman data</li>
+<li>To stimulate development of software for modeling microlensing events, capable of conducting analyses of Roman-scale datasets</li>
+</p>
+
+<h4 style='color:cadetblue'>Data Challenge Logistics</h4>
+<p>The challenge was coordinated by Rachel Street and centered around a set of simulated lightcurves, produced by Matthew Penny, designed to
+reproduce the expected observing cadence, duration and noise model of the Roman Galactic Exoplanet Survey.  </p>
+<p>The challenge was announced at the annual microlensing meeting in New Zealand, and widely publicized.
+  The whole community was invited to participate in the challenge, with newcomers to the field especially welcome.
+  An open
+  URL::URL=https://github.com/microlensing-data-challenge::NAME=Data Challenge Github Project::GROUP=data challenge
+  provided a platform for teams to form and collaborate.</p>
+<p>The dataset included lightcurves from non-variable and variable stars, as well as both single and binary microlensing
+  events of different types, and teams were challenged to identify the nature of the phenomenon causing the
+  variability in each lightcurve. For microlensing events, they were expected to fit an appropriate model
+  to the data, and to analyze as much data as possible before the submission deadline, October 31, 2018.  </p>
+<p>Each entry to the data challenge was required to submit a machine-readable table of fitted model parameters for all lightcurves
+  in a standardized format to facilitate the programmatic analysis and comparison of the results by
+  the evaluation panel.  No modeling analysis was required for variables, but None entries had to be given rather than missing entries.
+For lightcurves classified as microlensing, the appropriate parameters had to be provided with uncertainties, including
+binary lens and second-order effect parameters where applicable.  This reflects the fact that second-order effects are
+not always measurable, so weight was given in the evaluation to constraining the priority parameters well.
+The table included the time taken to model each lightcurve, from initial data ingest to final parameter output.  </p>
+<p>In addition, all entries had to provide written answers to the following questions to provide context which aided in the evaluation of their results. </p>
+<ol>
+<li>Descriptions of all software used to conduct the analysis, including version numbers where available and all major dependencies (compilers, libraries, external services).  This had to include:
+  <ul>
+    <li>the algorithm/approach used to classify the lightcurves</li>
+    <li>the algorithm(s) used to find the best-fitting model </li>
+    <li>the algorithm used to evaluate the parameter uncertainties</li>
+    <li>how competing solutions were evaluated and the best fit selected</li>
+  </ul>
+<li>Descriptions of any data filtering or outlier rejection techniques used and any changes made to the photometric errors.  </li>
+<li> If the analysis included limb darkening of the source star, descriptions of the relation or parameterization that was used and the origin of the coefficients.  </li>
+<li> Descriptions of the computer hardware on which the analysis was conducted including number and type of processors (whether GPU or CPU), processor speed, memory, system architecture (e.g. a single multi-processor machine, cluster (Beowulf, condor pool, etc)...) and operating system.</li>
+</ol>
+<p>Plots of all fitted lightcurves were encouraged with the model lightcurve overlaid, together with a plot of the lightcurve residuals as a function of time.
+  Zoomed-in plots of any anomalous features were considered to be advantageous but not required.
+  Plots of the lens plane geometry, caustic structures and source trajectory were also encouraged. </p>
+<p>All entries were evaluated by a panel comprised of experts in microlensing theory and analysis, software and algorithms.
+  No panel member was allowed to participate in any of the teams and all panel members were required to declare
+  any conflicts of interest. All submissions were anonymized during the evaluation to minimize unconscious bias, and entries were judged
+  quantitatively against the input parameters of the simulations.  </p>
+
+<h4 style='color:cadetblue'>Simulated Lightcurve Dataset</h4>
+<p>The
+    URL::URL=https://github.com/microlensing-data-challenge/data-challenge-1::NAME=2018 data challenge dataset::GROUP=data-challenge
+    can be download from here.</p>
+<p>The dataset consists of two lightcurve files for each event or star, representing the data from Roman's W149 and Z087 filters.
+  The files are in ASCII format with the columns BJD, Aperture_Magnitude and Error, and follow the file-naming convention: ulwdc1_nnn_[W149/Z087].txt</p>
+<p>Supplementary files are also provided including wfirst_ephemeris.txt, which contains the BJD and 3D spacecraft location within the solar system.
+  Information is provided on the surface-brightness color relation for Z087-W149 to enable lens masses to be determined where applicable. </p>
+<p>It should be noted that in the simulated data, the inertial frame of reference is defined with the x-axis increasing from the binary center of mass towards
+  the less massive lens at t<sub>0</sub>, the time of closest approach to the center of mass.
+  If viewed from the solar system barycenter, the inertial frame moves at the relative velocity vlens_CoM – vobserver(t<sub>0</sub>).
+  The inclination of the orbit is a counter-clockwise rotation about the x-axis. &alpha is the angle that the source trajectory
+  makes with the x-axis (if parallax was 0). Where finite source effects are significant, a linear limb darkening law has been applied.</p>
+
+<h4 style='color:cadetblue'>Publicly Available Software Tools</h4>
+<p>A number of software packages for microlensing modeling were made publicly-available to support entrant.  Details of these can be found under the
+    SITELINK::TABLE=SitePage::NAME=software::LINKTEXT=Software Tab
+</p>
+<p>Tiffany Meshkat from IPAC kindly developed a Python notebook tutorial which provides an
+  introduction to three public microlensing packages: PyLIMA, MulensModel and muLAn.
+   This is a great way to get started if you're new to the field!  Click
+FILE::NAME=challenge_notebook_tutorial::FILENAME=challenge_notebook_tutorial.tar::LINKTEXT=here
+    to download a tarball of the notebook, data and instructions, or visit the
+    URL::URL=https://wfirst.ipac.caltech.edu/::NAME=IPAC website::GROUP=data-challenge
+</p>
+
+<h4 style='color:cadetblue'>Entries to the 2018 Data Challenge</h4>
+<p>Four teams entered the 2018 challenge, including 7 people who were newcomers to the field, all of whom were successful in classifying and modeling the dataset using a variety of techniques. </p>
+<p>A full overview of the challenge and the results can be found
+  FILE::NAME=challenge_summary_presentation::FILENAME=2018_microlensing_data_challenge.pdf::LINKTEXT=here
+and was presented at the Roman Science Team Community Briefing in 2021.</p>
+<iframe src="/static/website/2018_microlensing_data_challenge.pdf" width="800" height="900"></iframe>
