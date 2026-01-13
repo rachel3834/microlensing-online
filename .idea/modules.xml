@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/microlensing-online.iml" filepath="$PROJECT_DIR$/.idea/microlensing-online.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../rges/minicourses/.idea/minicourses.iml" filepath="$PROJECT_DIR$/../rges/minicourses/.idea/minicourses.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../rges/.idea/rges.iml" filepath="$PROJECT_DIR$/../rges/.idea/rges.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../rges/rubin_galplane_survey/.idea/rubin_galplane_survey.iml" filepath="$PROJECT_DIR$/../rges/rubin_galplane_survey/.idea/rubin_galplane_survey.iml" />
     </modules>
   </component>
 </project>

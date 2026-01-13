@@ -2,5 +2,12 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/VBMicrolensing" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/bkup" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/gulls" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/minicourses" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/rges-pit.github.io" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/rubin_galplane_survey" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../rges/variable_catalog_xmatch" vcs="Git" />
   </component>
 </project>

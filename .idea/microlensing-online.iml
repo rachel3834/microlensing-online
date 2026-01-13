@@ -6,6 +6,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="minicourses" />
+    <orderEntry type="module" module-name="rubin_galplane_survey" />
+    <orderEntry type="module" module-name="rges" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
